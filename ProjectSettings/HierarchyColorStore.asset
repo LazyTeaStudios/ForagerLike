@@ -166,3 +166,6 @@ MonoBehaviour:
   - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-184136944-0
     tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
     icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-523341383-0
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
