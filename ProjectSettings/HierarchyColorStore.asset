@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 53
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a28280e08558a44a996b9ab66121ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entries:
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-55699095-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: PATH_SETUP
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1035954178-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: PATH_ENVIRONMENT
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-64246287-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: PATH_MANAGERS
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-2094793019-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: PATH_CANVASSES
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-55699095-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-64246287-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-1035954178-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-2094793019-0
+    tint: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1447247214-0
+    tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
+    icon: 
+  - id: PATH_MANAGERS/Grid Manager
+    tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1318306466-0
+    tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
+    icon: 
+  - id: PATH_MANAGERS/Tile Placer
+    tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-789109630-0
+    tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
+    icon: 
+  - id: PATH_MANAGERS/Tile Manager
+    tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-5214826357382424777-743346300
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: PATH_MANAGERS/Game Manager
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-8638888279271756103-874629960
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: PATH_MANAGERS/Sound Manager
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-8697056565519636344-4582590301159180019
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: PATH_MANAGERS/Input Manager
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-2160586850467708426-573472282
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: PATH_MANAGERS/Scene Transition Manager
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1031407593-0
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: PATH_SETUP/Directional Light
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1261844109-0
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: PATH_SETUP/Global Volume
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-386538843-0
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: PATH_SETUP/Camer Controller
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-184136944-0
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: PATH_CANVASSES/EventSystem
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-7414684969383257239-575685488983541342
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: PATH_CANVASSES/Pause Menu Canvas
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-7414684967769240932-0
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: PATH_CANVASSES/Tower Health Canvas
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-6997325358591795913-0
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-519420028-0
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
+    icon: 
+  - id: PATH_SETUP/Camera Controller/Main Camera
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1472090731-0
+    tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
+    icon: 

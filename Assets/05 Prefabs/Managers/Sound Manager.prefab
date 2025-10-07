@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8638888279271756103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2641006975662397192}
+  - component: {fileID: 7338618534243314233}
+  - component: {fileID: 5400542712142253434}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 7613635659260235171, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2641006975662397192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638888279271756103}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7338618534243314233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638888279271756103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad8411fb01f298439b9d2ad1865dd6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  mixer: {fileID: 24100000, guid: b13a4cb20eb6aaf4aa955d1d84e2d440, type: 2}
+  masterGroup: {fileID: 24300002, guid: b13a4cb20eb6aaf4aa955d1d84e2d440, type: 2}
+  musicGroup: {fileID: 337004127504259040, guid: b13a4cb20eb6aaf4aa955d1d84e2d440, type: 2}
+  sfxGroup: {fileID: 1066273870446564822, guid: b13a4cb20eb6aaf4aa955d1d84e2d440, type: 2}
+  uiGroup: {fileID: 8410414131628790422, guid: b13a4cb20eb6aaf4aa955d1d84e2d440, type: 2}
+  ambienceGroup: {fileID: 678942586098846690, guid: b13a4cb20eb6aaf4aa955d1d84e2d440, type: 2}
+  initialPoolSize: 20
+--- !u!114 &5400542712142253434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638888279271756103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d5001e51952a849a999142a8f9628e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entries:
+  - id: ButtonPressed
+    clip: {fileID: 8300000, guid: e76fcc40968947444b690be14b945f89, type: 3}
+    category: 2
+  - id: DefaultMusic
+    clip: {fileID: 8300000, guid: a0d3d6493520e2a4286dbef1cde0a2a2, type: 3}
+    category: 0
