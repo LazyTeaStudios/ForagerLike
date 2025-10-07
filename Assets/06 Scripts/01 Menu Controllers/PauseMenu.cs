@@ -72,20 +72,22 @@ public class PauseMenu : MenuBase
 
         GameManagerHandler.Pause();
         InputHandler.SetMap(ActionMap.UI);
-        RefreshSelection(resumeButton.gameObject);
+
         pauseMenuContainer.SetActive(true);
+        RefreshSelection(resumeButton.gameObject);
     }
 
     private void OnResume()
     {
         Sound.PlaySound("ButtonPressed", 1f, 0.3f);
-        GameManagerHandler.Resume();
 
+        GameManagerHandler.Resume();
         InputHandler.SetMap(previousActionMap);
 
         pauseMenuContainer.SetActive(false);
         optionsMenuContainer.SetActive(false);
     }
+
 
     private void OnOptions()
     {

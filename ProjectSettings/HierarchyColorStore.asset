@@ -131,7 +131,7 @@ MonoBehaviour:
     tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
     icon: 
   - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-519420028-0
-    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
+    tint: {r: 0.21960784, g: 0.21960784, b: 0.21960784, a: 1}
     icon: 
   - id: PATH_SETUP/Camera Controller/Main Camera
     tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
@@ -168,4 +168,16 @@ MonoBehaviour:
     icon: 
   - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-523341383-0
     tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-200124934-0
+    tint: {r: 0.2784314, g: 0.11372549, b: 0.14117648, a: 1}
+    icon: 
+  - id: PATH_ENVIRONMENT/Player Controller
+    tint: {r: 0.2784314, g: 0.11372549, b: 0.14117648, a: 1}
+    icon: 
+  - id: PATH_ENVIRONMENT/Player Controller/Main Camera
+    tint: {r: 0.21960784, g: 0.21960784, b: 0.21960784, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1773623360729482-1082495473
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
     icon: 

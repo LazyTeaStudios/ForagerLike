@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
   dontDestroyOnLoad: 1
   actionAsset: {fileID: -944628639613478452, guid: 4e2fdfc69e6df7f418dc442565758cd7, type: 3}
-  defaultHoldTime: 0.3
+  defaultHoldTime: 0.05
