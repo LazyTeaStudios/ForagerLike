@@ -281,7 +281,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 386538844}
-  - component: {fileID: 386538845}
   m_Layer: 0
   m_Name: Camera Controller
   m_TagString: Untagged
@@ -305,30 +304,6 @@ Transform:
   - {fileID: 519420032}
   m_Father: {fileID: 55699096}
   m_LocalEulerAnglesHint: {x: 0, y: 42.72, z: 0}
---- !u!114 &386538845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386538843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 090c1fb0db80e17469a8eac5efd12d6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasMoved: 0
-  isHoveringTile: 0
-  speed: 2
-  maxSpeed: 2
-  acceleration: 5
-  damping: 5
-  maxRotationSpeed: 0.5
-  distance: 15
-  minDistance: 5
-  maxDistance: 30
-  pitchAngle: 35
-  zoomStep: 1.2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,6 +1097,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1968558917436556998, guid: 65cd185c782ba574bad646e3519647bf, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968558917436556998, guid: 65cd185c782ba574bad646e3519647bf, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 2257692117779309177, guid: 65cd185c782ba574bad646e3519647bf, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1475,7 +1458,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Input Manager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 132079827432101810, guid: e6e0b049230857d429999b8c5889b213, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

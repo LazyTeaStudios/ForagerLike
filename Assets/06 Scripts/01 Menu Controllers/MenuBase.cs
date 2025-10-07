@@ -22,7 +22,7 @@ public class MenuBase : MonoBehaviour
 
         EnsureSelection(system);
 
-        Vector2 pointerPos = Input.GetValue<Vector2>(GameAction.UIMousePoint);
+        Vector2 pointerPos = InputHandler.GetValue<Vector2>(GameAction.Point);
 
         if (!_pointerPosValid)
         {
@@ -37,11 +37,14 @@ public class MenuBase : MonoBehaviour
         UpdateSelectionFromPointer(system, pointerPos);
     }
 
-
+    /// <summary>
+    /// If nothing is selected, re-select the most recently valid selectable.
+    /// </summary>
     private static void EnsureSelection(EventSystem system)
     {
         var current = system.currentSelectedGameObject;
 
+        // Cache the current object if it’s a valid, active Selectable
         if (current != null &&
             current.activeInHierarchy &&
             current.GetComponent<Selectable>() != null)
@@ -50,6 +53,7 @@ public class MenuBase : MonoBehaviour
             return;
         }
 
+        // Nothing selected? Restore the last valid one (if still active)
         if (current == null &&
             _lastValidSelection != null &&
             _lastValidSelection.activeInHierarchy)
@@ -58,6 +62,9 @@ public class MenuBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Ensures a selectable is focused when a panel becomes active.
+    /// </summary>
     protected void RefreshSelection(GameObject fallback)
     {
         var system = EventSystem.current;

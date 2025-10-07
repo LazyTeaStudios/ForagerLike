@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+/// <summary>
+/// Categories routed through the AudioMixer.
+/// </summary>
 public enum AudioCategory { Music, SFX, UI, Ambience }
 
 
@@ -111,6 +114,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         base.Awake();
 
+        // Build pool, music sources, etc…
         for (int i = 0; i < initialPoolSize; i++) pool.Enqueue(CreatePooledSource());
         musicA = CreateMusicSource("Music_A");
         musicB = CreateMusicSource("Music_B");
@@ -122,6 +126,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         yield return null;
 
+        //Debug.Log("Test");
         LoadPersistedVolumes();
     }
 

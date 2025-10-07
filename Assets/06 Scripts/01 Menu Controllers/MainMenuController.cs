@@ -32,6 +32,9 @@ public class MainMenuController : MenuBase
 
     #region OnEnable/Disable
 
+    /// <summary>
+    /// Subscribes to GameManager PauseStateChanged to handle pause logic.
+    /// </summary>
     private void OnEnable()
     {
         startGame.onClick.AddListener(OnStartPressed);
@@ -55,6 +58,10 @@ public class MainMenuController : MenuBase
     }
 
 
+
+    /// <summary>
+    /// Called by the Start button.
+    /// </summary>
     public void OnStartPressed()
     {
         SceneTransitionManager.LoadScene(startScene);
@@ -79,17 +86,19 @@ public class MainMenuController : MenuBase
     }
 
 
-
+    /// <summary>
+    /// Called by the Quit button
+    /// </summary>
     public void OnQuitPressed()
     {
         Sound.PlaySound("ButtonPressed", 1f, 0.3f);
 
-        #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
             // Close the standalone/player build
             Application.Quit();
-        #endif
+#endif
 
 
     }

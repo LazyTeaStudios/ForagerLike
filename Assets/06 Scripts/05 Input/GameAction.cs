@@ -1,9 +1,12 @@
 
+using System;
+
 /// <summary>
 /// List any action maps you would like. Only one can be active at a time.
 /// </summary>
 public enum ActionMap
 {
+    Global,
     Gameplay,
     UI,
     Disabled
@@ -16,27 +19,39 @@ public enum ActionMap
 public enum GameAction
 {
     //UI Action Map
-    Resume,
+    UIPause,
     Navigate,
     Submit,
     Cancel,
-    UIMousePoint,
-    UILeftClick,
-    UIRightClick,
+    Point,
+    Click,
+    RightClick,
 
     //Gameplay Action Map
-    Pause,
-
-    GameplayCtrlModifier,
-    GameplayMousePoint,
-    GameplayMouseScroll,
-
-    GameplayLeftClick,
-    GameplayMiddleClick,
-    GameplayRightClick,
-    
-    ResetCameraPosition,
+    GameplayPause,
+    GameplayMousePosition,
+    GameplayMouseLeftClick,
+    GameplayMouseRightClick,
     Move,
-    
-    Dash
+    Roll,
+    Attack,
+
+    // Inventory Actions (Global)
+    ToggleInventory,
+    Hotbar1,
+    Hotbar2,
+    Hotbar3,
+    Hotbar4,
+    Hotbar5,
+    Hotbar6,
+    Hotbar7,
+    Hotbar8,
+    Hotbar9,
+    ScrollHotbar,
+
+    //  Global Modifiers
+    ShiftModifier,
+    ControlModifier,
+    AltModifier
 }
+

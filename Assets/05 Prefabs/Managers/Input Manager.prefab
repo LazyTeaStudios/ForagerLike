@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8189844167350317816}
-  - component: {fileID: 132079827432101810}
+  - component: {fileID: 8718845949781325136}
   m_Layer: 0
   m_Name: Input Manager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &132079827432101810
+--- !u!114 &8718845949781325136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8697056565519636344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95b7f14028e508e40a5c198934c2a81d, type: 3}
+  m_Script: {fileID: 11500000, guid: 18b92564498ccee458055ddd7fe114d2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
   dontDestroyOnLoad: 1
-  actionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  actionAsset: {fileID: -944628639613478452, guid: 4e2fdfc69e6df7f418dc442565758cd7, type: 3}
   defaultHoldTime: 0.3

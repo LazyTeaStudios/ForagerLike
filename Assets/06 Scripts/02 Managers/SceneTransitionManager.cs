@@ -3,6 +3,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Simple, persistent scene–transition manager with fade-to-black and an optional load-progress bar.
+/// Call from anywhere:
+///     SceneTransitionManager.LoadScene(targetSceneField);
+///     SceneTransitionManager.LoadScene("Level02");
+/// </summary>
 public class SceneTransitionManager : Singleton<SceneTransitionManager>
 {
 
@@ -10,7 +16,7 @@ public class SceneTransitionManager : Singleton<SceneTransitionManager>
     [Tooltip("Full-screen black Image with a CanvasGroup component.")]
     [SerializeField] private CanvasGroup fadeGroup;
 
-    [Tooltip("Slider used as a loading-progress bar (optional).")]
+    [Tooltip("Slider used as a loading-progress bar (optional but recommended).")]
     [SerializeField] private Slider progressBar;
 
     [Header("Timing")]
@@ -19,7 +25,6 @@ public class SceneTransitionManager : Singleton<SceneTransitionManager>
 
     public static void LoadScene(SceneField target) => Instance.BeginTransition(target?.SceneName);
     public static void LoadScene(string sceneName) => Instance.BeginTransition(sceneName);
-    public static void ReloadCurrentScene() => Instance.BeginTransition(SceneManager.GetActiveScene().name);
 
     bool _busy;
 
@@ -39,9 +44,8 @@ public class SceneTransitionManager : Singleton<SceneTransitionManager>
     {
         _busy = true;
 
-        GameManager.Pause();
-        Input.SetMap(ActionMap.Disabled);
-
+        GameManagerHandler.Pause();
+        InputHandler.SetMap(ActionMap.Disabled);
         yield return Fade(1f);
 
         if (progressBar) progressBar.gameObject.SetActive(true);
@@ -61,8 +65,8 @@ public class SceneTransitionManager : Singleton<SceneTransitionManager>
         if (progressBar) progressBar.gameObject.SetActive(false);
         yield return Fade(0f);
 
-        Input.SetMap(ActionMap.Gameplay);
-        GameManager.Resume();
+        InputHandler.SetMap(ActionMap.Gameplay);
+        GameManagerHandler.Resume();
         _busy = false;
     }
 
@@ -70,14 +74,7 @@ public class SceneTransitionManager : Singleton<SceneTransitionManager>
     {
         if (!fadeGroup) yield break;
 
-        float start = fadeGroup.alpha;
-        if (Mathf.Approximately(start, targetAlpha) || fadeDuration <= 0f)
-        {
-            fadeGroup.alpha = targetAlpha;
-            yield break;
-        }
-
-        float t = 0f;
+        float start = fadeGroup.alpha, t = 0f;
         while (t < fadeDuration)
         {
             t += Time.unscaledDeltaTime;

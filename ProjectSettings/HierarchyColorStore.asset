@@ -139,3 +139,30 @@ MonoBehaviour:
   - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1472090731-0
     tint: {r: 0.13333334, g: 0.36078432, b: 0.26666668, a: 1}
     icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-5214826357989652661-0
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-5128059866354061707-0
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-5214826357382424777-2347822515674809531
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-8638888279271756103-5164781773342009932
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-8697056565519636344-1580492951
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-2160586850467708426-5413451353069959102
+    tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-410087039-0
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-832575517-0
+    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-f69465760a27be64fa4c5d136e3dbc5f-184136944-0
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
