@@ -17,14 +17,28 @@ public class Zoom : MonoBehaviour
 
     void Update()
     {
-        if (!InputHandler.Held(GameAction.ShiftModifier)) return;
+        if (!Application.isPlaying) return;
 
-        float scroll = 0f;
-        try { scroll = InputHandler.GetValue<float>(GameAction.ScrollHotbar); } catch { }
+        if (InputHandler.Held(GameAction.ShiftModifier))
+        {
+            float scroll = 0f;
+            try
+            {
+                scroll = InputHandler.GetValue<float>(GameAction.ScrollHotbar);
+            }
+            catch { }
 
-        currentZoom += scroll * sensitivity * 0.05f;
-        currentZoom = Mathf.Clamp01(currentZoom);
+            if (Mathf.Abs(scroll) > 0.01f)
+            {
+                currentZoom += scroll * sensitivity * 0.001f;
+                currentZoom = Mathf.Clamp01(currentZoom);
+            }
+        }
 
-        if (cam) cam.fieldOfView = Mathf.Lerp(defaultFOV, maxZoomFOV, currentZoom);
+        if (cam)
+        {
+            float targetFOV = Mathf.Lerp(defaultFOV, maxZoomFOV, currentZoom);
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * 10f);
+        }
     }
 }

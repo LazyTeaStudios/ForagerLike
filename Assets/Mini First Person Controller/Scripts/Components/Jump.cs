@@ -33,7 +33,7 @@ public class Jump : MonoBehaviour
         if (pressedJump && grounded)
         {
             Vector3 v = rb.linearVelocity;
-            v.y = 0f; // clear any downward vel so the jump is consistent
+            v.y = 0f;
             rb.linearVelocity = v;
 
             rb.AddForce(Vector3.up * 100f * jumpStrength, ForceMode.Force);

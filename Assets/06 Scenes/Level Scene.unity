@@ -2767,11 +2767,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4207292327508947}
-  - component: {fileID: 136877097968791145}
-  - component: {fileID: 54063889561575773}
   - component: {fileID: 114963310820917735}
   - component: {fileID: 114497867166237727}
   - component: {fileID: 114762043163072565}
+  - component: {fileID: 136877097968791146}
+  - component: {fileID: 136877097968791145}
+  - component: {fileID: 54063889561575773}
   m_Layer: 0
   m_Name: First Person Controller
   m_TagString: Untagged
@@ -3060,6 +3061,7 @@ MonoBehaviour:
   movementSpeed: 2
   headToLower: {fileID: 4490258391768115}
   crouchYHeadPosition: 1
+  crouchSpeed: 10
   colliderToLower: {fileID: 136877097968791145}
 --- !u!114 &114963310820917735
 MonoBehaviour:
@@ -3076,6 +3078,7 @@ MonoBehaviour:
   speed: 5
   canRun: 1
   runSpeed: 9
+  airControl: 0.3
 --- !u!124 &124991111516524487
 Behaviour:
   m_ObjectHideFlags: 0
@@ -3091,7 +3094,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773622295535739}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3ce7e64c6c1888349a483929d054b379, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3107,6 +3110,22 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &136877097968791146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773622295535739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e7fcb20e650fb4ab502b0c6dc981b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GravityController
+  normalGravity: -9.81
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  fallGravityTransitionSpeed: 8
 --- !u!1001 &575685488983541342
 PrefabInstance:
   m_ObjectHideFlags: 0

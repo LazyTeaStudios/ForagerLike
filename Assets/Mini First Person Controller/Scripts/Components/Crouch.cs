@@ -14,12 +14,19 @@ public class Crouch : MonoBehaviour
     [HideInInspector] public float? defaultHeadYLocalPosition;
     public float crouchYHeadPosition = 1;
 
+    [Header("Crouch Transition")]
+    [Tooltip("Speed of the crouch transition.")]
+    public float crouchSpeed = 10f;
+
     [Tooltip("Collider to lower when crouched.")]
     public CapsuleCollider colliderToLower;
     [HideInInspector] public float? defaultColliderHeight;
 
     public bool IsCrouched { get; private set; }
     public event System.Action CrouchStart, CrouchEnd;
+
+    private float targetHeadHeight;
+    private float currentHeadHeight;
 
     void Reset()
     {
@@ -29,6 +36,21 @@ public class Crouch : MonoBehaviour
         colliderToLower = movement ? movement.GetComponentInChildren<CapsuleCollider>() : null;
     }
 
+    void Start()
+    {
+        if (headToLower)
+        {
+            defaultHeadYLocalPosition = headToLower.localPosition.y;
+            currentHeadHeight = defaultHeadYLocalPosition.Value;
+            targetHeadHeight = defaultHeadYLocalPosition.Value;
+        }
+
+        if (colliderToLower)
+        {
+            defaultColliderHeight = colliderToLower.height;
+        }
+    }
+
     void LateUpdate()
     {
         if (InputHandler.IsMapActive(ActionMap.UI)) return;
@@ -36,60 +58,47 @@ public class Crouch : MonoBehaviour
         bool wantCrouch = false;
         try { wantCrouch = InputHandler.Held(GameAction.Crouch); } catch { }
 
+        // Set target height based on crouch state
         if (wantCrouch)
         {
-            // head
-            if (headToLower)
-            {
-                if (!defaultHeadYLocalPosition.HasValue)
-                    defaultHeadYLocalPosition = headToLower.localPosition.y;
-
-                headToLower.localPosition = new Vector3(
-                    headToLower.localPosition.x,
-                    crouchYHeadPosition,
-                    headToLower.localPosition.z
-                );
-            }
-
-            // collider
-            if (colliderToLower)
-            {
-                if (!defaultColliderHeight.HasValue)
-                    defaultColliderHeight = colliderToLower.height;
-
-                float loweringAmount = defaultHeadYLocalPosition.HasValue
-                    ? (defaultHeadYLocalPosition.Value - crouchYHeadPosition)
-                    : defaultColliderHeight.Value * 0.5f;
-
-                colliderToLower.height = Mathf.Max(defaultColliderHeight.Value - loweringAmount, 0f);
-                colliderToLower.center = Vector3.up * (colliderToLower.height * 0.5f);
-            }
-
             if (!IsCrouched)
             {
                 IsCrouched = true;
                 SetSpeedOverrideActive(true);
                 CrouchStart?.Invoke();
             }
+            targetHeadHeight = crouchYHeadPosition;
         }
-        else if (IsCrouched)
+        else
         {
-            if (headToLower && defaultHeadYLocalPosition.HasValue)
-                headToLower.localPosition = new Vector3(
-                    headToLower.localPosition.x,
-                    defaultHeadYLocalPosition.Value,
-                    headToLower.localPosition.z
-                );
-
-            if (colliderToLower && defaultColliderHeight.HasValue)
+            if (IsCrouched)
             {
-                colliderToLower.height = defaultColliderHeight.Value;
-                colliderToLower.center = Vector3.up * (colliderToLower.height * 0.5f);
+                IsCrouched = false;
+                SetSpeedOverrideActive(false);
+                CrouchEnd?.Invoke();
             }
+            targetHeadHeight = defaultHeadYLocalPosition ?? headToLower.localPosition.y;
+        }
 
-            IsCrouched = false;
-            SetSpeedOverrideActive(false);
-            CrouchEnd?.Invoke();
+        // Smoothly lerp to target height
+        currentHeadHeight = Mathf.Lerp(currentHeadHeight, targetHeadHeight, Time.deltaTime * crouchSpeed);
+
+        // Apply head position
+        if (headToLower)
+        {
+            headToLower.localPosition = new Vector3(
+                headToLower.localPosition.x,
+                currentHeadHeight,
+                headToLower.localPosition.z
+            );
+        }
+
+        // Update collider
+        if (colliderToLower && defaultColliderHeight.HasValue && defaultHeadYLocalPosition.HasValue)
+        {
+            float loweringAmount = defaultHeadYLocalPosition.Value - currentHeadHeight;
+            colliderToLower.height = Mathf.Max(defaultColliderHeight.Value - loweringAmount, 0f);
+            colliderToLower.center = Vector3.up * (colliderToLower.height * 0.5f);
         }
     }
 
