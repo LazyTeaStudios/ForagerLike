@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2152403529561245132, guid: 79ffe6444683b64479210dd30aca9739, type: 3}
+  m_Sprite: {fileID: 1721751460739895766, guid: 79ffe6444683b64479210dd30aca9739, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -498,9 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eefd7db0740238c4392f94eaa3b7a71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 5007114754781242333}
+  iconImage: {fileID: 5007114754781242333}
   quantityText: {fileID: 49359160272982100}
-  background: {fileID: 6466698833469491641}
+  backgroundImage: {fileID: 8048397746705590891}
   normalColor: {r: 1, g: 1, b: 1, a: 0}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
-  dragHighlightColor: {r: 1, g: 1, b: 1, a: 1}

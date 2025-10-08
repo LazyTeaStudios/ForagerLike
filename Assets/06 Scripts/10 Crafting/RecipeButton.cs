@@ -1,58 +1,81 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class RecipeButton : MonoBehaviour
+public class RecipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [Header("UI")]
-    [SerializeField] private Image recipeIcon;
+    [SerializeField] Image icon;
+    [SerializeField] GameObject tooltipPanel;
+    [SerializeField] TMPro.TextMeshProUGUI tooltipText;
 
-    public Recipe Recipe { get; private set; }
+    Button button;
+    Recipe recipe;
+    CraftingUI craftingUI;
 
-    private Button button;
-    private CraftingUI craftingUI;
-    private UIButtonOutline outline;
-
-    public void BindUI(CraftingUI ui, Recipe recipe)
+    public void Setup(Recipe recipeData, CraftingUI ui)
     {
+        recipe = recipeData;
         craftingUI = ui;
-        Recipe = recipe;
 
-        if (button == null) button = GetComponent<Button>();
-        if (button != null)
+        if (button == null)
+            button = GetComponent<Button>();
+
+        if (icon != null && recipe != null)
+            icon.sprite = recipe.recipeIcon;
+
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(OnClick);
+
+        UpdateInteractable();
+    }
+
+    void OnClick()
+    {
+        if (craftingUI != null && recipe != null)
+            craftingUI.TryCraft(recipe);
+
+        UpdateInteractable();
+    }
+
+    public void UpdateInteractable()
+    {
+        if (button == null || recipe == null) return;
+
+        bool canCraft = true;
+        foreach (ItemRequirement input in recipe.inputs)
         {
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() =>
+            if (InventoryManager.Instance.GetItemCount(input.item) < input.quantity)
             {
-                if (craftingUI != null && Recipe != null)
-                    craftingUI.SelectRecipe(Recipe);
-            });
-            button.interactable = (Recipe != null);
+                canCraft = false;
+                break;
+            }
         }
 
-        if (recipeIcon != null)
-            recipeIcon.sprite = Recipe != null ? Recipe.recipeIcon : null;
+        button.interactable = canCraft;
+    }
 
-        if (outline == null) outline = GetComponent<UIButtonOutline>();
-        if (outline != null)
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (tooltipPanel != null && recipe != null)
         {
-            // Recipe buttons keep the outline when selected (even if later disabled)
-            outline.SetPersistWhenSelected(true);
-            outline.SetSelected(false);
+            tooltipPanel.SetActive(true);
+
+            if (tooltipText != null)
+            {
+                string text = recipe.recipeName + "\n\nRequires:\n";
+                foreach (ItemRequirement input in recipe.inputs)
+                {
+                    int owned = InventoryManager.Instance.GetItemCount(input.item);
+                    text += $"- {input.item.itemName} x{input.quantity} ({owned})\n";
+                }
+                tooltipText.text = text;
+            }
         }
     }
 
-    /// <summary>Called by CraftingUI when this button becomes (de)selected.</summary>
-    public void SetSelected(bool selected) => outline?.SetSelected(selected);
-
-    /// <summary>
-    /// Enable/disable interaction from CraftingUI (e.g., during crafting).
-    /// Outline on the selected button remains due to UIButtonOutline logic.
-    /// Hover outline is suppressed automatically while disabled.
-    /// </summary>
-    public void SetInteractable(bool interactable)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        if (button == null) button = GetComponent<Button>();
-        if (button != null) button.interactable = interactable && (Recipe != null);
-        // NOTE: Do NOT clear outline here—selected button should remain "locked" visually.
+        if (tooltipPanel != null)
+            tooltipPanel.SetActive(false);
     }
 }

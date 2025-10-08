@@ -3,68 +3,74 @@ using UnityEngine;
 [System.Serializable]
 public class InventorySlot
 {
-    public ItemData item;
-    public int quantity;
+    [Header("Slot Contents")]
+    [SerializeField] private ItemData _item;
+    [SerializeField] private int _quantity;
 
-    public bool IsEmpty => item == null || quantity <= 0;
-    public bool IsFull => item != null && quantity >= item.maxStackSize;
+    public ItemData item
+    {
+        get => _item;
+        set
+        {
+            _item = value;
+            ValidateSlot();
+        }
+    }
 
-    /// sumary
-    /// Clears the slot
-    /// summary
+    public int quantity
+    {
+        get => _quantity;
+        set
+        {
+            _quantity = Mathf.Max(0, value);
+            ValidateSlot();
+        }
+    }
+
+    public InventorySlot()
+    {
+        _item = null;
+        _quantity = 0;
+    }
+
+    public InventorySlot(ItemData item, int quantity)
+    {
+        this._item = item;
+        this._quantity = quantity;
+        ValidateSlot();
+    }
+
+    public bool IsEmpty()
+    {
+        return _item == null || _quantity <= 0;
+    }
+
     public void Clear()
     {
-        item = null;
-        quantity = 0;
+        _item = null;
+        _quantity = 0;
     }
 
-    /// sumary
-    /// Validates if items can be added
-    /// summary
-    public bool CanAddItem(ItemData itemToAdd, int amount = 1)
+    private void ValidateSlot()
     {
-        if (itemToAdd == null || amount <= 0) return false;
-        if (IsEmpty) return amount <= itemToAdd.maxStackSize;
-        if (item != itemToAdd) return false;
-        return quantity + amount <= item.maxStackSize;
-    }
-
-    /// sumary
-    /// Adds up to amount and returns remaining
-    /// summary
-    public int AddItem(ItemData itemToAdd, int amount)
-    {
-        if (itemToAdd == null || amount <= 0) return amount;
-
-        if (IsEmpty)
+        if (_item == null)
         {
-            item = itemToAdd;
-            int canTake = Mathf.Min(amount, itemToAdd.maxStackSize);
-            quantity = canTake;
-            return amount - canTake;
+            _quantity = 0;
         }
-
-        if (item != itemToAdd) return amount;
-
-        int free = item.maxStackSize - quantity;
-        int taken = Mathf.Min(amount, free);
-        quantity += taken;
-        return amount - taken;
+        else if (_quantity <= 0)
+        {
+            _item = null;
+            _quantity = 0;
+        }
+        else if (_item.maxStackSize > 0)
+        {
+            _quantity = Mathf.Min(_quantity, _item.maxStackSize);
+        }
     }
 
-    /// sumary
-    /// Removes up to amount and returns a stack copy
-    /// summary
-    public InventorySlot RemoveItem(int amount)
+    public override string ToString()
     {
-        if (IsEmpty || amount <= 0) return new InventorySlot();
-
-        int removed = Mathf.Min(amount, quantity);
-        quantity -= removed;
-
-        var result = new InventorySlot { item = item, quantity = removed };
-        if (quantity <= 0) Clear();
-
-        return result;
+        if (IsEmpty()) return "Empty Slot";
+        return $"{_item.itemName} x{_quantity}";
     }
 }
