@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6907687982607576391}
   - component: {fileID: 3196896319389147661}
-  - component: {fileID: 853385938429879509}
   - component: {fileID: 1563736069825083610}
   - component: {fileID: 1274212575799160058}
   m_Layer: 0
@@ -55,6 +54,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -76,6 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
@@ -90,27 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &853385938429879509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3104169318974456822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc00325a942f704d999d5d17b34ffe6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 6d071d0ddc7e4e34eb6dc785682d4a3d, type: 2}
-  quantity: 1
-  bobHeight: 0.025
-  bobSpeed: 3
-  throwDuration: 0.25
-  throwHeight: 0.2
-  pickupRange: 3
-  collectRange: 0.2
-  maxMagnetSpeed: 8
 --- !u!58 &1563736069825083610
 CircleCollider2D:
   m_ObjectHideFlags: 0
