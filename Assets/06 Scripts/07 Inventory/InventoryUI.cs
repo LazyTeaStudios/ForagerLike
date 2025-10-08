@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
@@ -8,6 +9,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] SlotUI[] inventorySlotUIs;
 
     bool inventoryOpen;
+
+    public static System.Action<bool> OnInventoryToggled;
 
     void Start()
     {
@@ -47,6 +50,8 @@ public class InventoryUI : MonoBehaviour
     {
         inventoryOpen = !inventoryOpen;
         inventoryPanel.SetActive(inventoryOpen);
+
+        OnInventoryToggled?.Invoke(inventoryOpen);
 
         // Set input map
         InputHandler.SetMap(inventoryOpen ? ActionMap.UI : ActionMap.Gameplay);

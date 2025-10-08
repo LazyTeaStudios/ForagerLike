@@ -16,6 +16,9 @@ public class CraftingUI : MonoBehaviour
         InitializeExistingButtons();
         craftingPanel.SetActive(false);
         InventoryManager.Instance.OnInventoryChanged += UpdateRecipeButtons;
+
+        // Subscribe to inventory open/close events
+        InventoryUI.OnInventoryToggled += OnInventoryToggled;
     }
 
     void InitializeExistingButtons()
@@ -36,19 +39,13 @@ public class CraftingUI : MonoBehaviour
         }
     }
 
-    void Update()
+    void OnInventoryToggled(bool isOpen)
     {
-        bool shouldBeActive = InputHandler.IsMapActive(ActionMap.UI);
+        craftingPanel.SetActive(isOpen);
 
-        if (craftingPanel.activeSelf != shouldBeActive)
+        if (!isOpen)
         {
-            craftingPanel.SetActive(shouldBeActive);
-
-            // Hide all tooltips when closing
-            if (!shouldBeActive)
-            {
-                HideAllTooltips();
-            }
+            HideAllTooltips();
         }
     }
 
@@ -95,6 +92,8 @@ public class CraftingUI : MonoBehaviour
     {
         if (InventoryManager.Instance != null)
             InventoryManager.Instance.OnInventoryChanged -= UpdateRecipeButtons;
+
+        InventoryUI.OnInventoryToggled -= OnInventoryToggled;
     }
 
     void OnDisable()

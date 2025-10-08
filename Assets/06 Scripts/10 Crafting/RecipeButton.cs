@@ -43,7 +43,13 @@ public class RecipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (craftingUI != null && recipe != null)
             craftingUI.TryCraft(recipe);
+
+        // After crafting, the inventory changed; make sure button state updates
         UpdateInteractable();
+
+        // (Optional but immediate) If tooltip is active for this recipe, refresh counts now.
+        if (tooltip != null && tooltip.isActiveAndEnabled)
+            tooltip.Refresh();
     }
 
     public void UpdateInteractable()

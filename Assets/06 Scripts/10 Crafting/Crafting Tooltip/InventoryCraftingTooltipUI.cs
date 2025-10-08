@@ -28,6 +28,9 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
     private Coroutine fadeRoutine;
     private bool isVisible;
 
+    // Track which recipe we're showing so we can refresh counts on inventory change
+    private Recipe currentRecipe;
+
     private void Awake()
     {
         if (!canvasGroup)
@@ -41,6 +44,28 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         ClearAll();
     }
 
+    private void OnEnable()
+    {
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.OnInventoryChanged += HandleInventoryChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.OnInventoryChanged -= HandleInventoryChanged;
+        // Do not ClearAll here: we want to preserve state between enable/disable if needed.
+    }
+
+    private void OnDestroy()
+    {
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.OnInventoryChanged -= HandleInventoryChanged;
+    }
+
+    /// <summary>
+    /// Called by RecipeButton on hover. Also sets the current recipe reference for auto-refresh.
+    /// </summary>
     public void ShowForRecipe(Recipe recipe)
     {
         if (recipe == null)
@@ -48,6 +73,8 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
             Hide();
             return;
         }
+
+        currentRecipe = recipe;
 
         if (recipeNameText != null)
             recipeNameText.text = string.IsNullOrEmpty(recipe.recipeName) ? "Recipe" : recipe.recipeName;
@@ -58,9 +85,31 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         FadeTo(1f, true);
     }
 
+    /// <summary>
+    /// Explicit refresh that respects current visibility and recipe.
+    /// Useful to call immediately after crafting.
+    /// </summary>
+    public void Refresh()
+    {
+        if (!isVisible || currentRecipe == null) return;
+
+        // We only need to rebuild inputs (outputs rarely change), but doing both is cheap and guaranteed correct.
+        RebuildInputs(currentRecipe);
+        // RebuildOutputs(currentRecipe); // uncomment if outputs can change dynamically
+    }
+
     public void Hide()
     {
         FadeTo(0f, false, onComplete: ClearAll);
+    }
+
+    private void HandleInventoryChanged()
+    {
+        // If we're visible and have a recipe selected, refresh counts live.
+        if (isVisible && currentRecipe != null)
+        {
+            Refresh();
+        }
     }
 
     private void RebuildInputs(Recipe recipe)
@@ -73,9 +122,12 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
             if (req == null || req.item == null || req.quantity <= 0) continue;
 
             var ui = Instantiate(itemAmountPrefab, inputsParent);
-            
+
             // Get current inventory count
-            int owned = InventoryManager.Instance.GetItemCount(req.item);
+            int owned = InventoryManager.Instance != null
+                ? InventoryManager.Instance.GetItemCount(req.item)
+                : 0;
+
             bool hasEnough = owned >= req.quantity;
 
             // Set the item and quantity
@@ -113,6 +165,7 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         ClearList(spawnedInputs);
         ClearList(spawnedOutputs);
         if (recipeNameText) recipeNameText.text = string.Empty;
+        currentRecipe = null;
     }
 
     private void ClearList(List<ItemAmountUI> cache)
