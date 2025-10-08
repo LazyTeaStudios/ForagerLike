@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1563736069825083610}
   - component: {fileID: 1274212575799160058}
   m_Layer: 0
-  m_Name: I_Wood Planks
+  m_Name: I_Wood_Log
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,12 +81,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -832605352, guid: e5281a0aa1c316140ad32537b934d00d, type: 3}
+  m_Sprite: {fileID: 126666926, guid: 0d67feab7570fc741b27c7f19e18c1da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.1875, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
