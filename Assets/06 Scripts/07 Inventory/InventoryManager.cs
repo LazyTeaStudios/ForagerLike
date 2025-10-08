@@ -7,64 +7,36 @@ public class InventoryManager : Singleton<InventoryManager>
     [SerializeField] int inventoryRows = 4;
     [SerializeField] int inventoryColumns = 9;
 
-    [Header("Hotbar Slots - Edit in Inspector")]
-    [SerializeField] InventorySlot[] hotbarSlots = new InventorySlot[9];
-
-    [Header("Inventory Slots - Edit in Inspector")]
-    [SerializeField] InventorySlot[] inventorySlots = new InventorySlot[36];
+    InventorySlot[] hotbarSlots;
+    InventorySlot[] inventorySlots;
 
     int selectedHotbarIndex;
 
     public System.Action<int> OnHotbarSelectionChanged;
     public System.Action OnInventoryChanged;
 
+    [SerializeField] private ItemData itemToAdd;
+
     public override void Awake()
     {
         base.Awake();
+
         InitializeSlots();
+        AddItem(itemToAdd, 64);
     }
 
     void InitializeSlots()
     {
-        if (hotbarSlots == null || hotbarSlots.Length != hotbarSize)
-        {
-            System.Array.Resize(ref hotbarSlots, hotbarSize);
-        }
-
-        int totalInventorySlots = inventoryRows * inventoryColumns;
-        if (inventorySlots == null || inventorySlots.Length != totalInventorySlots)
-        {
-            System.Array.Resize(ref inventorySlots, totalInventorySlots);
-        }
+        hotbarSlots = new InventorySlot[hotbarSize];
+        inventorySlots = new InventorySlot[inventoryRows * inventoryColumns];
 
         for (int i = 0; i < hotbarSlots.Length; i++)
-            if (hotbarSlots[i] == null) hotbarSlots[i] = new InventorySlot();
+            hotbarSlots[i] = new InventorySlot();
 
         for (int i = 0; i < inventorySlots.Length; i++)
-            if (inventorySlots[i] == null) inventorySlots[i] = new InventorySlot();
+            inventorySlots[i] = new InventorySlot();
 
         selectedHotbarIndex = 0;
-    }
-
-    void OnValidate()
-    {
-        if (Application.isPlaying) return;
-
-        int newHotbarSize = Mathf.Clamp(hotbarSize, 1, 10);
-        if (hotbarSlots == null || hotbarSlots.Length != newHotbarSize)
-        {
-            System.Array.Resize(ref hotbarSlots, newHotbarSize);
-            for (int i = 0; i < hotbarSlots.Length; i++)
-                if (hotbarSlots[i] == null) hotbarSlots[i] = new InventorySlot();
-        }
-
-        int totalSlots = inventoryRows * inventoryColumns;
-        if (inventorySlots == null || inventorySlots.Length != totalSlots)
-        {
-            System.Array.Resize(ref inventorySlots, totalSlots);
-            for (int i = 0; i < inventorySlots.Length; i++)
-                if (inventorySlots[i] == null) inventorySlots[i] = new InventorySlot();
-        }
     }
 
     void Update()
@@ -100,16 +72,6 @@ public class InventoryManager : Singleton<InventoryManager>
         }
     }
 
-    public void SetItemAtSlot(int index, bool isHotbar, ItemData item, int quantity)
-    {
-        InventorySlot[] targetArray = isHotbar ? hotbarSlots : inventorySlots;
-        if (index < 0 || index >= targetArray.Length) return;
-
-        // ATOMIC write (prevents mid-write validation from clearing the item)
-        targetArray[index].Set(item, quantity);
-        OnInventoryChanged?.Invoke();
-    }
-
     public void SelectHotbarSlot(int index)
     {
         if (index < 0 || index >= hotbarSize) return;
@@ -138,27 +100,30 @@ public class InventoryManager : Singleton<InventoryManager>
 
     int AddToSlots(InventorySlot[] slots, ItemData item, int amount)
     {
-        // First pass: stack with existing items
-        for (int i = 0; i < slots.Length && amount > 0; i++)
+        foreach (var slot in slots)
         {
-            var slot = slots[i];
-            if (!slot.IsEmpty() && slot.item == item && slot.quantity < item.maxStackSize)
+            if (amount <= 0) break;
+
+            if (!slot.IsEmpty() && slot.item == item)
             {
                 int space = item.maxStackSize - slot.quantity;
-                int toAdd = Mathf.Min(amount, space);
-                slot.quantity = slot.quantity + toAdd; // single-field set ok
-                amount -= toAdd;
+                if (space > 0)
+                {
+                    int toAdd = Mathf.Min(amount, space);
+                    slot.Set(slot.item, slot.quantity + toAdd);
+                    amount -= toAdd;
+                }
             }
         }
 
-        // Second pass: fill empty slots (MUST be atomic!)
-        for (int i = 0; i < slots.Length && amount > 0; i++)
+        foreach (var slot in slots)
         {
-            var slot = slots[i];
+            if (amount <= 0) break;
+
             if (slot.IsEmpty())
             {
                 int toAdd = Mathf.Min(amount, item.maxStackSize);
-                slot.Set(item, toAdd); // atomic write
+                slot.Set(item, toAdd);
                 amount -= toAdd;
             }
         }
@@ -185,39 +150,24 @@ public class InventoryManager : Singleton<InventoryManager>
 
     int RemoveFromSlots(InventorySlot[] slots, ItemData item, int amount)
     {
-        for (int i = 0; i < slots.Length && amount > 0; i++)
+        foreach (var slot in slots)
         {
-            var slot = slots[i];
+            if (amount <= 0) break;
+
             if (!slot.IsEmpty() && slot.item == item)
             {
                 int toRemove = Mathf.Min(amount, slot.quantity);
-                slot.quantity = slot.quantity - toRemove; // single-field set ok; clears when <= 0
-                if (slot.quantity <= 0) slot.Clear();
+                int newQuantity = slot.quantity - toRemove;
+
+                if (newQuantity <= 0)
+                    slot.Clear();
+                else
+                    slot.Set(slot.item, newQuantity);
+
                 amount -= toRemove;
             }
         }
         return amount;
-    }
-
-    public void SwapSlots(int fromIndex, bool fromHotbar, int toIndex, bool toHotbar)
-    {
-        var fromArray = fromHotbar ? hotbarSlots : inventorySlots;
-        var toArray = toHotbar ? hotbarSlots : inventorySlots;
-
-        if (fromIndex < 0 || fromIndex >= fromArray.Length) return;
-        if (toIndex < 0 || toIndex >= toArray.Length) return;
-
-        var a = fromArray[fromIndex];
-        var b = toArray[toIndex];
-
-        // Atomically swap contents
-        ItemData tmpItem = a.item;
-        int tmpQty = a.quantity;
-
-        a.Set(b.item, b.quantity);   // atomic
-        b.Set(tmpItem, tmpQty);      // atomic
-
-        OnInventoryChanged?.Invoke();
     }
 
     public void MergeOrSwapSlots(int fromIndex, bool fromHotbar, int toIndex, bool toHotbar)
@@ -227,8 +177,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
         if (fromIndex < 0 || fromIndex >= fromArray.Length) return;
         if (toIndex < 0 || toIndex >= toArray.Length) return;
-
-        // same slot? nothing to do
         if (fromArray == toArray && fromIndex == toIndex) return;
 
         var from = fromArray[fromIndex];
@@ -236,7 +184,6 @@ public class InventoryManager : Singleton<InventoryManager>
 
         if (from.IsEmpty()) return;
 
-        // 1) Move if target empty
         if (to.IsEmpty())
         {
             to.Set(from.item, from.quantity);
@@ -245,48 +192,43 @@ public class InventoryManager : Singleton<InventoryManager>
             return;
         }
 
-        // 2) Merge if same item and target has space
         if (to.item == from.item && to.quantity < to.item.maxStackSize)
         {
             int space = to.item.maxStackSize - to.quantity;
             int move = Mathf.Min(space, from.quantity);
 
-            // single-field sets are safe (we won’t clear mid-write)
-            to.quantity = to.quantity + move;
-            from.quantity = from.quantity - move;
+            to.Set(to.item, to.quantity + move);
 
-            if (from.quantity <= 0) from.Clear();
+            int remaining = from.quantity - move;
+            if (remaining <= 0)
+                from.Clear();
+            else
+                from.Set(from.item, remaining);
 
             OnInventoryChanged?.Invoke();
             return;
         }
 
-        // 3) Otherwise swap
         ItemData tmpItem = from.item;
         int tmpQty = from.quantity;
 
-        from.Set(to.item, to.quantity); // atomic
-        to.Set(tmpItem, tmpQty);        // atomic
+        from.Set(to.item, to.quantity);
+        to.Set(tmpItem, tmpQty);
 
         OnInventoryChanged?.Invoke();
     }
-
 
     public int GetItemCount(ItemData item)
     {
         if (item == null) return 0;
 
         int count = 0;
-        count += CountInSlots(hotbarSlots, item);
-        count += CountInSlots(inventorySlots, item);
-        return count;
-    }
+        foreach (var slot in hotbarSlots)
+            if (slot.item == item) count += slot.quantity;
 
-    int CountInSlots(InventorySlot[] slots, ItemData item)
-    {
-        int count = 0;
-        for (int i = 0; i < slots.Length; i++)
-            if (slots[i].item == item) count += slots[i].quantity;
+        foreach (var slot in inventorySlots)
+            if (slot.item == item) count += slot.quantity;
+
         return count;
     }
 

@@ -2,85 +2,58 @@ using UnityEngine;
 
 public class CraftingUI : MonoBehaviour
 {
-    [Header("UI")]
     [SerializeField] GameObject craftingPanel;
-
-    [Header("Recipe Buttons - Assign in Inspector")]
     [SerializeField] RecipeButton[] recipeButtons;
-
-    [Header("Recipes")]
     [SerializeField] Recipe[] recipes;
 
     void Start()
     {
-        InitializeExistingButtons();
+        InitializeButtons();
         craftingPanel.SetActive(false);
-        InventoryManager.Instance.OnInventoryChanged += UpdateRecipeButtons;
 
-        // Subscribe to inventory open/close events
+        InventoryManager.Instance.OnInventoryChanged += UpdateAllButtons;
         InventoryUI.OnInventoryToggled += OnInventoryToggled;
     }
 
-    void InitializeExistingButtons()
+    void InitializeButtons()
     {
-        int buttonCount = Mathf.Min(recipeButtons.Length, recipes.Length);
         for (int i = 0; i < recipeButtons.Length; i++)
         {
             if (recipeButtons[i] == null) continue;
-            if (i < recipes.Length && recipes[i] != null)
-            {
+
+            bool hasRecipe = i < recipes.Length && recipes[i] != null;
+            recipeButtons[i].gameObject.SetActive(hasRecipe);
+
+            if (hasRecipe)
                 recipeButtons[i].Setup(recipes[i], this);
-                recipeButtons[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                recipeButtons[i].gameObject.SetActive(false);
-            }
         }
     }
 
     void OnInventoryToggled(bool isOpen)
     {
         craftingPanel.SetActive(isOpen);
-
-        if (!isOpen)
-        {
-            HideAllTooltips();
-        }
     }
 
-    void HideAllTooltips()
+    void UpdateAllButtons()
     {
-        foreach (RecipeButton button in recipeButtons)
-        {
-            if (button != null)
-                button.ForceHideTooltip();
-        }
-    }
-
-    void UpdateRecipeButtons()
-    {
-        foreach (RecipeButton button in recipeButtons)
-        {
-            if (button != null && button.gameObject.activeSelf)
-                button.UpdateInteractable();
-        }
+        foreach (var button in recipeButtons)
+            button?.UpdateInteractable();
     }
 
     public void TryCraft(Recipe recipe)
     {
         if (!CanCraft(recipe)) return;
 
-        foreach (ItemRequirement input in recipe.inputs)
+        foreach (var input in recipe.inputs)
             InventoryManager.Instance.RemoveItem(input.item, input.quantity);
 
-        foreach (ItemResult output in recipe.outputs)
+        foreach (var output in recipe.outputs)
             InventoryManager.Instance.AddItem(output.item, output.quantity);
     }
 
     bool CanCraft(Recipe recipe)
     {
-        foreach (ItemRequirement input in recipe.inputs)
+        foreach (var input in recipe.inputs)
         {
             if (InventoryManager.Instance.GetItemCount(input.item) < input.quantity)
                 return false;
@@ -90,14 +63,9 @@ public class CraftingUI : MonoBehaviour
 
     void OnDestroy()
     {
-        if (InventoryManager.Instance != null)
-            InventoryManager.Instance.OnInventoryChanged -= UpdateRecipeButtons;
+        if (InventoryManager.Instance)
+            InventoryManager.Instance.OnInventoryChanged -= UpdateAllButtons;
 
         InventoryUI.OnInventoryToggled -= OnInventoryToggled;
-    }
-
-    void OnDisable()
-    {
-        HideAllTooltips();
     }
 }

@@ -76,8 +76,8 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
 
         currentRecipe = recipe;
 
-        if (recipeNameText != null)
-            recipeNameText.text = string.IsNullOrEmpty(recipe.recipeName) ? "Recipe" : recipe.recipeName;
+        if (recipeNameText)
+            recipeNameText.text = recipe.recipeName;
 
         RebuildInputs(recipe);
         RebuildOutputs(recipe);
@@ -85,17 +85,10 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         FadeTo(1f, true);
     }
 
-    /// <summary>
-    /// Explicit refresh that respects current visibility and recipe.
-    /// Useful to call immediately after crafting.
-    /// </summary>
     public void Refresh()
     {
-        if (!isVisible || currentRecipe == null) return;
-
-        // We only need to rebuild inputs (outputs rarely change), but doing both is cheap and guaranteed correct.
-        RebuildInputs(currentRecipe);
-        // RebuildOutputs(currentRecipe); // uncomment if outputs can change dynamically
+        if (isVisible && currentRecipe != null)
+            RebuildInputs(currentRecipe);
     }
 
     public void Hide()
