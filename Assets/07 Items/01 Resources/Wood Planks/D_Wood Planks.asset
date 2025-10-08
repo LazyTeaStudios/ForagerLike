@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: D_Wood Planks
   m_EditorClassIdentifier: 
   itemName: Wood Planks
-  icon: {fileID: 7650761692310392958, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  icon: {fileID: -832605352, guid: e5281a0aa1c316140ad32537b934d00d, type: 3}
   maxStackSize: 64
   itemType: 1
+  toolData: {fileID: 0}
   itemPrefab: {fileID: 3104169318974456822, guid: c2de140fbb37a9148aec57c3c50aef59, type: 3}
   buildingPrefab: {fileID: 0}
   buildingSize: {x: 1, y: 1}

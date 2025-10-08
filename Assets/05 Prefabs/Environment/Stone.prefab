@@ -11,7 +11,11 @@ GameObject:
   - component: {fileID: 2947162665741128260}
   - component: {fileID: 7209781746062856673}
   - component: {fileID: 1240544593294665196}
-  m_Layer: 0
+  - component: {fileID: 2171291895586182783}
+  - component: {fileID: 7899232574607692393}
+  - component: {fileID: 2759656365918016719}
+  - component: {fileID: 6957694338456963201}
+  m_Layer: 23
   m_Name: Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5006144953640104743}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.76365495, y: -0.5000007, z: 4.4687304}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
@@ -90,3 +94,90 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2171291895586182783
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006144953640104743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1175114822770842131, guid: 71e0a8a6c1ef5a34c8b1a42c530a84ee, type: 3}
+--- !u!114 &7899232574607692393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006144953640104743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b51b75e818e5b4d8908236238c3975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  maxHealth: 10
+  currentHealth: 0
+  entityType: 0
+  destroyOnDeath: 1
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2759656365918016719}
+        m_TargetAssemblyTypeName: ItemDropper, Assembly-CSharp
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2759656365918016719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006144953640104743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810a398d020ed3140b7437685eed9db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
+  drops:
+  - itemPrefab: {fileID: 1784502518683212841, guid: 78df863dd4b173a4ca50ebe938c5363c, type: 3}
+    quantity: 5
+  spawnPoint: {fileID: 2947162665741128260}
+  spawnRadius: 1
+  throwForce: 3
+--- !u!114 &6957694338456963201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006144953640104743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebd3d943c65c0f46af8ddb7733ca0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickableDamageable
+  damagePerClick: 1

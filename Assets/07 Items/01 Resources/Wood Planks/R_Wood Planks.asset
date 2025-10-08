@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: R_Wood Planks
   m_EditorClassIdentifier: 
   recipeName: Wood Planks
-  recipeIcon: {fileID: 7650761692310392958, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  recipeIcon: {fileID: -832605352, guid: e5281a0aa1c316140ad32537b934d00d, type: 3}
   craftingTime: 2
   inputs:
   - item: {fileID: 11400000, guid: 0457bc9d02301f5408fcfa9250ff0c56, type: 2}
-    quantity: 1
+    quantity: 5
   outputs:
   - item: {fileID: 11400000, guid: 6d071d0ddc7e4e34eb6dc785682d4a3d, type: 2}
     quantity: 1

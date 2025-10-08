@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone_Small
   m_EditorClassIdentifier: 
   itemName: Stone Small
-  icon: {fileID: 21300000, guid: cccf93e9a171ecd49b44fbd16492c3c4, type: 3}
+  icon: {fileID: 1964111185, guid: ebaf6835f3be24c458b6b6addac9a900, type: 3}
   maxStackSize: 64
   itemType: 1
   toolData: {fileID: 0}

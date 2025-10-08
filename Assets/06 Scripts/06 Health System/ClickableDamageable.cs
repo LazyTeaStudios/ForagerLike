@@ -1,0 +1,42 @@
+using UnityEngine;
+
+/// <summary>
+/// Makes an object clickable and deals damage to its HealthSystem.
+/// </summary>
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(HealthSystem))]
+public class ClickableDamageable : MonoBehaviour
+{
+    [Header("Damage")]
+    [SerializeField] private float damagePerClick = 10f;
+
+    private HealthSystem healthSystem;
+    private Camera mainCamera;
+
+    private void Awake()
+    {
+        healthSystem = GetComponent<HealthSystem>();
+        mainCamera = Camera.main;
+    }
+
+    private void Update()
+    {
+        if (InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
+        {
+            CheckForClick();
+        }
+    }
+
+    private void CheckForClick()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(InputHandler.GetValue<Vector2>(GameAction.GameplayMousePosition));
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.collider.gameObject == gameObject)
+            {
+                healthSystem.TakeDamage(damagePerClick);
+            }
+        }
+    }
+}

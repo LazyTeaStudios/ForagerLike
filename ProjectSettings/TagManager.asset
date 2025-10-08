@@ -16,8 +16,6 @@ TagManager:
   - UI
   - 
   - 
-  - Obstructors
-  - WaterPostProcessing
   - 
   - 
   - 
@@ -29,9 +27,11 @@ TagManager:
   - 
   - 
   - 
-  - Enemy
-  - ChangeableTile
-  - PlacedTile
+  - 
+  - 
+  - 
+  - 
+  - Damageable
   - 
   - 
   - 

@@ -11,7 +11,11 @@ GameObject:
   - component: {fileID: 3582989543279423806}
   - component: {fileID: 6164224284788021697}
   - component: {fileID: 2401005510541083359}
-  m_Layer: 0
+  - component: {fileID: 2068471639197311645}
+  - component: {fileID: 3927873865503314770}
+  - component: {fileID: 8263830993632351683}
+  - component: {fileID: 7571361922741872894}
+  m_Layer: 23
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8369392626471216749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.3841043, y: -0.50000095, z: 4.558662}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
@@ -90,3 +94,90 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2068471639197311645
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369392626471216749}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2072599730667818792, guid: 46cd3ef7c2f647441bfabf2de18a381d, type: 3}
+--- !u!114 &3927873865503314770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369392626471216749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b51b75e818e5b4d8908236238c3975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  maxHealth: 10
+  currentHealth: 0
+  entityType: 0
+  destroyOnDeath: 1
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8263830993632351683}
+        m_TargetAssemblyTypeName: ItemDropper, Assembly-CSharp
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8263830993632351683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369392626471216749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810a398d020ed3140b7437685eed9db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDropper
+  drops:
+  - itemPrefab: {fileID: 5963558514767050100, guid: 62ebd94d2205c8e419b621309a5115eb, type: 3}
+    quantity: 3
+  spawnPoint: {fileID: 3582989543279423806}
+  spawnRadius: 1
+  throwForce: 3
+--- !u!114 &7571361922741872894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369392626471216749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebd3d943c65c0f46af8ddb7733ca0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickableDamageable
+  damagePerClick: 1
