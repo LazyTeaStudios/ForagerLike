@@ -181,3 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickableDamageable
   damagePerClick: 1
+  clickRange: 5
+  clickLayers:
+    serializedVersion: 2
+    m_Bits: 8388608

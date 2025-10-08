@@ -10,6 +10,10 @@ public class ClickableDamageable : MonoBehaviour
     [Header("Damage")]
     [SerializeField] private float damagePerClick = 10f;
 
+    [Header("Range")]
+    [SerializeField] private float clickRange = 10f;
+    [SerializeField] private LayerMask clickLayers;
+
     private HealthSystem healthSystem;
     private Camera mainCamera;
 
@@ -31,7 +35,7 @@ public class ClickableDamageable : MonoBehaviour
     {
         Ray ray = mainCamera.ScreenPointToRay(InputHandler.GetValue<Vector2>(GameAction.GameplayMousePosition));
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, clickRange, clickLayers))
         {
             if (hit.collider.gameObject == gameObject)
             {
