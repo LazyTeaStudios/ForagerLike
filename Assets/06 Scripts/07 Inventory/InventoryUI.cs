@@ -12,13 +12,11 @@ public class InventoryUI : MonoBehaviour
     void Start()
     {
         SetupSlots();
-
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.OnHotbarSelectionChanged += UpdateHotbarSelection;
             InventoryManager.Instance.OnInventoryChanged += RefreshAllSlots;
         }
-
         inventoryPanel.SetActive(false);
         RefreshAllSlots();
     }
@@ -30,7 +28,6 @@ public class InventoryUI : MonoBehaviour
             if (hotbarSlotUIs[i] != null)
                 hotbarSlotUIs[i].Setup(i, true);
         }
-
         for (int i = 0; i < inventorySlotUIs.Length; i++)
         {
             if (inventorySlotUIs[i] != null)
@@ -70,11 +67,9 @@ public class InventoryUI : MonoBehaviour
     public void CloseInventory()
     {
         if (!inventoryOpen) return;
-
         inventoryOpen = false;
         inventoryPanel.SetActive(false);
         InputHandler.SetMap(ActionMap.Gameplay);
-
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetCursorLocked(true);
@@ -83,6 +78,7 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateHotbarSelection(int index)
     {
+        // Use outline enabled/disabled instead of color change
         for (int i = 0; i < hotbarSlotUIs.Length; i++)
         {
             if (hotbarSlotUIs[i] != null)
@@ -97,7 +93,6 @@ public class InventoryUI : MonoBehaviour
             if (hotbarSlotUIs[i] != null)
                 hotbarSlotUIs[i].UpdateDisplay();
         }
-
         for (int i = 0; i < inventorySlotUIs.Length; i++)
         {
             if (inventorySlotUIs[i] != null)

@@ -21,11 +21,9 @@ public class CraftingUI : MonoBehaviour
     void InitializeExistingButtons()
     {
         int buttonCount = Mathf.Min(recipeButtons.Length, recipes.Length);
-
         for (int i = 0; i < recipeButtons.Length; i++)
         {
             if (recipeButtons[i] == null) continue;
-
             if (i < recipes.Length && recipes[i] != null)
             {
                 recipeButtons[i].Setup(recipes[i], this);
@@ -40,7 +38,27 @@ public class CraftingUI : MonoBehaviour
 
     void Update()
     {
-        craftingPanel.SetActive(InputHandler.IsMapActive(ActionMap.UI));
+        bool shouldBeActive = InputHandler.IsMapActive(ActionMap.UI);
+
+        if (craftingPanel.activeSelf != shouldBeActive)
+        {
+            craftingPanel.SetActive(shouldBeActive);
+
+            // Hide all tooltips when closing
+            if (!shouldBeActive)
+            {
+                HideAllTooltips();
+            }
+        }
+    }
+
+    void HideAllTooltips()
+    {
+        foreach (RecipeButton button in recipeButtons)
+        {
+            if (button != null)
+                button.ForceHideTooltip();
+        }
     }
 
     void UpdateRecipeButtons()
@@ -77,5 +95,10 @@ public class CraftingUI : MonoBehaviour
     {
         if (InventoryManager.Instance != null)
             InventoryManager.Instance.OnInventoryChanged -= UpdateRecipeButtons;
+    }
+
+    void OnDisable()
+    {
+        HideAllTooltips();
     }
 }

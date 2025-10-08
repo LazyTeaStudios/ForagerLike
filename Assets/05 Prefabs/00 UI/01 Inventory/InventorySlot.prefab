@@ -500,6 +500,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 5007114754781242333}
   quantityText: {fileID: 49359160272982100}
-  backgroundImage: {fileID: 8048397746705590891}
+  outlineImage: {fileID: 8686715878206808178}
   normalColor: {r: 1, g: 1, b: 1, a: 0}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}

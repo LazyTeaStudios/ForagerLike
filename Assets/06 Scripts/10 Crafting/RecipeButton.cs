@@ -5,12 +5,22 @@ using UnityEngine.EventSystems;
 public class RecipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] Image icon;
-    [SerializeField] GameObject tooltipPanel;
-    [SerializeField] TMPro.TextMeshProUGUI tooltipText;
+    [SerializeField] InventoryCraftingTooltipUI tooltip;
 
     Button button;
     Recipe recipe;
     CraftingUI craftingUI;
+
+    void Awake()
+    {
+        button = GetComponent<Button>();
+
+        // Auto-find tooltip if not assigned
+        if (tooltip == null)
+        {
+            tooltip = GetComponentInChildren<InventoryCraftingTooltipUI>(true);
+        }
+    }
 
     public void Setup(Recipe recipeData, CraftingUI ui)
     {
@@ -33,7 +43,6 @@ public class RecipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (craftingUI != null && recipe != null)
             craftingUI.TryCraft(recipe);
-
         UpdateInteractable();
     }
 
@@ -56,26 +65,30 @@ public class RecipeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (tooltipPanel != null && recipe != null)
+        if (tooltip != null && recipe != null)
         {
-            tooltipPanel.SetActive(true);
-
-            if (tooltipText != null)
-            {
-                string text = recipe.recipeName + "\n\nRequires:\n";
-                foreach (ItemRequirement input in recipe.inputs)
-                {
-                    int owned = InventoryManager.Instance.GetItemCount(input.item);
-                    text += $"- {input.item.itemName} x{input.quantity} ({owned})\n";
-                }
-                tooltipText.text = text;
-            }
+            tooltip.ShowForRecipe(recipe);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (tooltipPanel != null)
-            tooltipPanel.SetActive(false);
+        if (tooltip != null)
+        {
+            tooltip.Hide();
+        }
+    }
+
+    public void ForceHideTooltip()
+    {
+        if (tooltip != null)
+        {
+            tooltip.Hide();
+        }
+    }
+
+    void OnDisable()
+    {
+        ForceHideTooltip();
     }
 }

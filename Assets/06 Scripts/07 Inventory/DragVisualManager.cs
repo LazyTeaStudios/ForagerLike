@@ -66,7 +66,7 @@ public class DragVisualManager : MonoBehaviour
         quantityRect.anchorMin = new Vector2(1, 0);
         quantityRect.anchorMax = new Vector2(1, 0);
         quantityRect.pivot = new Vector2(1, 0);
-        quantityRect.anchoredPosition = new Vector2(-2, 2);
+        quantityRect.anchoredPosition = new Vector2(8, -12);
 
         quantityText = quantityObj.AddComponent<TextMeshProUGUI>();
         quantityText.fontSize = fontSize;

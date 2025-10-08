@@ -13,7 +13,7 @@ public class InventorySlot
         set
         {
             _item = value;
-            ValidateSlot();
+            ValidateAfterSingleFieldSet();
         }
     }
 
@@ -23,7 +23,8 @@ public class InventorySlot
         set
         {
             _quantity = Mathf.Max(0, value);
-            ValidateSlot();
+            // Same note as above.
+            ValidateAfterSingleFieldSet();
         }
     }
 
@@ -35,8 +36,17 @@ public class InventorySlot
 
     public InventorySlot(ItemData item, int quantity)
     {
-        this._item = item;
-        this._quantity = quantity;
+        Set(item, quantity);
+    }
+
+    /// <summary>
+    /// Atomically assign both fields and then validate once.
+    /// Use this for swaps, moves, and adds into empty slots.
+    /// </summary>
+    public void Set(ItemData item, int quantity)
+    {
+        _item = item;
+        _quantity = Mathf.Max(0, quantity);
         ValidateSlot();
     }
 
@@ -51,21 +61,39 @@ public class InventorySlot
         _quantity = 0;
     }
 
-    private void ValidateSlot()
+    /// <summary>
+    /// Lenient validation for single-field sets: never nuke values mid-write.
+    /// It only clamps stack sizes and normalizes zero state,
+    /// but it does NOT clear item just because quantity is temporarily 0.
+    /// </summary>
+    private void ValidateAfterSingleFieldSet()
     {
         if (_item == null)
         {
+            // If item is null, normalize to empty slot.
             _quantity = 0;
+            return;
         }
-        else if (_quantity <= 0)
+
+        // If there is an item, cap quantity but don't auto-clear.
+        if (_item.maxStackSize > 0)
+            _quantity = Mathf.Min(_quantity, _item.maxStackSize);
+    }
+
+    /// <summary>
+    /// Full validation when both fields are intended to be set.
+    /// </summary>
+    private void ValidateSlot()
+    {
+        if (_item == null || _quantity <= 0)
         {
             _item = null;
             _quantity = 0;
+            return;
         }
-        else if (_item.maxStackSize > 0)
-        {
+
+        if (_item.maxStackSize > 0)
             _quantity = Mathf.Min(_quantity, _item.maxStackSize);
-        }
     }
 
     public override string ToString()

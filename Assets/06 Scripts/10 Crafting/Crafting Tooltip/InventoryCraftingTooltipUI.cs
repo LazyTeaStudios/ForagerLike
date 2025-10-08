@@ -3,45 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// Shows a crafting tooltip by fading a CanvasGroup in/out instead of enabling/disabling the GameObject.
-/// </summary>
 [RequireComponent(typeof(CanvasGroup))]
 public class InventoryCraftingTooltipUI : MonoBehaviour
 {
     [Header("Canvas Group / Visibility")]
-    [Tooltip("CanvasGroup to control visibility. If null, will use the one on this GameObject.")]
     [SerializeField] private CanvasGroup canvasGroup;
-
-    [Tooltip("Seconds to fade in/out.")]
     [SerializeField] private float fadeDuration = 0.15f;
-
-    [Tooltip("If true, fade uses unscaled time (ignores Time.timeScale).")]
     [SerializeField] private bool useUnscaledTime = true;
-
-    [Tooltip("Optional ease curve for the fade (time 0..1 on X, alpha 0..1 on Y). If null, uses linear.")]
     [SerializeField] private AnimationCurve fadeCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     [Header("Header")]
     [SerializeField] private TextMeshProUGUI recipeNameText;
 
     [Header("Content Parents")]
-    [Tooltip("Parent transform where input item prefabs will be instantiated.")]
     [SerializeField] private Transform inputsParent;
-    [Tooltip("Parent transform where output item prefabs will be instantiated.")]
     [SerializeField] private Transform outputsParent;
 
     [Header("Prefabs")]
-    [Tooltip("Prefab with ItemAmountUI to show an INPUT item icon and quantity.")]
-    [SerializeField] private ItemAmountUI inputItemPrefab;
-    [Tooltip("Prefab with ItemAmountUI to show an OUTPUT item icon and quantity.")]
-    [SerializeField] private ItemAmountUI outputItemPrefab;
+    [SerializeField] private ItemAmountUI itemAmountPrefab;
 
-    // caches to destroy/rebuild entries
-    private readonly List<GameObject> spawnedInputs = new();
-    private readonly List<GameObject> spawnedOutputs = new();
+    private readonly List<ItemAmountUI> spawnedInputs = new();
+    private readonly List<ItemAmountUI> spawnedOutputs = new();
 
-    // runtime
     private Coroutine fadeRoutine;
     private bool isVisible;
 
@@ -50,7 +33,6 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         if (!canvasGroup)
             canvasGroup = GetComponent<CanvasGroup>();
 
-        // Start hidden
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
@@ -59,7 +41,6 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         ClearAll();
     }
 
-    /// <summary>Show the tooltip for a recipe at its anchored (fixed) UI position.</summary>
     public void ShowForRecipe(Recipe recipe)
     {
         if (recipe == null)
@@ -77,7 +58,6 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         FadeTo(1f, true);
     }
 
-    /// <summary>Fade out and clear contents after the fade completes.</summary>
     public void Hide()
     {
         FadeTo(0f, false, onComplete: ClearAll);
@@ -86,32 +66,45 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
     private void RebuildInputs(Recipe recipe)
     {
         ClearList(spawnedInputs);
-        if (inputsParent == null || inputItemPrefab == null || recipe?.inputs == null) return;
+        if (inputsParent == null || itemAmountPrefab == null || recipe?.inputs == null) return;
 
         foreach (var req in recipe.inputs)
         {
             if (req == null || req.item == null || req.quantity <= 0) continue;
 
-            var go = Instantiate(inputItemPrefab.gameObject, inputsParent);
-            var ui = go.GetComponent<ItemAmountUI>();
-            if (ui) ui.Set(req.item, req.quantity);
-            spawnedInputs.Add(go);
+            var ui = Instantiate(itemAmountPrefab, inputsParent);
+            
+            // Get current inventory count
+            int owned = InventoryManager.Instance.GetItemCount(req.item);
+            bool hasEnough = owned >= req.quantity;
+
+            // Set the item and quantity
+            ui.Set(req.item, req.quantity);
+
+            // Update text color based on availability
+            var text = ui.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.color = hasEnough ? Color.green : Color.red;
+                text.text = $"{req.quantity} ({owned})";
+            }
+
+            spawnedInputs.Add(ui);
         }
     }
 
     private void RebuildOutputs(Recipe recipe)
     {
         ClearList(spawnedOutputs);
-        if (outputsParent == null || outputItemPrefab == null || recipe?.outputs == null) return;
+        if (outputsParent == null || itemAmountPrefab == null || recipe?.outputs == null) return;
 
         foreach (var res in recipe.outputs)
         {
             if (res == null || res.item == null || res.quantity <= 0) continue;
 
-            var go = Instantiate(outputItemPrefab.gameObject, outputsParent);
-            var ui = go.GetComponent<ItemAmountUI>();
-            if (ui) ui.Set(res.item, res.quantity);
-            spawnedOutputs.Add(go);
+            var ui = Instantiate(itemAmountPrefab, outputsParent);
+            ui.Set(res.item, res.quantity);
+            spawnedOutputs.Add(ui);
         }
     }
 
@@ -122,19 +115,15 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         if (recipeNameText) recipeNameText.text = string.Empty;
     }
 
-    private void ClearList(List<GameObject> cache)
+    private void ClearList(List<ItemAmountUI> cache)
     {
         for (int i = 0; i < cache.Count; i++)
-            if (cache[i]) Destroy(cache[i]);
+            if (cache[i]) Destroy(cache[i].gameObject);
         cache.Clear();
     }
 
-    /// <summary>
-    /// Starts a fade to the target alpha. Handles raycasts/interactable toggling.
-    /// </summary>
     private void FadeTo(float targetAlpha, bool visibleStateAfter, System.Action onComplete = null)
     {
-        // Short-circuit if already at target visually
         if (Mathf.Approximately(canvasGroup.alpha, targetAlpha))
         {
             isVisible = visibleStateAfter;
@@ -155,7 +144,6 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         float duration = Mathf.Max(0.0001f, fadeDuration);
         float t = 0f;
 
-        // Make it responsive to input as soon as we begin showing
         if (targetAlpha > start)
             ApplyInteractableState(true);
 
@@ -173,7 +161,6 @@ public class InventoryCraftingTooltipUI : MonoBehaviour
         canvasGroup.alpha = targetAlpha;
         isVisible = visibleStateAfter;
 
-        // If fully hidden, disable interaction; if shown, keep it on
         ApplyInteractableState(targetAlpha > 0.001f);
 
         fadeRoutine = null;
