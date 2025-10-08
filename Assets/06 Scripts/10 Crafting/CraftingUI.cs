@@ -18,9 +18,6 @@ public class CraftingUI : MonoBehaviour
     public RecipeButton[] recipeButtons;
     public bool autoSelectFirstRecipe = true;
 
-    [Header("Optional context")]
-    public Building building;
-
     // Internal machine storage (persistent)
     private InventorySlot[] machineInputSlots;
     private InventorySlot[] machineOutputSlots;
@@ -36,7 +33,6 @@ public class CraftingUI : MonoBehaviour
 
     private bool isCrafting;
     private float elapsed;
-    private bool started;
 
     void OnEnable()
     {
@@ -56,8 +52,6 @@ public class CraftingUI : MonoBehaviour
     }
     void Start()
     {
-        started = true;
-
         EnsureMachineSlots();
         BindSlotsToMachine();
 
@@ -79,14 +73,6 @@ public class CraftingUI : MonoBehaviour
         UpdateCraftButton();
     }
 
-
-    public void Initialize(Building host)
-    {
-        building = host;
-        if (started) UpdateCraftButton();
-    }
-
-    // Open / Close
     public void Open()
     {
         if (craftingPanel != null) craftingPanel.SetActive(true);
