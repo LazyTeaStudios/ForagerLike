@@ -205,3 +205,42 @@ MonoBehaviour:
   - id: PATH_CANVASSES/Crosshair
     tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
     icon: 
+  - id: GlobalObjectId_V1-1-4f71cb201add88b4d86de43aa8cfc335-102900000-0
+    tint: {r: 0.84313726, g: 0.23529412, b: 0.2901961, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-49253b644601fa24bb7f3a8def8120bb-102900000-0
+    tint: {r: 0.84313726, g: 0.23529412, b: 0.2901961, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-709f11a7f3c4041caa4ef136ea32d874-102900000-0
+    tint: {r: 0.84313726, g: 0.23529412, b: 0.2901961, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-f54d1bd14bd3ca042bd867b519fee8cc-102900000-0
+    tint: {r: 0.84313726, g: 0.23529412, b: 0.2901961, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-edc124a378c4b2c488372d1dc78398c4-102900000-0
+    tint: {r: 0.15294118, g: 0.6509804, b: 0.34117648, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-a5000d8e8e1ce954b9c7ddf8c1b530d6-102900000-0
+    tint: {r: 0.15294118, g: 0.6509804, b: 0.34117648, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-109e9bdd0fcc649c5bc59085c35bdc83-102900000-0
+    tint: {r: 0.1882353, g: 0.5411765, b: 0.8666667, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-77f2730e9a49c0947ade730e7104ffd2-102900000-0
+    tint: {r: 0.1882353, g: 0.5411765, b: 0.8666667, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-684606dfb399ec642906093cadf51bec-102900000-0
+    tint: {r: 0.8784314, g: 0.6313726, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-ee3f49ffdc3634f4bb794c54916563cc-102900000-0
+    tint: {r: 0.8784314, g: 0.6313726, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-86f31a7f8273c9e4dad15c45457ebe02-102900000-0
+    tint: {r: 0.8784314, g: 0.6313726, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-81899dc9d6d6b9544bc5cf3ce3601c45-102900000-0
+    tint: {r: 0.8784314, g: 0.6313726, b: 0.26666668, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-1-16e52617478cd0e468797f0b21214fd1-102900000-0
+    tint: {r: 0.8784314, g: 0.6313726, b: 0.26666668, a: 1}
+    icon: 
