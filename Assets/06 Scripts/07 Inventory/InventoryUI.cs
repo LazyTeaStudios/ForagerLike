@@ -19,9 +19,20 @@ public class InventoryUI : MonoBehaviour
         {
             InventoryManager.Instance.OnHotbarSelectionChanged += UpdateHotbarSelection;
             InventoryManager.Instance.OnInventoryChanged += RefreshAllSlots;
+
+            UpdateHotbarSelection(InventoryManager.Instance.GetSelectedHotbarIndex());
         }
+
         inventoryPanel.SetActive(false);
         RefreshAllSlots();
+    }
+
+    void OnEnable()
+    {
+        if (InventoryManager.Instance != null && hotbarSlotUIs != null && hotbarSlotUIs.Length > 0)
+        {
+            UpdateHotbarSelection(InventoryManager.Instance.GetSelectedHotbarIndex());
+        }
     }
 
     void SetupSlots()
@@ -53,17 +64,14 @@ public class InventoryUI : MonoBehaviour
 
         OnInventoryToggled?.Invoke(inventoryOpen);
 
-        // Set input map
         InputHandler.SetMap(inventoryOpen ? ActionMap.UI : ActionMap.Gameplay);
 
-        // Properly handle cursor lock state
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetCursorLocked(!inventoryOpen);
         }
         else
         {
-            // Fallback if GameManager isn't available
             Cursor.lockState = inventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = inventoryOpen;
         }
@@ -83,7 +91,6 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateHotbarSelection(int index)
     {
-        // Use outline enabled/disabled instead of color change
         for (int i = 0; i < hotbarSlotUIs.Length; i++)
         {
             if (hotbarSlotUIs[i] != null)
@@ -102,6 +109,11 @@ public class InventoryUI : MonoBehaviour
         {
             if (inventorySlotUIs[i] != null)
                 inventorySlotUIs[i].UpdateDisplay();
+        }
+
+        if (InventoryManager.Instance != null)
+        {
+            UpdateHotbarSelection(InventoryManager.Instance.GetSelectedHotbarIndex());
         }
     }
 
