@@ -92,16 +92,16 @@ MonoBehaviour:
     tint: {r: 0.12156863, g: 0.23137255, b: 0.3529412, a: 1}
     icon: 
   - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1031407593-0
-    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
     icon: 
   - id: PATH_SETUP/Directional Light
-    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
     icon: 
   - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1261844109-0
-    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
     icon: 
   - id: PATH_SETUP/Global Volume
-    tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
     icon: 
   - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-386538843-0
     tint: {r: 0.5294118, g: 0.23529412, b: 0.26666668, a: 1}
@@ -180,4 +180,28 @@ MonoBehaviour:
     icon: 
   - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1773623360729482-1082495473
     tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1211648949-0
+    tint: {r: 0.09019608, g: 0.23921569, b: 0.1764706, a: 1}
+    icon: 
+  - id: PATH_ENVIRONMENT/Cubes
+    tint: {r: 0.09019608, g: 0.23921569, b: 0.1764706, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1567446850-0
+    tint: {r: 0.09019608, g: 0.23921569, b: 0.1764706, a: 1}
+    icon: 
+  - id: PATH_ENVIRONMENT/Ground
+    tint: {r: 0.09019608, g: 0.23921569, b: 0.1764706, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-1773622295535739-0
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
+    icon: 
+  - id: PATH_SETUP/First Person Controller
+    tint: {r: 0.4, g: 0.17254902, b: 0.20392157, a: 1}
+    icon: 
+  - id: GlobalObjectId_V1-2-ce4686dbb747a9b4695d03a266790cad-7414684969590038422-0
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
+    icon: 
+  - id: PATH_CANVASSES/Crosshair
+    tint: {r: 0.07450981, g: 0.2784314, b: 0.2784314, a: 1}
     icon: 

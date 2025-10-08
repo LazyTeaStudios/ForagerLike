@@ -3001,6 +3001,7 @@ MonoBehaviour:
   maxZoomFOV: 15
   currentZoom: 0
   sensitivity: 1
+  zoomLerpSpeed: 10
 --- !u!114 &114497867166237727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3015,6 +3016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpStrength: 2.5
   groundCheck: {fileID: 114503056288971131}
+  ledgeBlockAngle: 45
 --- !u!114 &114503056288971131
 MonoBehaviour:
   m_ObjectHideFlags: 0
