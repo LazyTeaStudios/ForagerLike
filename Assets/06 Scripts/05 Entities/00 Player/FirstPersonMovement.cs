@@ -27,7 +27,11 @@ public class FirstPersonMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (InputHandler.IsMapActive(ActionMap.UI)) return;
+        if (InputHandler.IsMapActive(ActionMap.UI))
+        {
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+            return;
+        }
 
         bool isGrounded = !groundCheck || groundCheck.isGrounded;
         bool wantsToRun = canRun && InputHandler.Held(GameAction.ShiftModifier);
