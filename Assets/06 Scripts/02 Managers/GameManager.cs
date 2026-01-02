@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private GameState startState = GameState.Playing;
 
-    public bool IsCursorLocked { get; private set; }
+    public bool IsCursorLocked;
 
     public override void Awake()
     {
