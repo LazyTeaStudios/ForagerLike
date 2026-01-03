@@ -6,6 +6,7 @@ public enum PlacementSurface { GroundOnly, WallOnly, Both }
 public class BuildItemSO : ScriptableObject
 {
     public string displayName;
+    [TextArea(2, 4)] public string description;
     public Sprite icon;
     public GameObject prefab;
     public PlacementSurface allowedSurfaces = PlacementSurface.GroundOnly;

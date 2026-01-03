@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45211c38b7d8412438389504ade5927f, type: 3}
   m_Name: Rock
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
-  displayName: 
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  displayName: Rock
+  description: Place a rock. It beats scissors.
+  icon: {fileID: 1964111185, guid: ebaf6835f3be24c458b6b6addac9a900, type: 3}
+  prefab: {fileID: 5006144953640104743, guid: cdc4ce2fc930d574e8c77e63af578606, type: 3}
   allowedSurfaces: 0
   maxGroundAngle: 45
   maxWallAngle: 30
