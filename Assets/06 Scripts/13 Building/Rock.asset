@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e540c084d72dfa49bfa01de40c3d53f, type: 3}
-  m_Name: Chest
+  m_Script: {fileID: 11500000, guid: 45211c38b7d8412438389504ade5927f, type: 3}
+  m_Name: Rock
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
-  displayName: Tree
-  icon: {fileID: 1126344992095758660, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
-  prefab: {fileID: 5006144953640104743, guid: cdc4ce2fc930d574e8c77e63af578606, type: 3}
+  displayName: 
+  icon: {fileID: 0}
+  prefab: {fileID: 0}
   allowedSurfaces: 0
   maxGroundAngle: 45
   maxWallAngle: 30
