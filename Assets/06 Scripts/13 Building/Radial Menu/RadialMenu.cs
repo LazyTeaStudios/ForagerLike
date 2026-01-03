@@ -18,6 +18,7 @@ public class RadialMenu : MonoBehaviour
 
     [Header("Layout")]
     [SerializeField] private float radius = 160f;
+    [SerializeField] private float deadZoneRadius = 50f;
 
     [Header("Colors")]
     [SerializeField] private Color normalColor = new Color(1, 1, 1, 0.5f);
@@ -29,22 +30,20 @@ public class RadialMenu : MonoBehaviour
     private RadialMenuButton selectedButton;
     private float fillAmount;
     private bool isOpen;
-    private bool inputCooldown;
-
-    // NEW: latch to prevent one held click from firing multiple times
-    private bool clickHeld;
+    private bool clickProcessed = false;
 
     public bool IsOpen => isOpen;
     public System.Action OnClosed;
 
+    private void Start()
+    {
+        Close();
+    }
+
     public void Open()
     {
         isOpen = true;
-        inputCooldown = true;
-
-        // Ignore any click that is currently being held when we open
-        clickHeld = true;
-
+        clickProcessed = false;
         gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -57,13 +56,10 @@ public class RadialMenu : MonoBehaviour
         OnClosed?.Invoke();
     }
 
-    public void SetButtons(List<RadialButtonData> buttonData)
+    public void SetButtons(List<RadialButtonData> buttonData, int defaultSelectionIndex = 0)
     {
         ClearButtons();
-        inputCooldown = true;
-
-        // Ignore current held click during menu rebuild
-        clickHeld = true;
+        clickProcessed = false;
 
         int count = buttonData.Count;
         if (count == 0) return;
@@ -90,6 +86,12 @@ public class RadialMenu : MonoBehaviour
             selectionFill.fillAmount = fillAmount;
         if (selectionFillInner != null)
             selectionFillInner.fillAmount = fillAmount;
+
+        // Set default selection
+        if (buttons.Count > 0 && defaultSelectionIndex >= 0 && defaultSelectionIndex < buttons.Count)
+        {
+            selectedButton = buttons[defaultSelectionIndex];
+        }
     }
 
     private void ClearButtons()
@@ -111,10 +113,22 @@ public class RadialMenu : MonoBehaviour
         UpdateSelection();
         UpdateVisuals();
         HandleInput();
+    }
 
-        // You can keep this if you like your cooldown pattern,
-        // the clickHeld latch now prevents multi-fire.
-        inputCooldown = false;
+    private void HandleInput()
+    {
+        // Reset click flag when mouse is released
+        if (!Input.GetMouseButton(0))
+        {
+            clickProcessed = false;
+        }
+
+        // Handle click on the currently selected button
+        if (Input.GetMouseButtonDown(0) && selectedButton != null && !clickProcessed)
+        {
+            clickProcessed = true;
+            selectedButton.TriggerAction();
+        }
     }
 
     private void UpdateSelection()
@@ -122,7 +136,18 @@ public class RadialMenu : MonoBehaviour
         if (buttons.Count == 0) return;
 
         Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-        Vector2 mouseDir = (Vector2)Input.mousePosition - screenCenter;
+        Vector2 mousePos = Input.mousePosition;
+        Vector2 mouseDir = (Vector2)mousePos - screenCenter;
+
+        float distanceFromCenter = mouseDir.magnitude;
+
+        // Only update selection if mouse is outside the dead zone
+        // If inside dead zone, keep the current selection (don't clear it)
+        if (distanceFromCenter < deadZoneRadius)
+        {
+            // Don't change selection when hovering over center
+            return;
+        }
 
         float mouseAngle = Mathf.Atan2(mouseDir.y, mouseDir.x) * Mathf.Rad2Deg - 270f;
         if (mouseAngle < 0) mouseAngle += 360f;
@@ -186,28 +211,7 @@ public class RadialMenu : MonoBehaviour
         if (canvasGroup != null)
             canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, 10f * Time.unscaledDeltaTime);
     }
-
-    private void HandleInput()
-    {
-        // When the mouse button is released, allow a new click
-        if (Input.GetMouseButtonUp(0))
-            clickHeld = false;
-
-        // Don't do anything if we're still holding the click that was already used
-        if (clickHeld)
-            return;
-
-        if (!inputCooldown && InputHandler.Pressed(GameAction.Click) && selectedButton != null)
-        {
-            // Mark that this physical press has been consumed
-            clickHeld = true;
-            inputCooldown = true;
-
-            selectedButton.OnClick?.Invoke();
-        }
-    }
 }
-
 
 public struct RadialButtonData
 {
