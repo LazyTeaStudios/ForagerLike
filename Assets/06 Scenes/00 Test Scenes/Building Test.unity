@@ -3831,6 +3831,11 @@ MonoBehaviour:
   validColor: {r: 1, g: 1, b: 1, a: 0.35}
   invalidColor: {r: 1, g: 0, b: 0, a: 0.35}
   destroyColor: {r: 1, g: 0, b: 0, a: 0.5}
+  rotationIncrement: 45
+  rotateKey: 114
+  enableSnapping: 1
+  snapGridSize: 0.5
+  snapToWorldGrid: 1
 --- !u!114 &1398354037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5468,63 +5473,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: -10000
   m_TargetDisplay: 0
---- !u!1001 &2084792929400944612
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 144784770610736651, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_Name
-      value: Planter
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.604
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.49999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.891
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378764255905423823, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
 --- !u!114 &2105119886100788936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6956,4 +6904,3 @@ SceneRoots:
   - {fileID: 1035954179}
   - {fileID: 2094793020}
   - {fileID: 1758790798}
-  - {fileID: 2084792929400944612}

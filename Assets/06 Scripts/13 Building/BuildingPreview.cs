@@ -14,11 +14,9 @@ public class BuildingPreview : MonoBehaviour
         overlapMask = overlapLayer;
         ignoreMask = ignoreLayer;
 
-        // Get all renderers including children
-        renderers = GetComponentsInChildren<Renderer>(true); // true includes inactive objects
+        renderers = GetComponentsInChildren<Renderer>(true);
         colliders = GetComponentsInChildren<Collider>(true);
 
-        // Create a single instance of the preview material
         if (material != null)
             previewMaterialInstance = new Material(material);
 
@@ -55,7 +53,6 @@ public class BuildingPreview : MonoBehaviour
         {
             if (rend == null) continue;
 
-            // Apply the same material instance to all material slots
             Material[] materials = new Material[rend.sharedMaterials.Length];
             for (int i = 0; i < materials.Length; i++)
             {
@@ -67,22 +64,16 @@ public class BuildingPreview : MonoBehaviour
 
     public void SetColor(Color color)
     {
-        if (previewMaterialInstance != null && previewMaterialInstance.HasProperty("_Color"))
+        if (previewMaterialInstance != null)
         {
-            previewMaterialInstance.color = color;
-
-            // If using URP/HDRP, you might need to set _BaseColor instead
+            if (previewMaterialInstance.HasProperty("_Color"))
+                previewMaterialInstance.color = color;
             if (previewMaterialInstance.HasProperty("_BaseColor"))
                 previewMaterialInstance.SetColor("_BaseColor", color);
         }
     }
 
-    public void SetTransform(Vector3 position, Vector3 normal)
-    {
-        transform.position = position;
-        transform.rotation = Quaternion.FromToRotation(Vector3.up, normal);
-    }
-
+    // Rest of the code remains the same...
     public bool HasOverlap()
     {
         foreach (var col in colliders)
@@ -179,7 +170,6 @@ public class BuildingPreview : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Clean up the material instance to avoid memory leaks
         if (previewMaterialInstance != null)
             DestroyImmediate(previewMaterialInstance);
     }
