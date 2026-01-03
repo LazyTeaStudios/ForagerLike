@@ -16,6 +16,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ToggleBuildModeAction",
+                    "type": "Button",
+                    "id": "9c4e2352-b394-4262-bc1e-6365520ce393",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ScrollHotbar",
                     "type": "PassThrough",
                     "id": "8c257701-877b-4b46-866f-a61a08694285",
@@ -250,6 +259,17 @@
                 },
                 {
                     "name": "",
+                    "id": "37f3458b-b4a3-4937-aafb-0dbdb521c91a",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleBuildModeAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "aba5c1e2-e791-4852-b21e-f9188e2b96f9",
                     "path": "<Mouse>/scroll",
                     "interactions": "",
@@ -332,6 +352,15 @@
                     "name": "Crouch",
                     "type": "Button",
                     "id": "e9beca57-69ef-48d8-87f4-1f240dcc92d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Open Circular Menu",
+                    "type": "Button",
+                    "id": "3f04559c-7624-45ec-be5a-4886e6737249",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -611,6 +640,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ab780675-653e-4e27-8514-35aa91a4463a",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Circular Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

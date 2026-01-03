@@ -17,6 +17,7 @@ MonoBehaviour:
     - ce4686dbb747a9b4695d03a266790cad
     - f69465760a27be64fa4c5d136e3dbc5f
     - e833472fb3dd98648ace5bb7e6fa419b
+    - 9d29a3f158ebf3442a871c01aef1d40d
     values:
     - goDatas_byGlobalId:
         keys:
@@ -340,6 +341,159 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 2
           iconNameOrGuid: ParticleSystem Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-55699095-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-64246287-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1035954178-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-2094793019-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1773622295535739-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1261844109-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1031407593-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1567446850-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1211648949-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-5006144953640104743-5405598365344842760
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-941856298-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1312606633-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1067364008-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-321491118-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-5214826357382424777-743346300
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-8638888279271756103-874629960
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-8697056565519636344-4582590301159180019
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-2160586850467708426-573472282
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-184136944-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-7414684969383257239-575685488983541342
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-859015794556602425-1080070976
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-859015794631448868-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-7414684969590038422-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-571527653-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-901831029-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1593728828855631-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1130723995608017-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1525719237750497-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1688226271-0
+        - globalObjectIdString: GlobalObjectId_V1-2-9d29a3f158ebf3442a871c01aef1d40d-1398354034-0
+        values:
+        - colorIndex: 1
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 1
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 1
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 1
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 5
+          iconNameOrGuid: AvatarMask On Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: ParticleSystem Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: DirectionalLight Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
+          iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
+          iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 7
+          iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 7
+          iconNameOrGuid: AudioClip Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 7
+          iconNameOrGuid: StandaloneInputModule Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 7
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 9
+          iconNameOrGuid: StandaloneInputModule Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 9
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 9
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 9
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 9
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 3
+          iconNameOrGuid: Light Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 2
+          iconNameOrGuid: ParticleSystem Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: CapsuleCollider Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Favorite
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 7
+          iconNameOrGuid: MeshCollider Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 6
+          iconNameOrGuid: BoxCollider Icon
           isIconRecursive: 0
           isColorRecursive: 0
   bookmarks: []

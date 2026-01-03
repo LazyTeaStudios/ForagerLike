@@ -40,6 +40,7 @@ public enum GameAction
 
     // Inventory Actions (Global)
     ToggleInventory,
+    ToggleBuildModeAction,
     Hotbar1,
     Hotbar2,
     Hotbar3,
