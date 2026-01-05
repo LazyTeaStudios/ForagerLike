@@ -3,44 +3,40 @@
 public class FirstPersonController : MonoBehaviour
 {
     [Header("Player")]
-    [Tooltip("Move speed of the character in m/s")]
     public float MoveSpeed = 4.0f;
-    [Tooltip("Sprint speed of the character in m/s")]
     public float SprintSpeed = 6.0f;
-    [Tooltip("Rotation speed of the character")]
     public float RotationSpeed = 1.0f;
-    [Tooltip("Acceleration and deceleration")]
     public float SpeedChangeRate = 10.0f;
 
-    [Space(10)]
-    [Tooltip("The height the player can jump")]
+    [Header("Jump & Gravity")]
     public float JumpHeight = 1.2f;
-    [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-    public float Gravity = -15.0f;
+    public float Gravity = -20.0f;
+    [Tooltip("Multiplier for gravity when falling (not jumping)")]
+    public float FallGravityMultiplier = 1.0f;
+    [Tooltip("Maximum fall speed when walking off a ledge initially")]
+    public float LedgeFallStartSpeed = -2.0f;
+    [Tooltip("How quickly fall speed ramps up when walking off ledge")]
+    public float FallAccelerationRate = 8.0f;
 
-    [Space(10)]
-    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+    [Header("Timing")]
     public float JumpTimeout = 0.1f;
-    [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
     public float FallTimeout = 0.15f;
+    [Tooltip("Time after leaving ground where jump is still allowed")]
+    public float CoyoteTime = 0.15f;
 
     [Header("Player Grounded")]
-    [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
     public bool Grounded = true;
-    [Tooltip("Useful for rough ground")]
     public float GroundedOffset = -0.14f;
-    [Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
     public float GroundedRadius = 0.5f;
-    [Tooltip("What layers the character uses as ground")]
     public LayerMask GroundLayers;
 
     [Header("Cinemachine")]
-    [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
     public GameObject CinemachineCameraTarget;
-    [Tooltip("How far in degrees can you move the camera up")]
     public float TopClamp = 90.0f;
-    [Tooltip("How far in degrees can you move the camera down")]
     public float BottomClamp = -90.0f;
+
+    [Header("Look Smoothing")]
+    public float LookSmooth = 20f;
 
     private float _cinemachineTargetPitch;
     private float _speed;
@@ -49,18 +45,17 @@ public class FirstPersonController : MonoBehaviour
     private float _terminalVelocity = 53.0f;
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
+    private float _coyoteTimeCounter;
+    private float _targetFallSpeed;
+    private bool _isJumping;
+    private bool _wasGroundedLastFrame;
 
     private CharacterController _controller;
     private StarterAssetsInputs _input;
     private GameObject _mainCamera;
+    private Vector2 _lookSmoothed;
 
     private const float _threshold = 0.01f;
-
-    // In FirstPersonController
-    private Vector2 _lookSmoothed;
-    public float LookSmooth = 20f;
-
-
 
     private void Awake()
     {
@@ -74,7 +69,6 @@ public class FirstPersonController : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<StarterAssetsInputs>();
-
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
     }
@@ -84,6 +78,7 @@ public class FirstPersonController : MonoBehaviour
         JumpAndGravity();
         GroundedCheck();
         Move();
+        _wasGroundedLastFrame = Grounded;
     }
 
     private void LateUpdate()
@@ -99,16 +94,13 @@ public class FirstPersonController : MonoBehaviour
 
     private void CameraRotation()
     {
-        // Smooth toward current input
         _lookSmoothed = Vector2.Lerp(_lookSmoothed, _input.look, 1f - Mathf.Exp(-LookSmooth * Time.deltaTime));
 
         if (_lookSmoothed.sqrMagnitude >= _threshold)
         {
             _cinemachineTargetPitch += _lookSmoothed.y * RotationSpeed;
             _rotationVelocity = _lookSmoothed.x * RotationSpeed;
-
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
             CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0f, 0f);
             transform.Rotate(Vector3.up * _rotationVelocity);
         }
@@ -117,11 +109,9 @@ public class FirstPersonController : MonoBehaviour
     private void Move()
     {
         float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-
         if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
-
         float speedOffset = 0.1f;
         float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
@@ -136,7 +126,6 @@ public class FirstPersonController : MonoBehaviour
         }
 
         Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-
         if (_input.move != Vector2.zero)
         {
             inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
@@ -149,7 +138,9 @@ public class FirstPersonController : MonoBehaviour
     {
         if (Grounded)
         {
+            _coyoteTimeCounter = CoyoteTime;
             _fallTimeoutDelta = FallTimeout;
+            _isJumping = false;
 
             if (_verticalVelocity < 0.0f)
             {
@@ -159,6 +150,7 @@ public class FirstPersonController : MonoBehaviour
             if (_input.jump && _jumpTimeoutDelta <= 0.0f)
             {
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                _isJumping = true;
             }
 
             if (_jumpTimeoutDelta >= 0.0f)
@@ -168,6 +160,20 @@ public class FirstPersonController : MonoBehaviour
         }
         else
         {
+            _coyoteTimeCounter -= Time.deltaTime;
+
+            if (_input.jump && _coyoteTimeCounter > 0f && !_isJumping)
+            {
+                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                _isJumping = true;
+                _coyoteTimeCounter = 0f;
+            }
+
+            if (_wasGroundedLastFrame && !_isJumping)
+            {
+                _targetFallSpeed = LedgeFallStartSpeed;
+            }
+
             _jumpTimeoutDelta = JumpTimeout;
 
             if (_fallTimeoutDelta >= 0.0f)
@@ -178,9 +184,23 @@ public class FirstPersonController : MonoBehaviour
             _input.jump = false;
         }
 
-        if (_verticalVelocity < _terminalVelocity)
+        if (_verticalVelocity > _terminalVelocity * -1)
         {
-            _verticalVelocity += Gravity * Time.deltaTime;
+            float gravityThisFrame = Gravity;
+
+            if (!_isJumping && _verticalVelocity < 0f)
+            {
+                gravityThisFrame *= FallGravityMultiplier;
+
+                float minFallSpeed = Mathf.Lerp(_targetFallSpeed, Gravity, FallAccelerationRate * Time.deltaTime);
+                _targetFallSpeed = minFallSpeed;
+                _verticalVelocity += gravityThisFrame * Time.deltaTime;
+                _verticalVelocity = Mathf.Max(_verticalVelocity, _targetFallSpeed);
+            }
+            else
+            {
+                _verticalVelocity += gravityThisFrame * Time.deltaTime;
+            }
         }
     }
 
@@ -196,9 +216,7 @@ public class FirstPersonController : MonoBehaviour
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        if (Grounded) Gizmos.color = transparentGreen;
-        else Gizmos.color = transparentRed;
-
+        Gizmos.color = Grounded ? transparentGreen : transparentRed;
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
     }
 }
