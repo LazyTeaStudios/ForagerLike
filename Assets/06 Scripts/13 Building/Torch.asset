@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45211c38b7d8412438389504ade5927f, type: 3}
   m_Name: Torch
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
-  displayName: Planter
-  description: Used to plant.
+  displayName: Torch
+  description: 'Light
+
+'
   icon: {fileID: -1184960675, guid: ccf0a6f8996424c4184b5a194f31c962, type: 3}
-  prefab: {fileID: 144784770610736651, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-  allowedSurfaces: 0
+  prefab: {fileID: 144784770610736651, guid: 53e3a3ae533e74e469ab4f4990cb0191, type: 3}
+  allowedSurfaces: 1
   maxGroundAngle: 45
   maxWallAngle: 30
+  cantSnapToGrid: 1
