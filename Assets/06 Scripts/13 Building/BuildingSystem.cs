@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingSystem : MonoBehaviour
@@ -11,7 +12,6 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private LayerMask groundMask = ~0;
     [SerializeField] private LayerMask overlapMask = ~0;
-    [SerializeField] private LayerMask buildingMask = ~0;
     [SerializeField] private float maxDistance = 50f;
 
     [Header("Preview")]
@@ -27,14 +27,39 @@ public class BuildingSystem : MonoBehaviour
     [Header("Snapping")]
     [SerializeField] private bool enableSnapping = true;
     [SerializeField] private float snapGridSize = 1f;
-    [SerializeField] private bool snapToWorldGrid = true; // true = world space, false = local to surface
+    [SerializeField] private bool snapToWorldGrid = true;
+
+    [Header("Snap Toggle")]
+    [SerializeField] private KeyCode toggleSnapKey = KeyCode.V;
+    [SerializeField] private bool startWithSnappingOn = true;
+
+
+
+    private bool snapToggledOn;
+
 
     private BuildingPreview preview;
-    private PlacedBuilding highlightedBuilding;
-    private Material[] originalMaterials;
     private Mode currentMode = Mode.None;
     private bool inputCooldown;
     private float currentRotation = 0f;
+
+    [SerializeField] private bool destroyDebug = true;
+
+    // --- Destroy-mode highlighting (FIXED) ---
+    private PlacedBuilding highlightedBuilding;
+
+    private struct RendererRestore
+    {
+        public Renderer renderer;
+        public Material[] originalSharedMaterials;
+    }
+
+    private readonly List<RendererRestore> restoreCache = new List<RendererRestore>(32);
+    private Material destroyMaterialInstance;
+
+    // Reuse buffer to avoid allocations
+    private RaycastHit[] rayHits = new RaycastHit[32];
+    private int ignoreRaycastLayerMask;
 
     public Mode CurrentMode => currentMode;
     public BuildItemSO CurrentItem => currentItem;
@@ -42,6 +67,24 @@ public class BuildingSystem : MonoBehaviour
     private void Awake()
     {
         if (cam == null) cam = Camera.main;
+
+        snapToggledOn = startWithSnappingOn;
+
+        int ignoreLayer = LayerMask.NameToLayer("Ignore Raycast");
+        ignoreRaycastLayerMask = (ignoreLayer >= 0) ? ~(1 << ignoreLayer) : ~0;
+
+        // One shared instance for destroy highlight
+        if (previewMaterial != null)
+        {
+            destroyMaterialInstance = new Material(previewMaterial);
+            ApplyDestroyColor(destroyMaterialInstance, destroyColor);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (destroyMaterialInstance != null)
+            Destroy(destroyMaterialInstance);
     }
 
     private void Update()
@@ -69,7 +112,7 @@ public class BuildingSystem : MonoBehaviour
         ExitDestroyMode();
         currentMode = Mode.Build;
         inputCooldown = true;
-        currentRotation = 0f; // Reset rotation when entering build mode
+        currentRotation = 0f;
         CreatePreview();
     }
 
@@ -77,6 +120,7 @@ public class BuildingSystem : MonoBehaviour
     {
         if (currentMode == Mode.Build)
             currentMode = Mode.None;
+
         DestroyPreview();
     }
 
@@ -85,6 +129,13 @@ public class BuildingSystem : MonoBehaviour
         ExitBuildMode();
         currentMode = Mode.Destroy;
         inputCooldown = true;
+
+        // Make sure we have a highlight material instance
+        if (destroyMaterialInstance == null && previewMaterial != null)
+        {
+            destroyMaterialInstance = new Material(previewMaterial);
+            ApplyDestroyColor(destroyMaterialInstance, destroyColor);
+        }
     }
 
     public void ExitDestroyMode()
@@ -105,7 +156,7 @@ public class BuildingSystem : MonoBehaviour
     public void SetBuildItem(BuildItemSO item)
     {
         currentItem = item;
-        currentRotation = 0f; // Reset rotation when switching items
+        currentRotation = 0f;
         if (currentMode == Mode.Build)
         {
             DestroyPreview();
@@ -113,9 +164,16 @@ public class BuildingSystem : MonoBehaviour
         }
     }
 
+    // ---------------- BUILD MODE (unchanged except it calls your existing methods) ----------------
     private void UpdateBuildMode()
     {
         if (preview == null) return;
+
+        // Toggle snap (only if the option is available for this item)
+        if (Input.GetKeyDown(toggleSnapKey) && IsSnapOptionAvailable())
+        {
+            snapToggledOn = !snapToggledOn;
+        }
 
         // Handle rotation input
         if (Input.GetKeyDown(rotateKey))
@@ -130,15 +188,15 @@ public class BuildingSystem : MonoBehaviour
             return;
         }
 
-        // Apply snapping if enabled
-        if (enableSnapping)
+
+        // Apply snapping ONLY if snapping is active for the current item
+        if (IsSnappingActiveForCurrentItem())
         {
             point = ApplySnapping(point, normal);
         }
 
         preview.gameObject.SetActive(true);
 
-        // Calculate rotation with user input
         Quaternion baseRotation = Quaternion.FromToRotation(Vector3.up, normal);
         Quaternion userRotation = Quaternion.AngleAxis(currentRotation, normal);
         preview.transform.position = point;
@@ -154,86 +212,111 @@ public class BuildingSystem : MonoBehaviour
             Place();
     }
 
-    private Vector3 ApplySnapping(Vector3 position, Vector3 normal)
-    {
-        if (snapToWorldGrid)
-        {
-            // Snap to world grid
-            position.x = Mathf.Round(position.x / snapGridSize) * snapGridSize;
-            position.y = Mathf.Round(position.y / snapGridSize) * snapGridSize;
-            position.z = Mathf.Round(position.z / snapGridSize) * snapGridSize;
-        }
-        else
-        {
-            // Snap relative to the surface (local grid)
-            // Create a coordinate system based on the surface normal
-            Vector3 right = Vector3.Cross(Vector3.up, normal);
-            if (right.magnitude < 0.001f) // Handle case when normal is up or down
-                right = Vector3.Cross(Vector3.forward, normal);
-            right.Normalize();
 
-            Vector3 forward = Vector3.Cross(normal, right).normalized;
-
-            // Project position onto the surface plane
-            Vector3 surfaceOrigin = Vector3.zero; // You could use a reference point here
-            Vector3 localPos = position - surfaceOrigin;
-
-            // Get local coordinates
-            float localX = Vector3.Dot(localPos, right);
-            float localZ = Vector3.Dot(localPos, forward);
-            float localY = Vector3.Dot(localPos, normal);
-
-            // Snap local coordinates
-            localX = Mathf.Round(localX / snapGridSize) * snapGridSize;
-            localZ = Mathf.Round(localZ / snapGridSize) * snapGridSize;
-
-            // Reconstruct world position
-            position = surfaceOrigin + right * localX + forward * localZ + normal * localY;
-        }
-
-        return position;
-    }
-
+    // ---------------- DESTROY MODE (FIXED) ----------------
     private void UpdateDestroyMode()
     {
-        Ray ray = GetAimRay();
-
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, buildingMask))
+        if (TryGetBuildingUnderAim(out PlacedBuilding building, out RaycastHit hit, out string reason))
         {
-            var building = hit.collider.GetComponentInParent<PlacedBuilding>();
-
             if (building != highlightedBuilding)
             {
                 ClearHighlight();
-                if (building != null) HighlightBuilding(building);
+                HighlightBuilding(building);
             }
 
-            if (!inputCooldown && building != null && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
+            if (!inputCooldown && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
             {
+                ClearHighlight();
                 Destroy(building.gameObject);
-                highlightedBuilding = null;
             }
         }
         else
         {
+            if (destroyDebug && !string.IsNullOrEmpty(reason))
+                Debug.Log($"[DestroyMode] No building: {reason}");
+
             ClearHighlight();
         }
     }
 
+    private bool TryGetBuildingUnderAim(out PlacedBuilding building, out RaycastHit chosenHit, out string reason)
+    {
+        building = null;
+        chosenHit = default;
+        reason = "";
+
+        Ray ray = GetAimRay();
+
+        // Raycast EVERYTHING except Ignore Raycast layer. This bypasses bad buildingMask setup.
+        int ignoreLayer = LayerMask.NameToLayer("Ignore Raycast");
+        int mask = (ignoreLayer >= 0) ? ~(1 << ignoreLayer) : ~0;
+
+        int hitCount = Physics.RaycastNonAlloc(ray, rayHits, maxDistance, mask, QueryTriggerInteraction.Ignore);
+        if (hitCount <= 0)
+        {
+            reason = "Raycast hit nothing (check camera + maxDistance + colliders exist).";
+            return false;
+        }
+
+        // Find nearest hit that has a PlacedBuilding in parents
+        float bestDist = float.MaxValue;
+        int bestIndex = -1;
+        PlacedBuilding bestBuilding = null;
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            var h = rayHits[i];
+            if (h.collider == null) continue;
+
+            var pb = h.collider.GetComponentInParent<PlacedBuilding>();
+            if (pb == null) continue;
+
+            if (h.distance < bestDist)
+            {
+                bestDist = h.distance;
+                bestIndex = i;
+                bestBuilding = pb;
+            }
+        }
+
+        if (bestIndex < 0 || bestBuilding == null)
+        {
+            return false;
+        }
+
+        chosenHit = rayHits[bestIndex];
+        building = bestBuilding;
+        return true;
+    }
+
+
+
     private void HighlightBuilding(PlacedBuilding building)
     {
         highlightedBuilding = building;
-        var renderers = building.GetComponentsInChildren<Renderer>();
-        originalMaterials = new Material[renderers.Length];
+        restoreCache.Clear();
+
+        // Grab every renderer under the pivot parent (including inactive if needed)
+        var renderers = building.GetComponentsInChildren<Renderer>(true);
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            originalMaterials[i] = renderers[i].material;
-            if (previewMaterial != null)
-            {
-                renderers[i].material = new Material(previewMaterial);
-                renderers[i].material.color = destroyColor;
-            }
+            var r = renderers[i];
+            if (r == null) continue;
+
+            // Cache originals (FULL array, not just .material)
+            var original = r.sharedMaterials;
+            restoreCache.Add(new RendererRestore { renderer = r, originalSharedMaterials = original });
+
+            // If no preview material assigned, at least do nothing gracefully
+            if (destroyMaterialInstance == null) continue;
+
+            // Replace ALL sub-materials so multi-material meshes highlight fully
+            var replaced = new Material[original.Length];
+            for (int m = 0; m < replaced.Length; m++)
+                replaced[m] = destroyMaterialInstance;
+
+            r.sharedMaterials = replaced;
         }
     }
 
@@ -241,15 +324,60 @@ public class BuildingSystem : MonoBehaviour
     {
         if (highlightedBuilding == null) return;
 
-        var renderers = highlightedBuilding.GetComponentsInChildren<Renderer>();
-        for (int i = 0; i < renderers.Length && i < originalMaterials.Length; i++)
+        for (int i = 0; i < restoreCache.Count; i++)
         {
-            if (originalMaterials[i] != null)
-                renderers[i].material = originalMaterials[i];
+            var entry = restoreCache[i];
+            if (entry.renderer != null)
+                entry.renderer.sharedMaterials = entry.originalSharedMaterials;
         }
 
+        restoreCache.Clear();
         highlightedBuilding = null;
-        originalMaterials = null;
+    }
+
+    private static void ApplyDestroyColor(Material mat, Color color)
+    {
+        if (mat == null) return;
+
+        if (mat.HasProperty("_Color"))
+            mat.color = color;
+
+        if (mat.HasProperty("_BaseColor"))
+            mat.SetColor("_BaseColor", color);
+    }
+
+    // ---------------- rest of your existing methods (unchanged) ----------------
+    private Vector3 ApplySnapping(Vector3 position, Vector3 normal)
+    {
+        if (snapToWorldGrid)
+        {
+            position.x = Mathf.Round(position.x / snapGridSize) * snapGridSize;
+            position.y = Mathf.Round(position.y / snapGridSize) * snapGridSize;
+            position.z = Mathf.Round(position.z / snapGridSize) * snapGridSize;
+        }
+        else
+        {
+            Vector3 right = Vector3.Cross(Vector3.up, normal);
+            if (right.magnitude < 0.001f)
+                right = Vector3.Cross(Vector3.forward, normal);
+            right.Normalize();
+
+            Vector3 forward = Vector3.Cross(normal, right).normalized;
+
+            Vector3 surfaceOrigin = Vector3.zero;
+            Vector3 localPos = position - surfaceOrigin;
+
+            float localX = Vector3.Dot(localPos, right);
+            float localZ = Vector3.Dot(localPos, forward);
+            float localY = Vector3.Dot(localPos, normal);
+
+            localX = Mathf.Round(localX / snapGridSize) * snapGridSize;
+            localZ = Mathf.Round(localZ / snapGridSize) * snapGridSize;
+
+            position = surfaceOrigin + right * localX + forward * localZ + normal * localY;
+        }
+
+        return position;
     }
 
     private bool IsSurfaceValid(Vector3 normal)
@@ -268,6 +396,18 @@ public class BuildingSystem : MonoBehaviour
             _ => false
         };
     }
+
+    private bool IsSnapOptionAvailable()
+    {
+
+        return enableSnapping && currentItem != null && !currentItem.cantSnapToGrid;
+    }
+
+    private bool IsSnappingActiveForCurrentItem()
+    {
+        return IsSnapOptionAvailable() && snapToggledOn;
+    }
+
 
     private void Place()
     {
@@ -299,10 +439,15 @@ public class BuildingSystem : MonoBehaviour
     {
         Ray ray = GetAimRay();
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, groundMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, groundMask, QueryTriggerInteraction.Ignore))
         {
             point = hit.point;
             normal = hit.normal;
+
+            // NEW: only accept the hit if it matches the current item's allowed surface.
+            if (currentItem != null && !IsHitSurfacePreviewableForItem(normal))
+                return false;
+
             return true;
         }
 
@@ -310,6 +455,28 @@ public class BuildingSystem : MonoBehaviour
         normal = Vector3.up;
         return false;
     }
+
+    private bool IsHitSurfacePreviewableForItem(Vector3 normal)
+    {
+        if (currentItem == null) return false;
+
+        float angleFromUp = Vector3.Angle(Vector3.up, normal);
+
+        // Ground-like means "close enough to up"
+        bool isGroundLike = angleFromUp <= currentItem.maxGroundAngle;
+
+        // Wall-like means "close enough to 90 degrees from up"
+        bool isWallLike = Mathf.Abs(angleFromUp - 90f) <= currentItem.maxWallAngle;
+
+        return currentItem.allowedSurfaces switch
+        {
+            PlacementSurface.GroundOnly => isGroundLike,
+            PlacementSurface.WallOnly => isWallLike,
+            PlacementSurface.Both => isGroundLike || isWallLike,
+            _ => false
+        };
+    }
+
 
     private Ray GetAimRay()
     {

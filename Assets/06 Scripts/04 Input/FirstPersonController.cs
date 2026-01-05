@@ -11,12 +11,21 @@ public class FirstPersonController : MonoBehaviour
     [Header("Jump & Gravity")]
     public float JumpHeight = 1.2f;
     public float Gravity = -20.0f;
-    [Tooltip("Multiplier for gravity when falling (not jumping)")]
-    public float FallGravityMultiplier = 1.0f;
-    [Tooltip("Maximum fall speed when walking off a ledge initially")]
-    public float LedgeFallStartSpeed = -2.0f;
-    [Tooltip("How quickly fall speed ramps up when walking off ledge")]
-    public float FallAccelerationRate = 8.0f;
+
+    [Header("Variable Jump")]
+    [Tooltip("If you release jump while moving upward, upward velocity is multiplied by this (lower = shorter hops).")]
+    [Range(0.1f, 1f)]
+    public float JumpCutMultiplier = 0.5f;
+    [Tooltip("Small grace time after jump start where we ignore jump-cut to prevent micro taps.")]
+    public float JumpCutGraceTime = 0.05f;
+
+    [Header("Air Control & Air Resistance")]
+    [Tooltip("How quickly you accelerate toward desired air speed while holding input (higher = more control).")]
+    public float AirAcceleration = 18f;
+    [Tooltip("How quickly horizontal velocity decays when you release movement in air (higher = quicker fade).")]
+    public float AirDragNoInput = 14f;
+    [Tooltip("Extra drag when trying to stop / reverse direction in air (higher = snappier).")]
+    public float AirDragOpposing = 8f;
 
     [Header("Timing")]
     public float JumpTimeout = 0.1f;
@@ -30,6 +39,7 @@ public class FirstPersonController : MonoBehaviour
     public float GroundedRadius = 0.5f;
     public LayerMask GroundLayers;
 
+
     [Header("Cinemachine")]
     public GameObject CinemachineCameraTarget;
     public float TopClamp = 90.0f;
@@ -39,21 +49,22 @@ public class FirstPersonController : MonoBehaviour
     public float LookSmooth = 20f;
 
     private float _cinemachineTargetPitch;
-    private float _speed;
     private float _rotationVelocity;
     private float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
     private float _coyoteTimeCounter;
-    private float _targetFallSpeed;
     private bool _isJumping;
-    private bool _wasGroundedLastFrame;
+    private float _jumpStartedTime;
 
     private CharacterController _controller;
     private StarterAssetsInputs _input;
     private GameObject _mainCamera;
     private Vector2 _lookSmoothed;
+
+    // NEW: track horizontal velocity ourselves so we can apply air drag smoothly
+    private Vector3 _horizontalVelocity;
 
     private const float _threshold = 0.01f;
 
@@ -75,10 +86,9 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
-        JumpAndGravity();
         GroundedCheck();
+        JumpAndGravity();
         Move();
-        _wasGroundedLastFrame = Grounded;
     }
 
     private void LateUpdate()
@@ -100,6 +110,7 @@ public class FirstPersonController : MonoBehaviour
         {
             _cinemachineTargetPitch += _lookSmoothed.y * RotationSpeed;
             _rotationVelocity = _lookSmoothed.x * RotationSpeed;
+
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
             CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0f, 0f);
             transform.Rotate(Vector3.up * _rotationVelocity);
@@ -108,99 +119,145 @@ public class FirstPersonController : MonoBehaviour
 
     private void Move()
     {
+        float dt = Time.deltaTime;
+
+        // Desired speed
         float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
         if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
-        float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
-        float speedOffset = 0.1f;
         float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
-        if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+        // Convert input to world direction
+        Vector3 desiredDir = Vector3.zero;
+        if (_input.move != Vector2.zero)
         {
-            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
-            _speed = Mathf.Round(_speed * 1000f) / 1000f;
+            desiredDir = (transform.right * _input.move.x + transform.forward * _input.move.y).normalized;
+        }
+
+        // Build desired horizontal velocity (ignores y)
+        Vector3 desiredHorizontalVel = desiredDir * (targetSpeed * inputMagnitude);
+
+        if (Grounded)
+        {
+            // On ground: use your classic smoothing to reach desired speed quickly
+            Vector3 currentHorizontal = new Vector3(_controller.velocity.x, 0f, _controller.velocity.z);
+            float currentSpeed = currentHorizontal.magnitude;
+
+            float speedOffset = 0.1f;
+            float newSpeed;
+            if (currentSpeed < targetSpeed - speedOffset || currentSpeed > targetSpeed + speedOffset)
+            {
+                newSpeed = Mathf.Lerp(currentSpeed, targetSpeed * inputMagnitude, dt * SpeedChangeRate);
+                newSpeed = Mathf.Round(newSpeed * 1000f) / 1000f;
+            }
+            else
+            {
+                newSpeed = targetSpeed;
+            }
+
+            // Recompute with newSpeed so it matches your old feel
+            _horizontalVelocity = desiredDir * newSpeed;
         }
         else
         {
-            _speed = targetSpeed;
+            // In air: apply acceleration toward desired velocity + drag when no input
+            bool hasInput = _input.move != Vector2.zero;
+
+            if (hasInput)
+            {
+                // Accelerate toward the desired horizontal velocity
+                _horizontalVelocity = Vector3.MoveTowards(
+                    _horizontalVelocity,
+                    desiredHorizontalVel,
+                    AirAcceleration * dt
+                );
+
+                // If player is trying to reverse / strongly oppose current motion, add a bit more drag
+                if (_horizontalVelocity.sqrMagnitude > 0.001f && desiredHorizontalVel.sqrMagnitude > 0.001f)
+                {
+                    float dot = Vector3.Dot(_horizontalVelocity.normalized, desiredHorizontalVel.normalized);
+                    // dot < 0 means opposing
+                    if (dot < 0f)
+                    {
+                        _horizontalVelocity = Vector3.Lerp(_horizontalVelocity, desiredHorizontalVel, 1f - Mathf.Exp(-AirDragOpposing * dt));
+                    }
+                }
+            }
+            else
+            {
+                // No input: fade out horizontal velocity quickly (air resistance)
+                _horizontalVelocity = Vector3.Lerp(_horizontalVelocity, Vector3.zero, 1f - Mathf.Exp(-AirDragNoInput * dt));
+            }
         }
 
-        Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-        if (_input.move != Vector2.zero)
-        {
-            inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
-        }
-
-        _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+        Vector3 motion = _horizontalVelocity + Vector3.up * _verticalVelocity;
+        _controller.Move(motion * dt);
     }
 
     private void JumpAndGravity()
     {
+        float dt = Time.deltaTime;
+
         if (Grounded)
         {
+            // refresh coyote + jump timeout timers
             _coyoteTimeCounter = CoyoteTime;
-            _fallTimeoutDelta = FallTimeout;
+
+            if (_jumpTimeoutDelta > 0f)
+                _jumpTimeoutDelta -= dt;
+
+            // Keep the controller grounded (small negative value)
+            if (_verticalVelocity < 0f)
+                _verticalVelocity = -2f;
+
             _isJumping = false;
 
-            if (_verticalVelocity < 0.0f)
-            {
-                _verticalVelocity = -2f;
-            }
-
-            if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+            // Jump
+            if (_input.jump && _jumpTimeoutDelta <= 0f)
             {
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                 _isJumping = true;
-            }
+                _jumpStartedTime = Time.time;
 
-            if (_jumpTimeoutDelta >= 0.0f)
-            {
-                _jumpTimeoutDelta -= Time.deltaTime;
+                _jumpTimeoutDelta = JumpTimeout;
+                _coyoteTimeCounter = 0f;
             }
         }
         else
         {
-            _coyoteTimeCounter -= Time.deltaTime;
+            // airborne timers
+            _coyoteTimeCounter -= dt;
+            _jumpTimeoutDelta = JumpTimeout;
 
+            // Coyote jump (only if we haven't already jumped)
             if (_input.jump && _coyoteTimeCounter > 0f && !_isJumping)
             {
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                 _isJumping = true;
+                _jumpStartedTime = Time.time;
                 _coyoteTimeCounter = 0f;
             }
 
-            if (_wasGroundedLastFrame && !_isJumping)
+            // VARIABLE JUMP CUT:
+            // If player released jump AND we are still going up, cut upward velocity.
+            // Your input system sets jump=false on release, so this works.
+            bool jumpReleased = !_input.jump;
+            bool movingUp = _verticalVelocity > 0f;
+            bool pastGrace = (Time.time - _jumpStartedTime) > JumpCutGraceTime;
+
+            if (_isJumping && jumpReleased && movingUp && pastGrace)
             {
-                _targetFallSpeed = LedgeFallStartSpeed;
+                _verticalVelocity *= JumpCutMultiplier;
+                // Prevent repeated cuts
+                _isJumping = false;
             }
 
-            _jumpTimeoutDelta = JumpTimeout;
+            // Apply gravity
+            _verticalVelocity += Gravity * dt;
 
-            if (_fallTimeoutDelta >= 0.0f)
-            {
-                _fallTimeoutDelta -= Time.deltaTime;
-            }
-
-            _input.jump = false;
-        }
-
-        if (_verticalVelocity > _terminalVelocity * -1)
-        {
-            float gravityThisFrame = Gravity;
-
-            if (!_isJumping && _verticalVelocity < 0f)
-            {
-                gravityThisFrame *= FallGravityMultiplier;
-
-                float minFallSpeed = Mathf.Lerp(_targetFallSpeed, Gravity, FallAccelerationRate * Time.deltaTime);
-                _targetFallSpeed = minFallSpeed;
-                _verticalVelocity += gravityThisFrame * Time.deltaTime;
-                _verticalVelocity = Mathf.Max(_verticalVelocity, _targetFallSpeed);
-            }
-            else
-            {
-                _verticalVelocity += gravityThisFrame * Time.deltaTime;
-            }
+            // Clamp terminal velocity (Gravity is negative)
+            if (_verticalVelocity < -_terminalVelocity)
+                _verticalVelocity = -_terminalVelocity;
         }
     }
 

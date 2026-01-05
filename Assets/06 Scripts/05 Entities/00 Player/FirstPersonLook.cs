@@ -15,16 +15,12 @@ public class FirstPersonLook : MonoBehaviour
     void Update()
     {
         if (InputHandler.IsMapActive(ActionMap.UI)) return;
-
         Vector2 lookDelta = InputHandler.GetValue<Vector2>(GameAction.Look);
         Vector2 rawFrameVelocity = lookDelta * sensitivity;
-
-        frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1f / Mathf.Max(0.0001f, smoothing));
-        velocity += frameVelocity;
+        frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, Time.deltaTime / Mathf.Max(0.0001f, smoothing));
+        velocity += frameVelocity * Time.deltaTime * 60f; // 60 to maintain similar feel
         velocity.y = Mathf.Clamp(velocity.y, -verticalClamp, verticalClamp);
-
         transform.localRotation = Quaternion.AngleAxis(-velocity.y, Vector3.right);
-
         if (character)
         {
             character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
