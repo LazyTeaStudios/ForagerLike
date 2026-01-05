@@ -82,18 +82,18 @@ namespace KinematicCharacterController.Examples
 
         private void HandleCharacterInput()
         {
-            PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
+            //PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
             // Build the CharacterInputs struct
-            characterInputs.MoveAxisForward = Input.GetAxisRaw(VerticalInput);
-            characterInputs.MoveAxisRight = Input.GetAxisRaw(HorizontalInput);
-            characterInputs.CameraRotation = CharacterCamera.Transform.rotation;
-            characterInputs.JumpDown = Input.GetKeyDown(KeyCode.Space);
-            characterInputs.CrouchDown = Input.GetKeyDown(KeyCode.C);
-            characterInputs.CrouchUp = Input.GetKeyUp(KeyCode.C);
-
-            // Apply inputs to character
-            Character.SetInputs(ref characterInputs);
+            //characterInputs.MoveAxisForward = Input.GetAxisRaw(VerticalInput);
+            //characterInputs.MoveAxisRight = Input.GetAxisRaw(HorizontalInput);
+            //characterInputs.CameraRotation = CharacterCamera.Transform.rotation;
+            //characterInputs.JumpDown = Input.GetKeyDown(KeyCode.Space);
+            //characterInputs.CrouchDown = Input.GetKeyDown(KeyCode.C);
+            //characterInputs.CrouchUp = Input.GetKeyUp(KeyCode.C);
+            //
+            //// Apply inputs to character
+            //Character.SetInputs(ref characterInputs);
         }
     }
 }
