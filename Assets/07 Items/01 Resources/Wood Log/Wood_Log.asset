@@ -15,8 +15,4 @@ MonoBehaviour:
   itemName: Wood Log
   icon: {fileID: 126666926, guid: 0d67feab7570fc741b27c7f19e18c1da, type: 3}
   maxStackSize: 64
-  itemType: 1
-  toolData: {fileID: 0}
-  itemPrefab: {fileID: 3104169318974456822, guid: bc7ee1b9731d72445b278f03049d79cc, type: 3}
-  buildingPrefab: {fileID: 0}
-  buildingSize: {x: 1, y: 1}
+  itemPrefab: {fileID: 5963558514767050100, guid: 62ebd94d2205c8e419b621309a5115eb, type: 3}

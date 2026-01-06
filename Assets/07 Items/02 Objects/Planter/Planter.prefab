@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4378764255905423823}
+  - component: {fileID: 5781341180279758056}
   m_Layer: 0
   m_Name: Planter
   m_TagString: Untagged
@@ -35,6 +36,23 @@ Transform:
   - {fileID: 9178694748272170212}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5781341180279758056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144784770610736651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f9e3a4a07150645ad19f4ca669a860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildItem: {fileID: 11400000, guid: d0265e1be56cafb4f91241c45cc401c8, type: 2}
+  returnFullResources: 1
+  resourceReturnRate: 1
+  dropSpawnRadius: 1
+  dropThrowForce: 3
 --- !u!1 &972530134854974291
 GameObject:
   m_ObjectHideFlags: 0

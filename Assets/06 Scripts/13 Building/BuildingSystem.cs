@@ -172,13 +172,11 @@ public class BuildingSystem : MonoBehaviour
     {
         if (preview == null) return;
 
-        // Toggle snap (only if the option is available for this item)
         if (Input.GetKeyDown(toggleSnapKey) && IsSnapOptionAvailable())
         {
             snapToggledOn = !snapToggledOn;
         }
 
-        // Handle rotation input
         if (Input.GetKeyDown(rotateKey))
         {
             currentRotation += rotationIncrement;
@@ -191,13 +189,10 @@ public class BuildingSystem : MonoBehaviour
             return;
         }
 
-
-        // Apply snapping ONLY if snapping is active for the current item
         if (IsSnappingActiveForCurrentItem())
         {
             point = ApplySnapping(point, normal);
         }
-
 
         preview.gameObject.SetActive(true);
 
@@ -213,12 +208,43 @@ public class BuildingSystem : MonoBehaviour
         if (requireGroundSupport && supportCheck != null)
             supported = supportCheck.HasSupport();
 
-        bool canPlace = validSurface && noOverlap && supported;
+        /// Check resource requirements
+        bool hasResources = HasRequiredResources();
+
+        bool canPlace = validSurface && noOverlap && supported && hasResources;
 
         preview.SetColor(canPlace ? validColor : invalidColor);
 
         if (!inputCooldown && canPlace && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
             Place();
+    }
+
+    /// Check if player has all required resources for current building
+    bool HasRequiredResources()
+    {
+        if (currentItem == null || currentItem.requiredResources == null || currentItem.requiredResources.Length == 0)
+            return true;
+
+        foreach (var requirement in currentItem.requiredResources)
+        {
+            if (!InventoryManager.Instance.HasResources(requirement.item, requirement.quantity))
+                return false;
+        }
+        return true;
+    }
+
+    /// Consume required resources when placing building
+    bool ConsumeResources()
+    {
+        if (currentItem == null || currentItem.requiredResources == null || currentItem.requiredResources.Length == 0)
+            return true;
+
+        foreach (var requirement in currentItem.requiredResources)
+        {
+            if (!InventoryManager.Instance.RemoveItem(requirement.item, requirement.quantity))
+                return false;
+        }
+        return true;
     }
 
 
@@ -236,6 +262,10 @@ public class BuildingSystem : MonoBehaviour
             if (!inputCooldown && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
             {
                 ClearHighlight();
+
+                /// Drop resources before destroying
+                building.DropResources();
+
                 Destroy(building.gameObject);
             }
         }
@@ -429,6 +459,12 @@ public class BuildingSystem : MonoBehaviour
 
     private void Place()
     {
+        if (!ConsumeResources())
+        {
+            Debug.LogWarning("Failed to consume resources for building!");
+            return;
+        }
+
         var obj = Instantiate(currentItem.prefab, preview.transform.position, preview.transform.rotation);
 
         var placed = obj.GetComponent<PlacedBuilding>();
