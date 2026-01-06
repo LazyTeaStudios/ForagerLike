@@ -12,7 +12,7 @@ public class SlotUI : MonoBehaviour,
 {
     [SerializeField] Image iconImage;
     [SerializeField] TextMeshProUGUI quantityText;
-    [SerializeField] Image outlineImage;
+    [SerializeField] GameObject outlineImage;
     [SerializeField] Color selectedColor = Color.yellow;
 
     int slotIndex;
@@ -46,8 +46,8 @@ public class SlotUI : MonoBehaviour,
     {
         if (outlineImage)
         {
-            outlineImage.enabled = selected;
-            outlineImage.color = selectedColor;
+            outlineImage.SetActive(selected);
+            //outlineImage.color = selectedColor;
         }
     }
 
