@@ -457,6 +457,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-707acc8dffb72b144bb1ffbe1c965f3d-2105119886592581940-0
         - globalObjectIdString: GlobalObjectId_V1-2-707acc8dffb72b144bb1ffbe1c965f3d-9065339783117221479-0
         - globalObjectIdString: GlobalObjectId_V1-2-707acc8dffb72b144bb1ffbe1c965f3d-2863206532454997684-0
+        - globalObjectIdString: GlobalObjectId_V1-2-707acc8dffb72b144bb1ffbe1c965f3d-1014132930-0
         values:
         - colorIndex: 1
           iconNameOrGuid: Folder Icon
@@ -548,6 +549,10 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 5
           iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 6
+          iconNameOrGuid: AudioEchoFilter Icon
           isIconRecursive: 0
           isColorRecursive: 0
   bookmarks: []

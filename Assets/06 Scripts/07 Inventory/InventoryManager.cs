@@ -1,7 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : Singleton<InventoryManager>
 {
+    [System.Serializable]
+    public class StartingItem
+    {
+        public ItemData item;
+        [Min(1)] public int amount = 1;
+    }
+
     [Header("Settings")]
     [SerializeField] int hotbarSize = 9;
 
@@ -11,14 +19,25 @@ public class InventoryManager : Singleton<InventoryManager>
     public System.Action<int> OnHotbarSelectionChanged;
     public System.Action OnInventoryChanged;
 
-    [SerializeField] private ItemData itemToAdd;
+    [Header("Starting Items")]
+    [SerializeField] private List<StartingItem> itemsToAdd = new List<StartingItem>();
 
     public override void Awake()
     {
         base.Awake();
         InitializeSlots();
-        if (itemToAdd != null)
-            AddItem(itemToAdd, 64);
+
+        // Add all configured starting items
+        if (itemsToAdd != null)
+        {
+            foreach (var entry in itemsToAdd)
+            {
+                if (entry == null || entry.item == null) continue;
+                if (entry.amount <= 0) continue;
+
+                AddItem(entry.item, entry.amount);
+            }
+        }
     }
 
     void InitializeSlots()
@@ -77,6 +96,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
         int remaining = amount;
 
+        // Fill existing stacks first
         foreach (var slot in hotbarSlots)
         {
             if (remaining <= 0) break;
@@ -93,6 +113,7 @@ public class InventoryManager : Singleton<InventoryManager>
             }
         }
 
+        // Then fill empty slots
         foreach (var slot in hotbarSlots)
         {
             if (remaining <= 0) break;
@@ -162,6 +183,28 @@ public class InventoryManager : Singleton<InventoryManager>
 
         return count;
     }
+
+    public void SwapHotbarSlots(int a, int b)
+    {
+        if (a < 0 || a >= hotbarSize) return;
+        if (b < 0 || b >= hotbarSize) return;
+        if (a == b) return;
+
+        InventorySlot slotA = hotbarSlots[a];
+        InventorySlot slotB = hotbarSlots[b];
+
+        ItemData aItem = slotA.item;
+        int aQty = slotA.quantity;
+
+        // Move B into A
+        slotA.Set(slotB.item, slotB.quantity);
+
+        // Move temp A into B
+        slotB.Set(aItem, aQty);
+
+        OnInventoryChanged?.Invoke();
+    }
+
 
     public InventorySlot GetSelectedHotbarSlot() => hotbarSlots[selectedHotbarIndex];
     public InventorySlot GetHotbarSlot(int index) => index >= 0 && index < hotbarSize ? hotbarSlots[index] : null;
