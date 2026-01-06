@@ -6746,54 +6746,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCapsule
       objectReference: {fileID: 0}
-    - target: {fileID: 782618177740309859, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 782618177740309859, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1725817911476841154, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 3ce7e64c6c1888349a483929d054b379, type: 2}
-    - target: {fileID: 5370077501019525031, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767129315226367203, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121048665759382457, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: Gravity
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121048665759382457, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: JumpHeight
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121048665759382457, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: LookSmooth
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121048665759382457, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: SprintSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121048665759382457, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: GroundedOffset
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121048665759382457, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: GroundedRadius
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6121048665759382457, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
-      propertyPath: GroundLayers.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
     - target: {fileID: 6566515447224271545, guid: d0b242ffd9770344a990943354d7a54a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

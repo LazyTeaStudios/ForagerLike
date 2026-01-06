@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5370077501019525031}
   - component: {fileID: 6121048665759382457}
   - component: {fileID: 4493661057103925642}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782618177740309859}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -74,23 +74,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 4
-  SprintSpeed: 6
+  SprintSpeed: 8
   RotationSpeed: 1
   SpeedChangeRate: 10
-  JumpHeight: 1.2
-  Gravity: -15
+  JumpHeight: 1.5
+  Gravity: -17
+  JumpCutMultiplier: 0.5
+  JumpCutGraceTime: 0.05
+  AirAcceleration: 18
+  AirDragNoInput: 14
+  AirDragOpposing: 8
   JumpTimeout: 0.1
   FallTimeout: 0.15
+  CoyoteTime: 0.15
   Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.5
+  GroundedOffset: 0
+  GroundedRadius: 0.1
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   CinemachineCameraTarget: {fileID: 2993864011196554063}
   TopClamp: 89
   BottomClamp: -89
-  LookSmooth: 20
+  LookSmooth: 50
 --- !u!114 &4493661057103925642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +162,7 @@ GameObject:
   - component: {fileID: 794887922173499380}
   - component: {fileID: 1826961570369017139}
   - component: {fileID: 1725817911476841154}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,8 +212,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -229,11 +233,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &1725817911476841154
 CapsuleCollider:
@@ -242,7 +244,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5767129315226367203}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3ce7e64c6c1888349a483929d054b379, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
