@@ -33,8 +33,11 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private KeyCode toggleSnapKey = KeyCode.V;
     [SerializeField] private bool startWithSnappingOn = true;
 
+    [Header("Ground Support Check")]
+    [SerializeField] private bool requireGroundSupport = true;
+    [SerializeField] private float supportRayDistance = 0.5f;
 
-
+    private PreviewGroundSupport supportCheck;
     private bool snapToggledOn;
 
 
@@ -195,6 +198,7 @@ public class BuildingSystem : MonoBehaviour
             point = ApplySnapping(point, normal);
         }
 
+
         preview.gameObject.SetActive(true);
 
         Quaternion baseRotation = Quaternion.FromToRotation(Vector3.up, normal);
@@ -204,7 +208,12 @@ public class BuildingSystem : MonoBehaviour
 
         bool validSurface = IsSurfaceValid(normal);
         bool noOverlap = !preview.HasOverlap();
-        bool canPlace = validSurface && noOverlap;
+
+        bool supported = true;
+        if (requireGroundSupport && supportCheck != null)
+            supported = supportCheck.HasSupport();
+
+        bool canPlace = validSurface && noOverlap && supported;
 
         preview.SetColor(canPlace ? validColor : invalidColor);
 
@@ -351,9 +360,16 @@ public class BuildingSystem : MonoBehaviour
     {
         if (snapToWorldGrid)
         {
+            // Always snap horizontally
             position.x = Mathf.Round(position.x / snapGridSize) * snapGridSize;
-            position.y = Mathf.Round(position.y / snapGridSize) * snapGridSize;
             position.z = Mathf.Round(position.z / snapGridSize) * snapGridSize;
+
+            // Only snap Y when the current item is NOT GroundOnly
+            // (GroundOnly keeps the raycast height so it sits on terrain properly)
+            if (currentItem == null || currentItem.allowedSurfaces != PlacementSurface.GroundOnly)
+            {
+                position.y = Mathf.Round(position.y / snapGridSize) * snapGridSize;
+            }
         }
         else
         {
@@ -374,11 +390,13 @@ public class BuildingSystem : MonoBehaviour
             localX = Mathf.Round(localX / snapGridSize) * snapGridSize;
             localZ = Mathf.Round(localZ / snapGridSize) * snapGridSize;
 
+            // localY stays unsnapped (keeps height along the surface normal)
             position = surfaceOrigin + right * localX + forward * localZ + normal * localY;
         }
 
         return position;
     }
+
 
     private bool IsSurfaceValid(Vector3 normal)
     {
@@ -427,13 +445,21 @@ public class BuildingSystem : MonoBehaviour
 
         preview = obj.AddComponent<BuildingPreview>();
         preview.Initialize(previewMaterial, overlapMask, groundMask);
+
+        // NEW: grab support checker from child footprint
+        supportCheck = obj.GetComponentInChildren<PreviewGroundSupport>(true);
+        if (supportCheck != null)
+            supportCheck.Initialize(groundMask, supportRayDistance);
     }
+
 
     private void DestroyPreview()
     {
         if (preview != null) Destroy(preview.gameObject);
         preview = null;
+        supportCheck = null;
     }
+
 
     private bool TryGetSurfacePoint(out Vector3 point, out Vector3 normal)
     {

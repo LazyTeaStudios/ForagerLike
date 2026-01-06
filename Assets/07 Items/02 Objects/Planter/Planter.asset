@@ -17,5 +17,6 @@ MonoBehaviour:
   icon: {fileID: -1184960675, guid: ccf0a6f8996424c4184b5a194f31c962, type: 3}
   prefab: {fileID: 144784770610736651, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
   allowedSurfaces: 0
-  maxGroundAngle: 45
-  maxWallAngle: 30
+  maxGroundAngle: 0
+  maxWallAngle: 0
+  cantSnapToGrid: 0
