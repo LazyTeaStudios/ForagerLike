@@ -33,8 +33,11 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private KeyCode toggleSnapKey = KeyCode.V;
     [SerializeField] private bool startWithSnappingOn = true;
 
+    [Header("Ground Support Check")]
+    [SerializeField] private bool requireGroundSupport = true;
+    [SerializeField] private float supportRayDistance = 0.5f;
 
-
+    private PreviewGroundSupport supportCheck;
     private bool snapToggledOn;
 
 
@@ -169,13 +172,11 @@ public class BuildingSystem : MonoBehaviour
     {
         if (preview == null) return;
 
-        // Toggle snap (only if the option is available for this item)
         if (Input.GetKeyDown(toggleSnapKey) && IsSnapOptionAvailable())
         {
             snapToggledOn = !snapToggledOn;
         }
 
-        // Handle rotation input
         if (Input.GetKeyDown(rotateKey))
         {
             currentRotation += rotationIncrement;
@@ -188,8 +189,6 @@ public class BuildingSystem : MonoBehaviour
             return;
         }
 
-
-        // Apply snapping ONLY if snapping is active for the current item
         if (IsSnappingActiveForCurrentItem())
         {
             point = ApplySnapping(point, normal);
@@ -204,12 +203,48 @@ public class BuildingSystem : MonoBehaviour
 
         bool validSurface = IsSurfaceValid(normal);
         bool noOverlap = !preview.HasOverlap();
-        bool canPlace = validSurface && noOverlap;
+
+        bool supported = true;
+        if (requireGroundSupport && supportCheck != null)
+            supported = supportCheck.HasSupport();
+
+        /// Check resource requirements
+        bool hasResources = HasRequiredResources();
+
+        bool canPlace = validSurface && noOverlap && supported && hasResources;
 
         preview.SetColor(canPlace ? validColor : invalidColor);
 
         if (!inputCooldown && canPlace && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
             Place();
+    }
+
+    /// Check if player has all required resources for current building
+    bool HasRequiredResources()
+    {
+        if (currentItem == null || currentItem.requiredResources == null || currentItem.requiredResources.Length == 0)
+            return true;
+
+        foreach (var requirement in currentItem.requiredResources)
+        {
+            if (!InventoryManager.Instance.HasResources(requirement.item, requirement.quantity))
+                return false;
+        }
+        return true;
+    }
+
+    /// Consume required resources when placing building
+    bool ConsumeResources()
+    {
+        if (currentItem == null || currentItem.requiredResources == null || currentItem.requiredResources.Length == 0)
+            return true;
+
+        foreach (var requirement in currentItem.requiredResources)
+        {
+            if (!InventoryManager.Instance.RemoveItem(requirement.item, requirement.quantity))
+                return false;
+        }
+        return true;
     }
 
 
@@ -227,6 +262,10 @@ public class BuildingSystem : MonoBehaviour
             if (!inputCooldown && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
             {
                 ClearHighlight();
+
+                /// Drop resources before destroying
+                building.DropResources();
+
                 Destroy(building.gameObject);
             }
         }
@@ -351,9 +390,16 @@ public class BuildingSystem : MonoBehaviour
     {
         if (snapToWorldGrid)
         {
+            // Always snap horizontally
             position.x = Mathf.Round(position.x / snapGridSize) * snapGridSize;
-            position.y = Mathf.Round(position.y / snapGridSize) * snapGridSize;
             position.z = Mathf.Round(position.z / snapGridSize) * snapGridSize;
+
+            // Only snap Y when the current item is NOT GroundOnly
+            // (GroundOnly keeps the raycast height so it sits on terrain properly)
+            if (currentItem == null || currentItem.allowedSurfaces != PlacementSurface.GroundOnly)
+            {
+                position.y = Mathf.Round(position.y / snapGridSize) * snapGridSize;
+            }
         }
         else
         {
@@ -374,11 +420,13 @@ public class BuildingSystem : MonoBehaviour
             localX = Mathf.Round(localX / snapGridSize) * snapGridSize;
             localZ = Mathf.Round(localZ / snapGridSize) * snapGridSize;
 
+            // localY stays unsnapped (keeps height along the surface normal)
             position = surfaceOrigin + right * localX + forward * localZ + normal * localY;
         }
 
         return position;
     }
+
 
     private bool IsSurfaceValid(Vector3 normal)
     {
@@ -411,6 +459,12 @@ public class BuildingSystem : MonoBehaviour
 
     private void Place()
     {
+        if (!ConsumeResources())
+        {
+            Debug.LogWarning("Failed to consume resources for building!");
+            return;
+        }
+
         var obj = Instantiate(currentItem.prefab, preview.transform.position, preview.transform.rotation);
 
         var placed = obj.GetComponent<PlacedBuilding>();
@@ -427,13 +481,21 @@ public class BuildingSystem : MonoBehaviour
 
         preview = obj.AddComponent<BuildingPreview>();
         preview.Initialize(previewMaterial, overlapMask, groundMask);
+
+        // NEW: grab support checker from child footprint
+        supportCheck = obj.GetComponentInChildren<PreviewGroundSupport>(true);
+        if (supportCheck != null)
+            supportCheck.Initialize(groundMask, supportRayDistance);
     }
+
 
     private void DestroyPreview()
     {
         if (preview != null) Destroy(preview.gameObject);
         preview = null;
+        supportCheck = null;
     }
+
 
     private bool TryGetSurfacePoint(out Vector3 point, out Vector3 normal)
     {

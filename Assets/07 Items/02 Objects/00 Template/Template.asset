@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45211c38b7d8412438389504ade5927f, type: 3}
-  m_Name: Planter
+  m_Name: Template
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
-  displayName: Planter
-  description: Used to plant.
+  displayName: 
+  description: 
   icon: {fileID: -1184960675, guid: ccf0a6f8996424c4184b5a194f31c962, type: 3}
-  prefab: {fileID: 144784770610736651, guid: 7593c90095b69aa488d52106a5c7d2d6, type: 3}
-  requiredResources:
-  - item: {fileID: 11400000, guid: 0457bc9d02301f5408fcfa9250ff0c56, type: 2}
-    quantity: 4
+  prefab: {fileID: 0}
+  requiredResources: []
   allowedSurfaces: 0
   maxGroundAngle: 0
   maxWallAngle: 0

@@ -1,29 +1,26 @@
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] GameObject inventoryPanel;
+    [SerializeField] GameObject craftingContainer;
     [SerializeField] SlotUI[] hotbarSlotUIs;
-    [SerializeField] SlotUI[] inventorySlotUIs;
 
     bool inventoryOpen;
-
     public static System.Action<bool> OnInventoryToggled;
 
     void Start()
     {
         SetupSlots();
+
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.OnHotbarSelectionChanged += UpdateHotbarSelection;
             InventoryManager.Instance.OnInventoryChanged += RefreshAllSlots;
-
             UpdateHotbarSelection(InventoryManager.Instance.GetSelectedHotbarIndex());
         }
 
-        inventoryPanel.SetActive(false);
+        craftingContainer.SetActive(false);
         RefreshAllSlots();
     }
 
@@ -42,11 +39,6 @@ public class InventoryUI : MonoBehaviour
             if (hotbarSlotUIs[i] != null)
                 hotbarSlotUIs[i].Setup(i, true);
         }
-        for (int i = 0; i < inventorySlotUIs.Length; i++)
-        {
-            if (inventorySlotUIs[i] != null)
-                inventorySlotUIs[i].Setup(i, false);
-        }
     }
 
     void Update()
@@ -60,8 +52,7 @@ public class InventoryUI : MonoBehaviour
     void ToggleInventory()
     {
         inventoryOpen = !inventoryOpen;
-        inventoryPanel.SetActive(inventoryOpen);
-
+        craftingContainer.SetActive(inventoryOpen);
         OnInventoryToggled?.Invoke(inventoryOpen);
 
         InputHandler.SetMap(inventoryOpen ? ActionMap.UI : ActionMap.Gameplay);
@@ -80,9 +71,11 @@ public class InventoryUI : MonoBehaviour
     public void CloseInventory()
     {
         if (!inventoryOpen) return;
+
         inventoryOpen = false;
-        inventoryPanel.SetActive(false);
+        craftingContainer.SetActive(false);
         InputHandler.SetMap(ActionMap.Gameplay);
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetCursorLocked(true);
@@ -104,11 +97,6 @@ public class InventoryUI : MonoBehaviour
         {
             if (hotbarSlotUIs[i] != null)
                 hotbarSlotUIs[i].UpdateDisplay();
-        }
-        for (int i = 0; i < inventorySlotUIs.Length; i++)
-        {
-            if (inventorySlotUIs[i] != null)
-                inventorySlotUIs[i].UpdateDisplay();
         }
 
         if (InventoryManager.Instance != null)

@@ -3,7 +3,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class SlotUI : MonoBehaviour,
+    IPointerClickHandler,
+    IBeginDragHandler,
+    IDragHandler,
+    IEndDragHandler,
+    IDropHandler
 {
     [SerializeField] Image iconImage;
     [SerializeField] TextMeshProUGUI quantityText;
@@ -11,22 +16,21 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, ID
     [SerializeField] Color selectedColor = Color.yellow;
 
     int slotIndex;
-    bool isHotbar;
 
-    static SlotUI dragSource;
-    bool isGhosted;
+    // Shared drag state across all slots
+    private static int draggingFromIndex = -1;
+    private static bool isDragging = false;
 
     public void Setup(int index, bool hotbar)
     {
         slotIndex = index;
-        isHotbar = hotbar;
         UpdateDisplay();
     }
 
     public void UpdateDisplay()
     {
-        InventorySlot slot = GetSlot();
-        bool isEmpty = isGhosted || slot == null || slot.IsEmpty();
+        InventorySlot slot = InventoryManager.Instance.GetHotbarSlot(slotIndex);
+        bool isEmpty = slot == null || slot.IsEmpty();
 
         if (iconImage)
         {
@@ -47,57 +51,58 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, ID
         }
     }
 
-    InventorySlot GetSlot() => isHotbar
-        ? InventoryManager.Instance.GetHotbarSlot(slotIndex)
-        : InventoryManager.Instance.GetInventorySlot(slotIndex);
-
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (isHotbar && eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left)
             InventoryManager.Instance.SelectHotbarSlot(slotIndex);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        InventorySlot slot = GetSlot();
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+
+        InventorySlot slot = InventoryManager.Instance.GetHotbarSlot(slotIndex);
         if (slot == null || slot.IsEmpty()) return;
 
-        dragSource = this;
-        isGhosted = true;
-        UpdateDisplay();
+        draggingFromIndex = slotIndex;
+        isDragging = true;
 
-        DragVisualManager.Instance?.StartDrag(slot.item.icon, slot.quantity, eventData.position);
+        if (DragVisualManager.Instance != null)
+            DragVisualManager.Instance.StartDrag(slot.item.icon, slot.quantity, eventData.position);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        DragVisualManager.Instance?.UpdatePosition(eventData.position);
+        if (!isDragging) return;
+
+        if (DragVisualManager.Instance != null)
+            DragVisualManager.Instance.UpdatePosition(eventData.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        DragVisualManager.Instance?.EndDrag();
+        if (!isDragging) return;
 
-        if (dragSource == this)
-        {
-            isGhosted = false;
-            UpdateDisplay();
-        }
+        isDragging = false;
+        draggingFromIndex = -1;
 
-        dragSource = null;
+        if (DragVisualManager.Instance != null)
+            DragVisualManager.Instance.EndDrag();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (dragSource == null || dragSource == this) return;
+        if (!isDragging) return;
+        if (draggingFromIndex < 0) return;
 
-        InventoryManager.Instance.MergeOrSwapSlots(
-            dragSource.slotIndex, dragSource.isHotbar,
-            slotIndex, isHotbar
-        );
+        // Swap the dragged slot with this slot
+        InventoryManager.Instance.SwapHotbarSlots(draggingFromIndex, slotIndex);
 
-        dragSource.isGhosted = false;
-        dragSource.UpdateDisplay();
-        UpdateDisplay();
+        // End drag visual immediately
+        isDragging = false;
+        draggingFromIndex = -1;
+
+        if (DragVisualManager.Instance != null)
+            DragVisualManager.Instance.EndDrag();
     }
 }

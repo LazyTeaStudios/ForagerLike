@@ -114,8 +114,8 @@ Material:
     - _Flow_Direction: 0.612
     - _Flow_Noise_Scale: 100
     - _Flow_Speed: 0.01
-    - _Foam_Amount: 3.1
-    - _Foam_Cutoff: 1.04
+    - _Foam_Amount: 1.4
+    - _Foam_Cutoff: 1.49
     - _Foam_Speed: 0.01
     - _GlossMapScale: 0
     - _Glossiness: 0

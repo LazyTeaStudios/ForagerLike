@@ -10,26 +10,18 @@ public class ItemData : ScriptableObject
     public int maxStackSize = 64;
     public ItemType itemType;
 
-    [Header("Tool Properties")]
-    [ShowIf(nameof(itemType), ItemType.Tool)]
-    public ToolData toolData;
-
     [Header("Prefab Reference")]
     public GameObject itemPrefab;
 
-    [Header("Building Properties")]
-    [ShowIf(nameof(itemType), ItemType.Building)]
-    public GameObject buildingPrefab;
-
-    [ShowIf(nameof(itemType), ItemType.Building)]
-    public Vector2Int buildingSize = Vector2Int.one;
-
-    public bool IsPlaceable => itemType == ItemType.Building && buildingPrefab != null;
+    [Header("Seed Properties")]
+    [ShowIf(nameof(itemType), ItemType.Seed)]
+    public int growthStages = 5;
+    [ShowIf(nameof(itemType), ItemType.Seed)]
+    public GameObject plantPrefab;
 }
 
 public enum ItemType
 {
-    Tool,
     Material,
-    Building
+    Seed
 }

@@ -9,6 +9,7 @@ public class BuildingPreview : MonoBehaviour
     private LayerMask ignoreMask;
     private Collider[] overlapResults = new Collider[20];
 
+
     public void Initialize(Material material, LayerMask overlapLayer, LayerMask ignoreLayer)
     {
         overlapMask = overlapLayer;
@@ -68,12 +69,12 @@ public class BuildingPreview : MonoBehaviour
         {
             if (previewMaterialInstance.HasProperty("_Color"))
                 previewMaterialInstance.color = color;
+
             if (previewMaterialInstance.HasProperty("_BaseColor"))
                 previewMaterialInstance.SetColor("_BaseColor", color);
         }
     }
 
-    // Rest of the code remains the same...
     public bool HasOverlap()
     {
         foreach (var col in colliders)
