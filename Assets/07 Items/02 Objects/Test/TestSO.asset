@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45211c38b7d8412438389504ade5927f, type: 3}
+  m_Name: TestSO
+  m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
+  displayName: Test
+  description: 'Test
+
+'
+  icon: {fileID: -1184960675, guid: ccf0a6f8996424c4184b5a194f31c962, type: 3}
+  prefab: {fileID: 144784770610736651, guid: f87957414679cee4d98147544298da63, type: 3}
+  allowedSurfaces: 0
+  maxGroundAngle: 0
+  maxWallAngle: 0
+  cantSnapToGrid: 0

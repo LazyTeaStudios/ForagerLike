@@ -166,6 +166,14 @@ MonoBehaviour:
     - e011be66ea374174bba018e80d40e91d
     - df0e1b2af442e2c47b1dadeab164b9e6
     - 367ab3d55b12373498b117eefb6804e2
+    - 72589719770b04ead999af902c0459f8
+    - 7c7cf4eb31e31664ba9e8fe7597b9198
+    - 32bca3c0967b305419afe814fe91778e
+    - 2d8d8d5e8807f9147b6d45b4109b3003
+    - 929a48eb70d2c9b4c82cd818e402796c
+    - f184615d7c10f2a46925b981f6e6f767
+    - e18849ae444833542a8585b2ee10b9d3
+    - 730c5242a1265384e83314fb146f3668
     values:
     - guid: 00000000000000001000000000000000
       iColor: 0
@@ -799,9 +807,9 @@ MonoBehaviour:
       autoIconDirty: 0
     - guid: da461bb152ac37641a29b22ca725b3a1
       iColor: 0
-      autoIcon: 
+      autoIcon: cs Script Icon
       customIcon: cs Script Icon
-      autoIconDirty: 1
+      autoIconDirty: 0
     - guid: 0f46202174f6e7349911802a33fc7f8d
       iColor: 0
       autoIcon: 
@@ -923,6 +931,46 @@ MonoBehaviour:
       customIcon: 
       autoIconDirty: 0
     - guid: 367ab3d55b12373498b117eefb6804e2
+      iColor: 0
+      autoIcon: 
+      customIcon: 
+      autoIconDirty: 0
+    - guid: 72589719770b04ead999af902c0459f8
+      iColor: 0
+      autoIcon: 
+      customIcon: 
+      autoIconDirty: 0
+    - guid: 7c7cf4eb31e31664ba9e8fe7597b9198
+      iColor: 0
+      autoIcon: 
+      customIcon: 
+      autoIconDirty: 0
+    - guid: 32bca3c0967b305419afe814fe91778e
+      iColor: 0
+      autoIcon: 
+      customIcon: 
+      autoIconDirty: 0
+    - guid: 2d8d8d5e8807f9147b6d45b4109b3003
+      iColor: 8
+      autoIcon: Prefab Icon
+      customIcon: 
+      autoIconDirty: 0
+    - guid: 929a48eb70d2c9b4c82cd818e402796c
+      iColor: 0
+      autoIcon: 
+      customIcon: 
+      autoIconDirty: 0
+    - guid: f184615d7c10f2a46925b981f6e6f767
+      iColor: 0
+      autoIcon: 
+      customIcon: 
+      autoIconDirty: 0
+    - guid: e18849ae444833542a8585b2ee10b9d3
+      iColor: 0
+      autoIcon: 
+      customIcon: 
+      autoIconDirty: 0
+    - guid: 730c5242a1265384e83314fb146f3668
       iColor: 0
       autoIcon: 
       customIcon: 
