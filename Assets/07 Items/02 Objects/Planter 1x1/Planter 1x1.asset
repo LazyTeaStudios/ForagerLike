@@ -16,7 +16,9 @@ MonoBehaviour:
   description: 1x1 Planter for Growing up to 4 Flowers
   icon: {fileID: -1184960675, guid: ccf0a6f8996424c4184b5a194f31c962, type: 3}
   prefab: {fileID: 144784770610736651, guid: c7463142d1a41e5499b628607eb171e8, type: 3}
-  requiredResources: []
+  requiredResources:
+  - item: {fileID: 11400000, guid: 0457bc9d02301f5408fcfa9250ff0c56, type: 2}
+    quantity: 5
   allowedSurfaces: 0
   maxGroundAngle: 0
   maxWallAngle: 0
