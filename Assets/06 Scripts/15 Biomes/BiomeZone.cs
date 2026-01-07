@@ -30,6 +30,11 @@ public class BiomeZone : MonoBehaviour
     [SerializeField] private bool drawAllowedCells = true;
     [Range(0.1f, 1f)][SerializeField] private float allowedCellFill = 0.9f;
 
+    [Header("Ground-aligned Gizmos")]
+    [SerializeField] private bool alignGizmosToGround = true;
+    [SerializeField] private float gizmoGroundOffset = 0.02f;
+    [SerializeField] private float gizmoRaycastHeight = 50f;
+
     private readonly List<GameObject> spawnedObjects = new List<GameObject>();
     private bool isPaused;
 
@@ -178,6 +183,26 @@ public class BiomeZone : MonoBehaviour
             allowedCells = newArr;
         }
     }
+
+    private bool TryGetGroundYAt(Vector3 xzPoint, out float y)
+    {
+        y = transform.position.y;
+
+        if (biomeData == null) return false;
+
+        Vector3 origin = new Vector3(xzPoint.x, xzPoint.y + gizmoRaycastHeight, xzPoint.z);
+        float dist = gizmoRaycastHeight * 2f;
+
+        // Only hit ground layer for visualization
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, dist, biomeData.groundLayer, QueryTriggerInteraction.Ignore))
+        {
+            y = hit.point.y;
+            return true;
+        }
+
+        return false;
+    }
+
 
     private int Index(int x, int y) => (y * gridWidth) + x;
     private bool InBounds(int x, int y) => x >= 0 && y >= 0 && x < gridWidth && y < gridHeight;
@@ -342,8 +367,21 @@ public class BiomeZone : MonoBehaviour
             {
                 if (!GetAllowed(x, y)) continue;
                 Vector3 c = CellCenterWorld(x, y);
-                c.y = transform.position.y;
+
+                if (alignGizmosToGround && biomeData != null)
+                {
+                    if (TryGetGroundYAt(c, out float groundY))
+                        c.y = groundY + gizmoGroundOffset;
+                    else
+                        c.y = transform.position.y; // fallback
+                }
+                else
+                {
+                    c.y = transform.position.y;
+                }
+
                 Gizmos.DrawCube(c, boxSize);
+
             }
         }
     }

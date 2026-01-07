@@ -10,12 +10,53 @@ public class BiomeZoneEditor : Editor
     private ToolMode _tool = ToolMode.None;
     private float _brushRadius = 2f;
 
-    // What layer to raycast against when painting
-    // (default to Everything; you can change here easily if you want)
-    private LayerMask _paintRaycastMask = ~0;
+    // Hide/Show state (persisted)
+    private bool _showGridAndPainting = true;
+    private const string PrefKey = "BiomeZoneEditor_ShowGridAndPainting";
+
+    // Serialized properties (we draw only what we want)
+    private SerializedProperty _biomeData;
+
+    private SerializedProperty _raycastHeight;
+    private SerializedProperty _ignoreRaycastLayers;
+    private SerializedProperty _maxSpawnAttemptsPerTick;
+    private SerializedProperty _maxGroundSlopeAngle;
+
+    private SerializedProperty _gridWidth;
+    private SerializedProperty _gridHeight;
+    private SerializedProperty _cellSize;
+
+    private SerializedProperty _drawGridGizmos;
+    private SerializedProperty _drawAllowedCells;
+    private SerializedProperty _allowedCellFill;
+
+    private SerializedProperty _alignGizmosToGround;
+    private SerializedProperty _gizmoGroundOffset;
+    private SerializedProperty _gizmoRaycastHeight;
 
     private void OnEnable()
     {
+        _showGridAndPainting = EditorPrefs.GetBool(PrefKey, true);
+
+        _biomeData = serializedObject.FindProperty("biomeData");
+
+        _raycastHeight = serializedObject.FindProperty("raycastHeight");
+        _ignoreRaycastLayers = serializedObject.FindProperty("ignoreRaycastLayers");
+        _maxSpawnAttemptsPerTick = serializedObject.FindProperty("maxSpawnAttemptsPerTick");
+        _maxGroundSlopeAngle = serializedObject.FindProperty("maxGroundSlopeAngle");
+
+        _gridWidth = serializedObject.FindProperty("gridWidth");
+        _gridHeight = serializedObject.FindProperty("gridHeight");
+        _cellSize = serializedObject.FindProperty("cellSize");
+
+        _drawGridGizmos = serializedObject.FindProperty("drawGridGizmos");
+        _drawAllowedCells = serializedObject.FindProperty("drawAllowedCells");
+        _allowedCellFill = serializedObject.FindProperty("allowedCellFill");
+
+        _alignGizmosToGround = serializedObject.FindProperty("alignGizmosToGround");
+        _gizmoGroundOffset = serializedObject.FindProperty("gizmoGroundOffset");
+        _gizmoRaycastHeight = serializedObject.FindProperty("gizmoRaycastHeight");
+
         SceneView.duringSceneGui += OnSceneGUI;
     }
 
@@ -26,9 +67,69 @@ public class BiomeZoneEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        DrawDefaultInspector();
+        serializedObject.Update();
+
+        // ---- Main (always visible) ----
+        EditorGUILayout.LabelField("Biome", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_biomeData);
+
+        EditorGUILayout.Space(8);
+
+        EditorGUILayout.LabelField("Spawning", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_raycastHeight);
+        EditorGUILayout.PropertyField(_ignoreRaycastLayers);
+        EditorGUILayout.PropertyField(_maxSpawnAttemptsPerTick);
+        EditorGUILayout.PropertyField(_maxGroundSlopeAngle);
 
         EditorGUILayout.Space(10);
+
+        // ---- Show/Hide button ----
+        string btnLabel = _showGridAndPainting ? "Hide Grid & Painting" : "Show Grid & Painting";
+        if (GUILayout.Button(btnLabel, GUILayout.Height(26)))
+        {
+            _showGridAndPainting = !_showGridAndPainting;
+            EditorPrefs.SetBool(PrefKey, _showGridAndPainting);
+
+            // If hiding, also disable painting tool to avoid accidental edits
+            if (!_showGridAndPainting)
+                _tool = ToolMode.None;
+
+            Repaint();
+            SceneView.RepaintAll();
+        }
+
+        // ---- Grid + Painting (optional) ----
+        if (_showGridAndPainting)
+        {
+            EditorGUILayout.Space(10);
+            EditorGUILayout.LabelField("Grid", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(_gridWidth);
+            EditorGUILayout.PropertyField(_gridHeight);
+            EditorGUILayout.PropertyField(_cellSize);
+
+            EditorGUILayout.Space(10);
+            DrawPaintingUI();
+
+            EditorGUILayout.Space(10);
+            EditorGUILayout.LabelField("Gizmos", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(_drawGridGizmos);
+            EditorGUILayout.PropertyField(_drawAllowedCells);
+            EditorGUILayout.PropertyField(_allowedCellFill);
+
+            EditorGUILayout.Space(6);
+            EditorGUILayout.LabelField("Ground-aligned Gizmos", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(_alignGizmosToGround);
+            EditorGUILayout.PropertyField(_gizmoGroundOffset);
+            EditorGUILayout.PropertyField(_gizmoRaycastHeight);
+        }
+
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    private void DrawPaintingUI()
+    {
+        var zone = (BiomeZone)target;
+
         EditorGUILayout.LabelField("Zone Painting", EditorStyles.boldLabel);
 
         using (new EditorGUILayout.HorizontalScope())
@@ -55,18 +156,18 @@ public class BiomeZoneEditor : Editor
         {
             if (GUILayout.Button("Clear Allowed (All Off)"))
             {
-                var zone = (BiomeZone)target;
                 Undo.RecordObject(zone, "Clear Zone Grid");
                 zone.ClearAll(false);
                 EditorUtility.SetDirty(zone);
+                SceneView.RepaintAll();
             }
 
             if (GUILayout.Button("Fill Allowed (All On)"))
             {
-                var zone = (BiomeZone)target;
                 Undo.RecordObject(zone, "Fill Zone Grid");
                 zone.ClearAll(true);
                 EditorUtility.SetDirty(zone);
+                SceneView.RepaintAll();
             }
         }
 
@@ -79,30 +180,41 @@ public class BiomeZoneEditor : Editor
 
     private void OnSceneGUI(SceneView view)
     {
+        // Only allow painting when the UI is visible AND a tool is selected
+        if (!_showGridAndPainting) return;
+
         var zone = (BiomeZone)target;
         if (_tool == ToolMode.None) return;
 
         Event e = Event.current;
+        if (e.alt) return; // allow orbit
 
-        // Let Alt still orbit camera
-        if (e.alt) return;
+        // Raycast mask: prefer biome ground layer if available, otherwise Everything
+        LayerMask paintMask = ~0;
+        var biomeDataField = typeof(BiomeZone).GetField("biomeData", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        if (biomeDataField != null)
+        {
+            var bd = biomeDataField.GetValue(zone) as BiomeData;
+            if (bd != null) paintMask = bd.groundLayer;
+        }
 
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, 10000f, _paintRaycastMask, QueryTriggerInteraction.Ignore))
+        if (!Physics.Raycast(ray, out RaycastHit hit, 10000f, paintMask, QueryTriggerInteraction.Ignore))
             return;
 
         Vector3 p = hit.point;
 
-        // Draw brush preview
+        // Brush preview
         Handles.color = (_tool == ToolMode.Paint)
             ? new Color(0f, 1f, 0f, 0.25f)
             : new Color(1f, 0f, 0f, 0.25f);
+
         Handles.DrawSolidDisc(p, Vector3.up, _brushRadius);
         Handles.color = (_tool == ToolMode.Paint) ? Color.green : Color.red;
         Handles.DrawWireDisc(p, Vector3.up, _brushRadius);
 
-        // Prevent selecting objects while painting
+        // Prevent selection while painting
         HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 
         bool paintEvent =
