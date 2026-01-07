@@ -388,44 +388,81 @@ public class BuildingSystem : MonoBehaviour
     // ---------------- rest of your existing methods (unchanged) ----------------
     private Vector3 ApplySnapping(Vector3 position, Vector3 normal)
     {
-        if (snapToWorldGrid)
-        {
-            // Always snap horizontally
-            position.x = Mathf.Round(position.x / snapGridSize) * snapGridSize;
-            position.z = Mathf.Round(position.z / snapGridSize) * snapGridSize;
+        // If you still want the old behavior sometimes:
+        if (!snapToWorldGrid)
+            return ApplySnappingOnSurfaceAxes(position, normal);
 
-            // Only snap Y when the current item is NOT GroundOnly
-            // (GroundOnly keeps the raycast height so it sits on terrain properly)
-            if (currentItem == null || currentItem.allowedSurfaces != PlacementSurface.GroundOnly)
-            {
-                position.y = Mathf.Round(position.y / snapGridSize) * snapGridSize;
-            }
+        // --- Rotated-grid snapping ---
+        // Build the preview rotation you are going to use this frame
+        Quaternion baseRotation = Quaternion.FromToRotation(Vector3.up, normal);
+        Quaternion userRotation = Quaternion.AngleAxis(currentRotation, normal);
+        Quaternion finalRotation = baseRotation * userRotation;
+
+        // Grid axes in world space (rotated with the building)
+        Vector3 gridRight = finalRotation * Vector3.right;
+        Vector3 gridForward = finalRotation * Vector3.forward;
+
+        // Ensure they lie on the surface plane (important on slopes/walls)
+        gridRight = Vector3.ProjectOnPlane(gridRight, normal).normalized;
+        gridForward = Vector3.ProjectOnPlane(gridForward, normal).normalized;
+
+        // Choose an origin for the grid. World origin is fine, but you can change this.
+        Vector3 origin = Vector3.zero;
+
+        Vector3 toPoint = position - origin;
+
+        float x = Vector3.Dot(toPoint, gridRight);
+        float z = Vector3.Dot(toPoint, gridForward);
+
+        x = Mathf.Round(x / snapGridSize) * snapGridSize;
+        z = Mathf.Round(z / snapGridSize) * snapGridSize;
+
+        Vector3 snapped = origin + gridRight * x + gridForward * z;
+
+        // Preserve the "height" along the normal (so you don't sink into terrain)
+        // For GroundOnly you wanted to keep the raycast height. We'll do that.
+        if (currentItem != null && currentItem.allowedSurfaces == PlacementSurface.GroundOnly)
+        {
+            // Keep original distance from plane through snapped point along normal
+            // (This keeps it sitting on terrain nicely)
+            float alongNormal = Vector3.Dot(position - snapped, normal);
+            snapped += normal * alongNormal;
         }
         else
         {
-            Vector3 right = Vector3.Cross(Vector3.up, normal);
-            if (right.magnitude < 0.001f)
-                right = Vector3.Cross(Vector3.forward, normal);
-            right.Normalize();
-
-            Vector3 forward = Vector3.Cross(normal, right).normalized;
-
-            Vector3 surfaceOrigin = Vector3.zero;
-            Vector3 localPos = position - surfaceOrigin;
-
-            float localX = Vector3.Dot(localPos, right);
-            float localZ = Vector3.Dot(localPos, forward);
-            float localY = Vector3.Dot(localPos, normal);
-
-            localX = Mathf.Round(localX / snapGridSize) * snapGridSize;
-            localZ = Mathf.Round(localZ / snapGridSize) * snapGridSize;
-
-            // localY stays unsnapped (keeps height along the surface normal)
-            position = surfaceOrigin + right * localX + forward * localZ + normal * localY;
+            // If you want Y-snapping for non-ground-only, you can optionally snap along the normal axis too:
+            // float y = Vector3.Dot(toPoint, normal);
+            // y = Mathf.Round(y / snapGridSize) * snapGridSize;
+            // snapped = origin + gridRight * x + gridForward * z + normal * y;
+            // But usually you DON'T want to move along normal when placing on uneven surfaces.
         }
 
-        return position;
+        return snapped;
     }
+
+    // Keep your old "surface axes" snapping for the non-world-grid mode if you want it
+    private Vector3 ApplySnappingOnSurfaceAxes(Vector3 position, Vector3 normal)
+    {
+        Vector3 right = Vector3.Cross(Vector3.up, normal);
+        if (right.magnitude < 0.001f)
+            right = Vector3.Cross(Vector3.forward, normal);
+        right.Normalize();
+
+        Vector3 forward = Vector3.Cross(normal, right).normalized;
+
+        Vector3 origin = Vector3.zero;
+        Vector3 localPos = position - origin;
+
+        float localX = Vector3.Dot(localPos, right);
+        float localZ = Vector3.Dot(localPos, forward);
+        float localY = Vector3.Dot(localPos, normal);
+
+        localX = Mathf.Round(localX / snapGridSize) * snapGridSize;
+        localZ = Mathf.Round(localZ / snapGridSize) * snapGridSize;
+
+        return origin + right * localX + forward * localZ + normal * localY;
+    }
+
 
 
     private bool IsSurfaceValid(Vector3 normal)
