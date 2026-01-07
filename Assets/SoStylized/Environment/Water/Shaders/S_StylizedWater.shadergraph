@@ -128,6 +128,9 @@
         },
         {
             "m_Id": "ad46f0b021e147878c2ba351c2d0f8b6"
+        },
+        {
+            "m_Id": "d4bc89b500c944a79e62eef6453f8abd"
         }
     ],
     "m_Keywords": [],
@@ -944,6 +947,9 @@
         },
         {
             "m_Id": "aa6d447356f44148b70cbaea59312ad6"
+        },
+        {
+            "m_Id": "6e35066d79db4642a78cf63460979918"
         }
     ],
     "m_GroupDatas": [
@@ -5708,7 +5714,7 @@
     "m_DefaultValue": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": 1.0
     },
     "m_Labels": []
 }
@@ -8080,7 +8086,7 @@
     },
     "m_DefaultValue": {
         "x": 0.0,
-        "y": 0.0
+        "y": 1.0
     },
     "m_Labels": []
 }
@@ -8130,8 +8136,8 @@
     "m_ObjectId": "1aab2abe59304504b5056cbd052e275f",
     "m_Title": "Shoreline Foam",
     "m_Position": {
-        "x": 1401.0,
-        "y": -1825.0
+        "x": 1400.9998779296875,
+        "y": -1824.9998779296875
     }
 }
 
@@ -9849,8 +9855,8 @@
         "y": 1.0
     },
     "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -1.0,
+        "y": 1.0
     },
     "m_Labels": []
 }
@@ -10136,6 +10142,9 @@
     "m_AlphaClip": false,
     "m_CastShadows": false,
     "m_ReceiveShadows": false,
+    "m_DisableTint": false,
+    "m_AdditionalMotionVectorMode": 0,
+    "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
     "m_CustomEditorGUI": "",
     "m_SupportVFX": false
@@ -10282,9 +10291,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 116.00003814697266,
-            "y": -803.0,
-            "width": 207.99996948242188,
+            "x": -29.999996185302736,
+            "y": -784.9999389648438,
+            "width": 207.99998474121095,
             "height": 104.0
         }
     },
@@ -10309,7 +10318,7 @@
             "x": 0.04491665959358215,
             "y": 0.31096163392066958,
             "z": 0.5390000343322754,
-            "w": 0.00881971511989832
+            "w": 0.00588998245075345
         },
         {
             "x": 0.07156626135110855,
@@ -10318,15 +10327,15 @@
             "w": 0.3205920457839966
         },
         {
-            "x": 0.003921590279787779,
-            "y": 0.772549033164978,
-            "z": 0.336993545293808,
+            "x": 0.15472587943077088,
+            "y": 0.18495558202266694,
+            "z": 0.5754716992378235,
             "w": 0.7911803126335144
         },
         {
-            "x": 0.019607849419116975,
-            "y": 0.5843137502670288,
-            "z": 0.4204840362071991,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
         }
     ],
@@ -11158,8 +11167,8 @@
     "m_ObjectId": "35f61c9586f54426ad52a42fca703c53",
     "m_Title": "Faked Reflection",
     "m_Position": {
-        "x": 4420.0,
-        "y": 1550.0
+        "x": 4419.99951171875,
+        "y": 1549.999755859375
     }
 }
 
@@ -15371,6 +15380,9 @@
         },
         {
             "m_Id": "6b143ce8f6f24a7fae633b82c092a4b3"
+        },
+        {
+            "m_Id": "d4bc89b500c944a79e62eef6453f8abd"
         }
     ]
 }
@@ -15654,7 +15666,7 @@
     "m_DefaultValue": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": 1.0
     },
     "m_Labels": []
 }
@@ -17076,7 +17088,7 @@
     "m_Title": "Specular",
     "m_Position": {
         "x": 6626.0,
-        "y": 926.0
+        "y": 925.9998779296875
     }
 }
 
@@ -17194,7 +17206,7 @@
     "m_DefaultValue": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": 1.0
     },
     "m_Labels": []
 }
@@ -17673,6 +17685,42 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "6e35066d79db4642a78cf63460979918",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 134.2650604248047,
+            "y": -874.4224243164063,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "92cd370c8902428dbf9241c1092eacc9"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "d4bc89b500c944a79e62eef6453f8abd"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.ScreenPositionMaterialSlot",
     "m_ObjectId": "6e5415ee6af248ab83654bcae9cfee52",
     "m_Id": 0,
@@ -17958,7 +18006,7 @@
     "m_DefaultValue": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": 1.0
     },
     "m_Labels": []
 }
@@ -22431,6 +22479,18 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.GradientMaterialSlot",
+    "m_ObjectId": "92cd370c8902428dbf9241c1092eacc9",
+    "m_Id": 0,
+    "m_DisplayName": "Gradient",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3
+}
+
+{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "92d0519382114d24b17146c5ab9c75c5",
@@ -22567,7 +22627,7 @@
     "m_DefaultValue": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": 1.0
     },
     "m_Labels": []
 }
@@ -24147,8 +24207,8 @@
         "y": 300.0
     },
     "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -1.0,
+        "y": 1.0
     },
     "m_Labels": []
 }
@@ -26938,8 +26998,8 @@
         "y": 1.0
     },
     "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 1.0,
+        "y": 1.0
     },
     "m_Labels": []
 }
@@ -28048,8 +28108,8 @@
         "y": 1000.0
     },
     "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -1.0,
+        "y": 1.0
     },
     "m_Labels": []
 }
@@ -30782,6 +30842,99 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.GradientShaderProperty",
+    "m_ObjectId": "d4bc89b500c944a79e62eef6453f8abd",
+    "m_Guid": {
+        "m_GuidSerialized": "a98a670e-b08f-4c44-88ec-efb289f8c67f"
+    },
+    "m_Name": "Gradient",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Gradient",
+    "m_DefaultReferenceName": "_Gradient",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": false,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "serializedVersion": "2",
+        "key0": {
+            "r": 0.04491665959358215,
+            "g": 0.31096163392066958,
+            "b": 0.5390000343322754,
+            "a": 0.9803921580314636
+        },
+        "key1": {
+            "r": 0.07156626135110855,
+            "g": 0.3864578902721405,
+            "b": 0.5940000414848328,
+            "a": 0.9960784316062927
+        },
+        "key2": {
+            "r": 0.003921590279787779,
+            "g": 0.772549033164978,
+            "b": 0.336993545293808,
+            "a": 0.7215686440467835
+        },
+        "key3": {
+            "r": 0.019607849419116975,
+            "g": 0.5843137502670288,
+            "b": 0.4204840362071991,
+            "a": 0.5333333611488342
+        },
+        "key4": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+        },
+        "key5": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+        },
+        "key6": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+        },
+        "key7": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+        },
+        "ctime0": 386,
+        "ctime1": 21010,
+        "ctime2": 51850,
+        "ctime3": 65535,
+        "ctime4": 0,
+        "ctime5": 0,
+        "ctime6": 0,
+        "ctime7": 0,
+        "atime0": 1928,
+        "atime1": 9059,
+        "atime2": 37008,
+        "atime3": 65535,
+        "atime4": 0,
+        "atime5": 0,
+        "atime6": 0,
+        "atime7": 0,
+        "m_Mode": 0,
+        "m_ColorSpace": -1,
+        "m_NumColorKeys": 4,
+        "m_NumAlphaKeys": 4
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "d512cba4fbed48c0be42d6157c42b937",
     "m_Id": 1,
@@ -30983,7 +31136,7 @@
     },
     "m_DefaultValue": {
         "x": 0.0,
-        "y": 0.0
+        "y": 1.0
     },
     "m_Labels": []
 }
@@ -32665,7 +32818,7 @@
     "m_DefaultValue": {
         "x": 0.0,
         "y": 0.0,
-        "z": 0.0
+        "z": 1.0
     },
     "m_Labels": []
 }
@@ -33188,8 +33341,8 @@
         "y": 1.0
     },
     "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 1.0,
+        "y": 1.0
     },
     "m_Labels": []
 }
@@ -35472,7 +35625,7 @@
     },
     "m_DefaultValue": {
         "x": 0.0,
-        "y": 0.0
+        "y": 1.0
     },
     "m_Labels": []
 }

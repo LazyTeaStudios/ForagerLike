@@ -151,7 +151,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Normal_Strength: 0.3
+    - _Normal_Strength: 0.05
     - _OcclusionStrength: 1
     - _Oversampling: 4
     - _Parallax: 0.005
@@ -187,7 +187,7 @@ Material:
     - _Water_Color_Depth: 10
     - _Water_Color_Falloff: 0.6
     - _Water_Color_Fresnel_Multiplier: 1.79
-    - _Water_Color_Multiplier: 1
+    - _Water_Color_Multiplier: 0.3
     - _Water_Detail_Scale: 30
     - _Water_Emissive_Strength: 0
     - _Water_Opacity_Multiplier: 1
@@ -203,7 +203,7 @@ Material:
     - _ShallowWaterColor: {r: 0, g: 1, b: 0.7166667, a: 0.29803923}
     - _Shoreline_Foam_Color: {r: 0.85800004, g: 0.85800004, b: 0.85800004, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Specular_Color: {r: 0.01886791, g: 0.01886791, b: 0.01886791, a: 1}
+    - _Specular_Color: {r: 0, g: 0, b: 0, a: 1}
     - _Specular_Color_1: {r: 0, g: 0, b: 0, a: 1}
     - _Specular_Color_Far: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
