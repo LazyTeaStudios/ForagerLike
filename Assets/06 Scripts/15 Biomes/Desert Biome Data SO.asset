@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eda4f603873ef842a1c6b6fa8edebcd, type: 3}
   m_Name: Desert Biome Data SO
   m_EditorClassIdentifier: 
-  biomeType: 0
+  biomeType: 1
   spawnablePrefabs:
-  - {fileID: 5006144953640104743, guid: cdc4ce2fc930d574e8c77e63af578606, type: 3}
+  - {fileID: 8369392626471216749, guid: babf2cafa446ef541acfe438f79f3aa1, type: 3}
   maxSpawnCount: 5
   groundLayer:
     serializedVersion: 2
