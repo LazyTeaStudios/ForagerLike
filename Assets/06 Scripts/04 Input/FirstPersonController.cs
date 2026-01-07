@@ -66,7 +66,7 @@ public class FirstPersonController : MonoBehaviour
     // NEW: track horizontal velocity ourselves so we can apply air drag smoothly
     private Vector3 _horizontalVelocity;
 
-    private const float _threshold = 0.01f;
+    private const float _threshold = 0.000001f;
 
     private void Awake()
     {

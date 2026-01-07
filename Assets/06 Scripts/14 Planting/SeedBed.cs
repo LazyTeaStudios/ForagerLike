@@ -6,9 +6,27 @@ public class SeedBed : MonoBehaviour
     [SerializeField] private Transform plantPosition;
     [SerializeField] private GameObject readyToHarvestIndicator;
 
+    [Header("Visual Smoothing")]
+    [Tooltip("How quickly the plant scale moves toward the target each second. Higher = snappier.")]
+    [SerializeField] private float growthSmoothSpeed = 6f;
+
+    [Tooltip("Starting scale of the plant when planted.")]
+    [SerializeField] private float minScale = 0.2f;
+
+    [Tooltip("Final scale of the plant when fully grown.")]
+    [SerializeField] private float maxScale = 1f;
+
     private ItemData currentSeed;
     private GameObject currentPlant;
+
     private int currentGrowthStage = 0;
+
+    // Tick-driven "target" (where the plant should be after the latest tick)
+    private float targetGrowthPercent = 0f;
+
+    // What we're currently displaying (smoothed)
+    private float visualGrowthPercent = 0f;
+
     private bool isGrowing = false;
 
     void Awake()
@@ -22,20 +40,37 @@ public class SeedBed : MonoBehaviour
 
     void OnEnable()
     {
-        TickManager.OnTick += Grow;
+        TickManager.OnTick += GrowTick;
     }
 
     void OnDisable()
     {
-        TickManager.OnTick -= Grow;
+        TickManager.OnTick -= GrowTick;
+    }
+
+    void Update()
+    {
+        if (currentSeed == null || currentPlant == null)
+            return;
+
+        // Smoothly move the visual growth toward the tick-based target.
+        // Exponential smoothing: stable across different frame rates.
+        visualGrowthPercent = Mathf.Lerp(
+            visualGrowthPercent,
+            targetGrowthPercent,
+            1f - Mathf.Exp(-growthSmoothSpeed * Time.deltaTime)
+        );
+
+        float scale = Mathf.Lerp(minScale, maxScale, visualGrowthPercent);
+        currentPlant.transform.localScale = Vector3.one * scale;
     }
 
     void OnMouseEnter()
     {
-        /// Show growth info when hovering
-        if (isGrowing && currentSeed != null)
+        // Show growth info when hovering (use visual so it matches what you see)
+        if ((isGrowing || IsFullyGrown()) && currentSeed != null)
         {
-            float percent = (currentGrowthStage / (float)currentSeed.growthStages) * 100f;
+            float percent = visualGrowthPercent * 100f;
             Debug.Log($"Growth: {percent:F0}%");
         }
     }
@@ -45,33 +80,40 @@ public class SeedBed : MonoBehaviour
         if (seed == null || seed.itemType != ItemType.Seed || seed.plantPrefab == null)
             return false;
 
-        if (isGrowing)
+        if (IsOccupied())
             return false;
 
         currentSeed = seed;
         currentGrowthStage = 0;
         isGrowing = true;
 
+        targetGrowthPercent = 0f;
+        visualGrowthPercent = 0f;
+
         currentPlant = Instantiate(seed.plantPrefab, plantPosition.position, plantPosition.rotation, plantPosition);
-        currentPlant.transform.localScale = Vector3.one * 0.2f;
+        currentPlant.transform.localScale = Vector3.one * minScale;
+
+        if (readyToHarvestIndicator)
+            readyToHarvestIndicator.SetActive(false);
 
         return true;
     }
 
-    void Grow()
+    // Called by TickManager
+    void GrowTick()
     {
         if (!isGrowing || currentSeed == null || currentPlant == null)
             return;
 
         currentGrowthStage++;
 
-        float growthPercent = (float)currentGrowthStage / currentSeed.growthStages;
-        float scale = Mathf.Lerp(0.2f, 1f, growthPercent);
-        currentPlant.transform.localScale = Vector3.one * scale;
+        // Update the target growth based on the new stage.
+        targetGrowthPercent = Mathf.Clamp01(currentGrowthStage / (float)currentSeed.growthStages);
 
         if (currentGrowthStage >= currentSeed.growthStages)
         {
             isGrowing = false;
+            targetGrowthPercent = 1f; // ensure final
 
             if (readyToHarvestIndicator)
                 readyToHarvestIndicator.SetActive(true);
@@ -99,6 +141,10 @@ public class SeedBed : MonoBehaviour
         currentSeed = null;
         currentPlant = null;
         currentGrowthStage = 0;
+
+        targetGrowthPercent = 0f;
+        visualGrowthPercent = 0f;
+
         isGrowing = false;
     }
 }
