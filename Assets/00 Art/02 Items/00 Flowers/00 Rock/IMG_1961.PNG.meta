@@ -175,7 +175,7 @@ TextureImporter:
         width: 2048
         height: 2048
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -184,6 +184,28 @@ TextureImporter:
       bones: []
       spriteID: b7fdea287282a664cbc09b874c13ef5a
       internalID: -257155142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IMG_1961_1
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 740
+        width: 607
+        height: 682
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5bd0add2266cee46ada4a244be206d7
+      internalID: -2062612301
       vertices: []
       indices: 
       edges: []

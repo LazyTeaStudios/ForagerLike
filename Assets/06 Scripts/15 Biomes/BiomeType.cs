@@ -2,6 +2,6 @@ using System;
 
 public enum BiomeType
 {
-    Mountain,
-    Desert
+    Rock_Plant,
+    Wood_Plant
 }
