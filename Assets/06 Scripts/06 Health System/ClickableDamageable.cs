@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Makes an object clickable and deals damage to its HealthSystem.
-/// </summary>
 [RequireComponent(typeof(HealthSystem))]
 public class ClickableDamageable : MonoBehaviour
 {
@@ -14,15 +11,24 @@ public class ClickableDamageable : MonoBehaviour
     [SerializeField] private LayerMask clickLayers;
 
     [Header("Collider")]
-    [SerializeField] private Collider coll;   // assign child collider here
+    [SerializeField] private Collider coll;
+
+    [Header("Feedback")]
+    [SerializeField] private float scaleMultiplier = 1.05f;
+    [SerializeField] private float scaleDuration = 0.15f;
 
     private HealthSystem healthSystem;
     private Camera mainCamera;
+    private Vector3 originalScale;
+    private bool isScaling;
+    private float scaleTimer;
+    private Vector3 targetScale;
 
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
         mainCamera = Camera.main;
+        originalScale = transform.localScale;
     }
 
     private void Update()
@@ -30,6 +36,11 @@ public class ClickableDamageable : MonoBehaviour
         if (InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
         {
             CheckForClick();
+        }
+
+        if (isScaling)
+        {
+            UpdateScale();
         }
     }
 
@@ -44,7 +55,38 @@ public class ClickableDamageable : MonoBehaviour
             if (hit.collider == coll)
             {
                 healthSystem.TakeDamage(damagePerClick);
+                TriggerScaleFeedback();
             }
         }
+    }
+
+    private void TriggerScaleFeedback()
+    {
+        targetScale = originalScale * scaleMultiplier;
+        transform.localScale = targetScale;
+        isScaling = true;
+        scaleTimer = 0f;
+    }
+
+    private void UpdateScale()
+    {
+        scaleTimer += Time.deltaTime;
+        float progress = scaleTimer / scaleDuration;
+
+        if (progress >= 1f)
+        {
+            transform.localScale = originalScale;
+            isScaling = false;
+        }
+        else
+        {
+            transform.localScale = Vector3.Lerp(targetScale, originalScale, progress);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (transform != null)
+            transform.localScale = originalScale;
     }
 }

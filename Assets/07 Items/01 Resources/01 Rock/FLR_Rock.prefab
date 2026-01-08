@@ -119,10 +119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b51b75e818e5b4d8908236238c3975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 10
   currentHealth: 0
   entityType: 0
   destroyOnDeath: 1
+  spawnOnDeathPrefab: {fileID: 6244200998153680120, guid: 4f5d0d2556e196045b1af657e907ce58, type: 3}
+  spawnOnDeathOffset: {x: 0, y: 1, z: 0}
+  spawnWithOwnerRotation: 1
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -159,6 +162,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8388608
   coll: {fileID: 3934005034282076284}
+  scaleMultiplier: 1.05
+  scaleDuration: 0.15
 --- !u!205 &8987621011340875345
 LODGroup:
   m_ObjectHideFlags: 0

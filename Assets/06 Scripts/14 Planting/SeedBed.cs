@@ -19,6 +19,9 @@ public class SeedBed : MonoBehaviour
     private ItemData currentSeed;
     private GameObject currentPlant;
 
+    // NEW: clickable reference on the planted instance
+    private ClickableDamageable currentClickable;
+
     private int currentGrowthStage = 0;
 
     // Tick-driven "target" (where the plant should be after the latest tick)
@@ -54,7 +57,6 @@ public class SeedBed : MonoBehaviour
             return;
 
         // Smoothly move the visual growth toward the tick-based target.
-        // Exponential smoothing: stable across different frame rates.
         visualGrowthPercent = Mathf.Lerp(
             visualGrowthPercent,
             targetGrowthPercent,
@@ -93,6 +95,13 @@ public class SeedBed : MonoBehaviour
         currentPlant = Instantiate(seed.plantPrefab, plantPosition.position, plantPosition.rotation, plantPosition);
         currentPlant.transform.localScale = Vector3.one * minScale;
 
+        // ?? Find clickable component on the planted instance and disable it while growing
+        currentClickable = currentPlant.GetComponentInChildren<ClickableDamageable>();
+        if (currentClickable != null)
+        {
+            currentClickable.enabled = false;
+        }
+
         if (readyToHarvestIndicator)
             readyToHarvestIndicator.SetActive(false);
 
@@ -114,6 +123,12 @@ public class SeedBed : MonoBehaviour
         {
             isGrowing = false;
             targetGrowthPercent = 1f; // ensure final
+
+            // ?? Fully grown: now allow clicking on this planted instance
+            if (currentClickable != null)
+            {
+                currentClickable.enabled = true;
+            }
 
             if (readyToHarvestIndicator)
                 readyToHarvestIndicator.SetActive(true);
@@ -144,7 +159,9 @@ public class SeedBed : MonoBehaviour
 
         targetGrowthPercent = 0f;
         visualGrowthPercent = 0f;
-
         isGrowing = false;
+
+        // Clear clickable reference
+        currentClickable = null;
     }
 }

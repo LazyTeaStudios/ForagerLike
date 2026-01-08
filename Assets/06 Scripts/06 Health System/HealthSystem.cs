@@ -25,6 +25,15 @@ public class HealthSystem : MonoBehaviour
     [Header("Death")]
     [SerializeField] private bool destroyOnDeath = true;
 
+    [Tooltip("Optional prefab to spawn when this entity dies.")]
+    [SerializeField] private GameObject spawnOnDeathPrefab;
+
+    [Tooltip("Local offset from this transform where the death prefab will spawn.")]
+    [SerializeField] private Vector3 spawnOnDeathOffset = Vector3.zero;
+
+    [Tooltip("If true, spawned prefab uses this object's rotation. If false, uses identity.")]
+    [SerializeField] private bool spawnWithOwnerRotation = true;
+
     [Header("Events")]
     [SerializeField] private UnityEvent<float, float> onHealthChanged;
     [SerializeField] private UnityEvent onDeath;
@@ -57,6 +66,15 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
+        // Spawn death prefab (loot, particles, corpse, etc.)
+        if (spawnOnDeathPrefab != null)
+        {
+            Vector3 spawnPos = transform.TransformPoint(spawnOnDeathOffset);
+            Quaternion spawnRot = spawnWithOwnerRotation ? transform.rotation : Quaternion.identity;
+
+            Instantiate(spawnOnDeathPrefab, spawnPos, spawnRot);
+        }
+
         OnDeath?.Invoke();
         onDeath?.Invoke();
 

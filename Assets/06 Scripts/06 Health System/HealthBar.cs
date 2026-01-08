@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 /// <summary>
 /// Displays health for whatever object the player is looking at within range.
@@ -8,8 +9,9 @@ using System.Collections;
 public class HealthBar : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Image healthFillImage;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private TMP_Text healthText;
 
     [Header("Detection")]
     [SerializeField] private float lookRange = 10f;
@@ -31,6 +33,12 @@ public class HealthBar : MonoBehaviour
 
         if (canvasGroup != null)
             canvasGroup.alpha = 0f;
+
+        if (healthFillImage != null)
+            healthFillImage.fillAmount = 1f;
+
+        if (healthText != null)
+            healthText.text = string.Empty;
     }
 
     private void Update()
@@ -48,15 +56,31 @@ public class HealthBar : MonoBehaviour
 
             if (newTarget != null && !newTarget.IsDead)
             {
-                if (newTarget != currentTarget)
+                // ?? If this health system belongs to a SeedBed plant,
+                // only show the bar once the SeedBed says it's fully grown.
+                SeedBed seedBed = newTarget.GetComponentInParent<SeedBed>();
+
+                if (seedBed != null && !seedBed.IsFullyGrown())
                 {
-                    SetTarget(newTarget);
+                    // It's a growing plant in a seed bed and not harvestable yet,
+                    // so treat it as "no valid target".
                 }
-                FadeTo(1f);
-                return;
+                else
+                {
+                    // Either:
+                    // - not part of a SeedBed (natural prefab / enemy / etc), OR
+                    // - part of a SeedBed but fully grown => show health bar
+                    if (newTarget != currentTarget)
+                    {
+                        SetTarget(newTarget);
+                    }
+                    FadeTo(1f);
+                    return;
+                }
             }
         }
 
+        // No valid target or blocked by SeedBed gating
         if (currentTarget != null)
         {
             ClearTarget();
@@ -64,7 +88,6 @@ public class HealthBar : MonoBehaviour
 
         FadeTo(0f);
     }
-
 
     private void SetTarget(HealthSystem newTarget)
     {
@@ -89,6 +112,9 @@ public class HealthBar : MonoBehaviour
             currentTarget.OnDeath -= OnTargetDeath;
             currentTarget = null;
         }
+
+        if (healthText != null)
+            healthText.text = string.Empty;
     }
 
     private void OnTargetDeath()
@@ -99,10 +125,16 @@ public class HealthBar : MonoBehaviour
 
     private void UpdateHealthBar(float current, float max)
     {
-        if (healthSlider != null)
+        if (healthFillImage != null)
         {
-            healthSlider.maxValue = max;
-            healthSlider.value = current;
+            healthFillImage.fillAmount = current / max;
+        }
+
+        if (healthText != null)
+        {
+            int curInt = Mathf.CeilToInt(current);
+            int maxInt = Mathf.CeilToInt(max);
+            healthText.text = $"{curInt}/{maxInt}";
         }
     }
 
