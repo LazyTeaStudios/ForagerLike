@@ -191,6 +191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seed Bed (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.223
@@ -290,6 +294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seed Bed (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.22
@@ -381,6 +389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seed Bed (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.726
@@ -442,6 +454,10 @@ PrefabInstance:
     - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_Name
       value: Seed Bed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -951,6 +967,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seed Bed
       objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.769
@@ -1020,6 +1040,10 @@ PrefabInstance:
     - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_Name
       value: Seed Bed (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1189,6 +1213,10 @@ PrefabInstance:
     - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_Name
       value: Seed Bed (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1446,6 +1474,10 @@ PrefabInstance:
     - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_Name
       value: Seed Bed (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983950458051283101, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5157199942761128724, guid: e7e54a9fcae5a684ab6585cc06ddd65e, type: 3}
       propertyPath: m_LocalPosition.x

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TestSeed
   m_EditorClassIdentifier: 
   itemName: Test Seed
-  icon: {fileID: -5158576199695199429, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  icon: {fileID: -257155142, guid: 39fd23c755af5f74c88ae52f57328571, type: 3}
   maxStackSize: 64
   itemType: 1
   itemPrefab: {fileID: 0}
   growthStages: 15
-  plantPrefab: {fileID: 2957269371418403219, guid: 7f461bb78ad98ce429135c003b7eef72, type: 3}
+  plantPrefab: {fileID: 2393737606811665049, guid: 581b388c58e7e7945a35b4cd577b95c1, type: 3}

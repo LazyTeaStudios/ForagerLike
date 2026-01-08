@@ -33,12 +33,18 @@ Material:
     m_Floats:
     - _Emissive_Strength: 0.3
     - _End_Fade_Distance: 600
+    - _LOD: 0
+    - _Smoothness: 0
     - _Start_Fade_Distance: 300
+    - _UseSolidTipColor: 0
     - _Use_Texture: 1
     - _WindIntensity: 10
     - _WindSpeed: 0.1
     - _WindWeight: 0.05
-    m_Colors: []
+    m_Colors:
+    - _Bottom_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Specular_Color: {r: 0.29691765, g: 0.3490566, b: 0.19263972, a: 0}
+    - _Texture_Tint: {r: 0.08791631, g: 0.9811321, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5404232976321525303

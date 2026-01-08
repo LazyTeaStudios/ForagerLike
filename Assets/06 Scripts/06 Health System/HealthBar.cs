@@ -44,7 +44,7 @@ public class HealthBar : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, lookRange, detectLayers))
         {
-            HealthSystem newTarget = hit.collider.GetComponent<HealthSystem>();
+            HealthSystem newTarget = hit.collider.GetComponentInParent<HealthSystem>();
 
             if (newTarget != null && !newTarget.IsDead)
             {
@@ -64,6 +64,7 @@ public class HealthBar : MonoBehaviour
 
         FadeTo(0f);
     }
+
 
     private void SetTarget(HealthSystem newTarget)
     {
