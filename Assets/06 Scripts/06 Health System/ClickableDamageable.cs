@@ -3,7 +3,6 @@ using UnityEngine;
 /// <summary>
 /// Makes an object clickable and deals damage to its HealthSystem.
 /// </summary>
-[RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(HealthSystem))]
 public class ClickableDamageable : MonoBehaviour
 {
@@ -13,6 +12,9 @@ public class ClickableDamageable : MonoBehaviour
     [Header("Range")]
     [SerializeField] private float clickRange = 10f;
     [SerializeField] private LayerMask clickLayers;
+
+    [Header("Collider")]
+    [SerializeField] private Collider coll;   // assign child collider here
 
     private HealthSystem healthSystem;
     private Camera mainCamera;
@@ -33,11 +35,13 @@ public class ClickableDamageable : MonoBehaviour
 
     private void CheckForClick()
     {
-        Ray ray = mainCamera.ScreenPointToRay(InputHandler.GetValue<Vector2>(GameAction.GameplayMousePosition));
+        Ray ray = mainCamera.ScreenPointToRay(
+            InputHandler.GetValue<Vector2>(GameAction.GameplayMousePosition)
+        );
 
         if (Physics.Raycast(ray, out RaycastHit hit, clickRange, clickLayers))
         {
-            if (hit.collider.gameObject == gameObject)
+            if (hit.collider == coll)
             {
                 healthSystem.TakeDamage(damagePerClick);
             }

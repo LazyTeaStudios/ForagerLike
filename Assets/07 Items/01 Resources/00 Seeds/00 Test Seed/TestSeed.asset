@@ -18,4 +18,4 @@ MonoBehaviour:
   itemType: 1
   itemPrefab: {fileID: 0}
   growthStages: 15
-  plantPrefab: {fileID: 2957269371418403219, guid: 7f461bb78ad98ce429135c003b7eef72, type: 3}
+  plantPrefab: {fileID: 6817826281783533454, guid: e7c46f4093e160c4caccd911d0f799a2, type: 3}
