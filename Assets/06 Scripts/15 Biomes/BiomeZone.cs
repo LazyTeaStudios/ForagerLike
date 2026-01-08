@@ -26,7 +26,19 @@ public class BiomeZone : MonoBehaviour
     [SerializeField] private float raycastHeight = 100f;
     [Tooltip("Layers to ignore when checking the FIRST hit (e.g. zone trigger volumes, helper colliders).")]
     [SerializeField] private LayerMask ignoreRaycastLayers;
-    [SerializeField] private int maxSpawnAttemptsPerTick = 10;
+
+    [Tooltip("Number of ticks between spawn attempts.")]
+    [Min(1)][SerializeField] private int ticksBetweenSpawns = 10;
+
+    [Header("Growth Settings")]
+    [Tooltip("Number of ticks for a plant to fully grow.")]
+    [Min(1)][SerializeField] private int growthTicks = 20;
+
+    [Tooltip("Starting scale when spawned.")]
+    [Range(0.01f, 0.5f)][SerializeField] private float startScale = 0.1f;
+
+    [Tooltip("Growth animation smoothing speed.")]
+    [SerializeField] private float growthSmoothSpeed = 6f;
 
     [Header("Slope Limit")]
     [Range(0f, 89f)]
@@ -42,10 +54,19 @@ public class BiomeZone : MonoBehaviour
     [SerializeField] private float gizmoGroundOffset = 0.02f;
     [SerializeField] private float gizmoRaycastHeight = 50f;
 
-    private readonly List<GameObject> spawnedObjects = new List<GameObject>();
-    private bool isPaused;
+    private class SpawnedPlant
+    {
+        public GameObject gameObject;
+        public int growthStage;
+        public float targetScale;
+        public float currentScale;
+        public ClickableDamageable clickable;
+    }
 
-    // cache for faster random selection
+    private readonly List<SpawnedPlant> spawnedPlants = new List<SpawnedPlant>();
+    private bool isPaused;
+    private int ticksSinceLastSpawn;
+
     [NonSerialized] private List<int> _allowedIndexCache;
     [NonSerialized] private bool _cacheDirty = true;
 
@@ -68,21 +89,59 @@ public class BiomeZone : MonoBehaviour
         TickManager.OnTick -= OnTick;
     }
 
+    private void Update()
+    {
+        foreach (var plant in spawnedPlants)
+        {
+            if (plant.gameObject == null) continue;
+
+            plant.currentScale = Mathf.Lerp(
+                plant.currentScale,
+                plant.targetScale,
+                1f - Mathf.Exp(-growthSmoothSpeed * Time.deltaTime)
+            );
+
+            plant.gameObject.transform.localScale = Vector3.one * plant.currentScale;
+        }
+    }
+
     private void OnTick()
     {
         CleanupDestroyedObjects();
 
-        // No prefab = nothing to do
         if (spawnPrefab == null)
             return;
 
-        if (isPaused || spawnedObjects.Count >= maxSpawnCount)
+        if (isPaused || spawnedPlants.Count >= maxSpawnCount)
         {
             isPaused = true;
-            return;
+        }
+        else
+        {
+            ticksSinceLastSpawn++;
+            if (ticksSinceLastSpawn >= ticksBetweenSpawns)
+            {
+                TrySpawnObject();
+                ticksSinceLastSpawn = 0;
+            }
         }
 
-        TrySpawnObject();
+        foreach (var plant in spawnedPlants)
+        {
+            if (plant.gameObject == null) continue;
+
+            if (plant.growthStage < growthTicks)
+            {
+                plant.growthStage++;
+                float growthPercent = plant.growthStage / (float)growthTicks;
+                plant.targetScale = Mathf.Lerp(startScale, 1f, growthPercent);
+
+                if (plant.growthStage >= growthTicks && plant.clickable != null)
+                {
+                    plant.clickable.enabled = true;
+                }
+            }
+        }
     }
 
     // -------------------- Spawning --------------------
@@ -92,13 +151,9 @@ public class BiomeZone : MonoBehaviour
         if (spawnPrefab == null)
             return;
 
-        for (int i = 0; i < maxSpawnAttemptsPerTick; i++)
+        if (TryGetSpawnPoint(out Vector3 spawnPoint))
         {
-            if (TryGetSpawnPoint(out Vector3 spawnPoint))
-            {
-                SpawnRandomObject(spawnPoint);
-                return;
-            }
+            SpawnRandomObject(spawnPoint);
         }
     }
 
@@ -112,7 +167,6 @@ public class BiomeZone : MonoBehaviour
         Vector3 rayOrigin = new Vector3(basePoint.x, basePoint.y + raycastHeight, basePoint.z);
         float maxDist = raycastHeight * 2f;
 
-        // Cast against everything (minus ignored layers) so ANY collider can block the ray.
         int mask = Physics.DefaultRaycastLayers & ~ignoreRaycastLayers.value;
 
         RaycastHit[] hits = Physics.RaycastAll(
@@ -129,16 +183,13 @@ public class BiomeZone : MonoBehaviour
         Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         RaycastHit firstHit = hits[0];
 
-        // First hit MUST be ground.
         if (!IsInLayerMask(firstHit.collider.gameObject.layer, groundLayer))
             return false;
 
-        // Reject steep surfaces
         float slopeAngle = Vector3.Angle(firstHit.normal, Vector3.up);
         if (slopeAngle > maxGroundSlopeAngle)
             return false;
 
-        // Ensure still inside grid bounds (in case of steep slopes/edges)
         if (!WorldToCell(firstHit.point, out _, out _))
             return false;
 
@@ -148,29 +199,46 @@ public class BiomeZone : MonoBehaviour
 
     private void SpawnRandomObject(Vector3 position)
     {
-        // Random Y rotation for organic placement
         float randomY = UnityEngine.Random.Range(0f, 360f);
         Quaternion rot = Quaternion.Euler(0f, randomY, 0f);
 
         GameObject spawned = Instantiate(spawnPrefab, position, rot, transform);
-        spawnedObjects.Add(spawned);
+        spawned.transform.localScale = Vector3.one * startScale;
+
+        var plant = new SpawnedPlant
+        {
+            gameObject = spawned,
+            growthStage = 0,
+            targetScale = startScale,
+            currentScale = startScale,
+            clickable = spawned.GetComponentInChildren<ClickableDamageable>()
+        };
+
+        if (plant.clickable != null)
+        {
+            plant.clickable.enabled = false;
+        }
+
+        spawnedPlants.Add(plant);
     }
 
     private void CleanupDestroyedObjects()
     {
-        spawnedObjects.RemoveAll(o => o == null);
+        spawnedPlants.RemoveAll(p => p.gameObject == null);
 
-        if (isPaused && spawnedObjects.Count < maxSpawnCount)
+        if (isPaused && spawnedPlants.Count < maxSpawnCount)
             isPaused = false;
     }
 
     public void RemoveSpawnedObject(GameObject obj)
     {
-        if (spawnedObjects.Remove(obj))
+        var plant = spawnedPlants.Find(p => p.gameObject == obj);
+        if (plant != null)
         {
+            spawnedPlants.Remove(plant);
             Destroy(obj);
 
-            if (isPaused && spawnedObjects.Count < maxSpawnCount)
+            if (isPaused && spawnedPlants.Count < maxSpawnCount)
                 isPaused = false;
         }
     }
@@ -202,7 +270,6 @@ public class BiomeZone : MonoBehaviour
         Vector3 origin = new Vector3(xzPoint.x, xzPoint.y + gizmoRaycastHeight, xzPoint.z);
         float dist = gizmoRaycastHeight * 2f;
 
-        // Only hit ground layer for visualization
         if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, dist, groundLayer, QueryTriggerInteraction.Ignore))
         {
             y = hit.point.y;
@@ -342,7 +409,6 @@ public class BiomeZone : MonoBehaviour
         int x = idx % gridWidth;
         int y = idx / gridWidth;
 
-        // random point inside the cell
         Vector3 origin = GridOriginWorld;
         float wx = origin.x + (x + UnityEngine.Random.value) * cellSize;
         float wz = origin.z + (y + UnityEngine.Random.value) * cellSize;
@@ -384,7 +450,7 @@ public class BiomeZone : MonoBehaviour
                     if (TryGetGroundYAt(c, out float groundY))
                         c.y = groundY + gizmoGroundOffset;
                     else
-                        c.y = transform.position.y; // fallback
+                        c.y = transform.position.y;
                 }
                 else
                 {
@@ -398,6 +464,6 @@ public class BiomeZone : MonoBehaviour
 
     // -------------------- Public info --------------------
 
-    public int CurrentSpawnCount => spawnedObjects.Count;
+    public int CurrentSpawnCount => spawnedPlants.Count;
     public bool IsPaused => isPaused;
 }

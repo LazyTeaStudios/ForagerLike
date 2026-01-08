@@ -1483,7 +1483,10 @@ MonoBehaviour:
   ignoreRaycastLayers:
     serializedVersion: 2
     m_Bits: 8390145
-  maxSpawnAttemptsPerTick: 1
+  ticksBetweenSpawns: 10
+  growthTicks: 20
+  startScale: 0.1
+  growthSmoothSpeed: 6
   maxGroundSlopeAngle: 10
   drawGridGizmos: 1
   drawAllowedCells: 1
@@ -3147,7 +3150,10 @@ MonoBehaviour:
   ignoreRaycastLayers:
     serializedVersion: 2
     m_Bits: 8390145
-  maxSpawnAttemptsPerTick: 1
+  ticksBetweenSpawns: 10
+  growthTicks: 20
+  startScale: 0.1
+  growthSmoothSpeed: 6
   maxGroundSlopeAngle: 10
   drawGridGizmos: 1
   drawAllowedCells: 1
