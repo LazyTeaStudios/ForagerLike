@@ -8,6 +8,7 @@ public class StarterAssetsInputs : MonoBehaviour
     public Vector2 look;
     public bool jump;
     public bool sprint;
+    public bool crouch;
 
     [Header("Movement Settings")]
     public bool analogMovement;
@@ -38,24 +39,21 @@ public class StarterAssetsInputs : MonoBehaviour
             Vector2 rawLook = InputHandler.GetValue<Vector2>(GameAction.Look);
 
             look.x = rawLook.x * mouseSensitivityX;
-            look.y = rawLook.y * mouseSensitivityY * -1;
+
+            // If you want to respect invertYAxis, do it properly:
+            float ySign = invertYAxis ? -1f : 1f;
+            look.y = rawLook.y * mouseSensitivityY * ySign;
         }
 
+        // Jump (held state)
         if (InputHandler.Pressed(GameAction.Jump))
-        {
             jump = true;
-        }
         else if (InputHandler.Released(GameAction.Jump))
-        {
             jump = false;
-        }
 
         sprint = InputHandler.Held(GameAction.ShiftModifier, 0f);
 
-        if (InputHandler.Pressed(GameAction.Crouch))
-        {
-            // Handle crouch if needed
-        }
+        crouch = InputHandler.Held(GameAction.Crouch, 0f);
 
         if (InputHandler.Pressed(GameAction.GameplayPause))
         {
@@ -63,30 +61,12 @@ public class StarterAssetsInputs : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
+    private void LateUpdate() { }
 
-    }
-
-    public void MoveInput(Vector2 newMoveDirection)
-    {
-        move = newMoveDirection;
-    }
-
-    public void LookInput(Vector2 newLookDirection)
-    {
-        look = newLookDirection;
-    }
-
-    public void JumpInput(bool newJumpState)
-    {
-        jump = newJumpState;
-    }
-
-    public void SprintInput(bool newSprintState)
-    {
-        sprint = newSprintState;
-    }
+    public void MoveInput(Vector2 newMoveDirection) => move = newMoveDirection;
+    public void LookInput(Vector2 newLookDirection) => look = newLookDirection;
+    public void JumpInput(bool newJumpState) => jump = newJumpState;
+    public void SprintInput(bool newSprintState) => sprint = newSprintState;
 
     private void OnApplicationFocus(bool hasFocus)
     {
