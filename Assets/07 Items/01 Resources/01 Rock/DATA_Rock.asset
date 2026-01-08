@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: DATA_Rock
   m_EditorClassIdentifier: 
   itemName: Stone Small
-  icon: {fileID: 1964111185, guid: ebaf6835f3be24c458b6b6addac9a900, type: 3}
+  icon: {fileID: -257155142, guid: 39fd23c755af5f74c88ae52f57328571, type: 3}
   maxStackSize: 64
-  itemType: 1
-  toolData: {fileID: 0}
-  itemPrefab: {fileID: 3104169318974456822, guid: af019bd1d38be6a4baff082c085c1660, type: 3}
-  buildingPrefab: {fileID: 0}
-  buildingSize: {x: 1, y: 1}
+  itemType: 0
+  itemPrefab: {fileID: 1784502518683212841, guid: 78df863dd4b173a4ca50ebe938c5363c, type: 3}
+  growthStages: 0
+  plantPrefab: {fileID: 0}

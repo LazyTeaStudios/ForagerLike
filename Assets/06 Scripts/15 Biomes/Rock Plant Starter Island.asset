@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biomeType: 0
   spawnablePrefabs:
-  - {fileID: 3040224944156367376, guid: 31d3056040cfcde40910f17316c32c1b, type: 3}
-  maxSpawnCount: 10
+  - {fileID: 6967365203733630599, guid: 646231e4f76bc6f4e895b8e690516c5e, type: 3}
+  maxSpawnCount: 5
   groundLayer:
     serializedVersion: 2
     m_Bits: 256

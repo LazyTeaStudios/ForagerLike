@@ -14,8 +14,10 @@ public class BiomeZoneEditor : Editor
     private bool _showGridAndPainting = true;
     private const string PrefKey = "BiomeZoneEditor_ShowGridAndPainting";
 
-    // Serialized properties (we draw only what we want)
-    private SerializedProperty _biomeData;
+    // Serialized properties
+    private SerializedProperty _spawnPrefab;
+    private SerializedProperty _maxSpawnCount;
+    private SerializedProperty _groundLayer;
 
     private SerializedProperty _raycastHeight;
     private SerializedProperty _ignoreRaycastLayers;
@@ -38,7 +40,9 @@ public class BiomeZoneEditor : Editor
     {
         _showGridAndPainting = EditorPrefs.GetBool(PrefKey, true);
 
-        _biomeData = serializedObject.FindProperty("biomeData");
+        _spawnPrefab = serializedObject.FindProperty("spawnPrefab");
+        _maxSpawnCount = serializedObject.FindProperty("maxSpawnCount");
+        _groundLayer = serializedObject.FindProperty("groundLayer");
 
         _raycastHeight = serializedObject.FindProperty("raycastHeight");
         _ignoreRaycastLayers = serializedObject.FindProperty("ignoreRaycastLayers");
@@ -69,12 +73,15 @@ public class BiomeZoneEditor : Editor
     {
         serializedObject.Update();
 
-        // ---- Main (always visible) ----
-        EditorGUILayout.LabelField("Biome", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(_biomeData);
+        // ---- Spawn Settings ----
+        EditorGUILayout.LabelField("Spawn Settings", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_spawnPrefab);
+        EditorGUILayout.PropertyField(_maxSpawnCount);
+        EditorGUILayout.PropertyField(_groundLayer);
 
         EditorGUILayout.Space(8);
 
+        // ---- Spawning ----
         EditorGUILayout.LabelField("Spawning", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(_raycastHeight);
         EditorGUILayout.PropertyField(_ignoreRaycastLayers);
@@ -189,14 +196,9 @@ public class BiomeZoneEditor : Editor
         Event e = Event.current;
         if (e.alt) return; // allow orbit
 
-        // Raycast mask: prefer biome ground layer if available, otherwise Everything
-        LayerMask paintMask = ~0;
-        var biomeDataField = typeof(BiomeZone).GetField("biomeData", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        if (biomeDataField != null)
-        {
-            var bd = biomeDataField.GetValue(zone) as BiomeData;
-            if (bd != null) paintMask = bd.groundLayer;
-        }
+        // Raycast mask: use the BiomeZone's groundLayer
+        serializedObject.Update();
+        LayerMask paintMask = _groundLayer != null ? (LayerMask)_groundLayer.intValue : ~0;
 
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
 

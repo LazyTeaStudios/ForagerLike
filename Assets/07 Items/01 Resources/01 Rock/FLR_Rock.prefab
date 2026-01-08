@@ -17,6 +17,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.72
       objectReference: {fileID: 0}
@@ -56,6 +60,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -3661639628750336703, guid: 7e0223e1d3e1733499accfa5ebffb67e, type: 3}
+    - target: {fileID: -5754084199372789682, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4536773283001372330, guid: 07b7679816e41334eab48647edbbe5f7, type: 3}
     - target: {fileID: 919132149155446097, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
       propertyPath: m_Name
       value: FLR_Rock
@@ -204,7 +224,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 3173471004659565780, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}
+  m_Mesh: {fileID: 4536773283001372330, guid: 07b7679816e41334eab48647edbbe5f7, type: 3}
 --- !u!23 &8913170999279251282 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 579fdbc820b59044caaa7d8d4159a85a, type: 3}

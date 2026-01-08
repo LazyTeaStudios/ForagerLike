@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class BiomeZone : MonoBehaviour
 {
-    [Header("Biome")]
-    [SerializeField] private BiomeData biomeData;
+    [Header("Spawn Settings")]
+    [Tooltip("The single prefab this biome zone will spawn.")]
+    [SerializeField] private GameObject spawnPrefab;
+
+    [Tooltip("Maximum number of spawned instances allowed at once.")]
+    [Min(0)][SerializeField] private int maxSpawnCount = 10;
+
+    [Tooltip("What counts as 'ground' for spawning and gizmos.")]
+    [SerializeField] private LayerMask groundLayer;
 
     [Header("Zone Grid (centered on this GameObject)")]
     [Min(1)][SerializeField] private int gridWidth = 64;
@@ -65,10 +72,11 @@ public class BiomeZone : MonoBehaviour
     {
         CleanupDestroyedObjects();
 
-        if (biomeData == null)
+        // No prefab = nothing to do
+        if (spawnPrefab == null)
             return;
 
-        if (isPaused || spawnedObjects.Count >= biomeData.maxSpawnCount)
+        if (isPaused || spawnedObjects.Count >= maxSpawnCount)
         {
             isPaused = true;
             return;
@@ -81,7 +89,7 @@ public class BiomeZone : MonoBehaviour
 
     private void TrySpawnObject()
     {
-        if (biomeData.spawnablePrefabs == null || biomeData.spawnablePrefabs.Length == 0)
+        if (spawnPrefab == null)
             return;
 
         for (int i = 0; i < maxSpawnAttemptsPerTick; i++)
@@ -122,10 +130,10 @@ public class BiomeZone : MonoBehaviour
         RaycastHit firstHit = hits[0];
 
         // First hit MUST be ground.
-        if (!IsInLayerMask(firstHit.collider.gameObject.layer, biomeData.groundLayer))
+        if (!IsInLayerMask(firstHit.collider.gameObject.layer, groundLayer))
             return false;
 
-        // NEW: reject steep surfaces (e.g. tables, ramps, cliffs)
+        // Reject steep surfaces
         float slopeAngle = Vector3.Angle(firstHit.normal, Vector3.up);
         if (slopeAngle > maxGroundSlopeAngle)
             return false;
@@ -140,8 +148,11 @@ public class BiomeZone : MonoBehaviour
 
     private void SpawnRandomObject(Vector3 position)
     {
-        GameObject prefab = biomeData.spawnablePrefabs[UnityEngine.Random.Range(0, biomeData.spawnablePrefabs.Length)];
-        GameObject spawned = Instantiate(prefab, position, Quaternion.identity, transform);
+        // Random Y rotation for organic placement
+        float randomY = UnityEngine.Random.Range(0f, 360f);
+        Quaternion rot = Quaternion.Euler(0f, randomY, 0f);
+
+        GameObject spawned = Instantiate(spawnPrefab, position, rot, transform);
         spawnedObjects.Add(spawned);
     }
 
@@ -149,7 +160,7 @@ public class BiomeZone : MonoBehaviour
     {
         spawnedObjects.RemoveAll(o => o == null);
 
-        if (biomeData != null && isPaused && spawnedObjects.Count < biomeData.maxSpawnCount)
+        if (isPaused && spawnedObjects.Count < maxSpawnCount)
             isPaused = false;
     }
 
@@ -159,7 +170,7 @@ public class BiomeZone : MonoBehaviour
         {
             Destroy(obj);
 
-            if (biomeData != null && isPaused && spawnedObjects.Count < biomeData.maxSpawnCount)
+            if (isPaused && spawnedObjects.Count < maxSpawnCount)
                 isPaused = false;
         }
     }
@@ -188,13 +199,11 @@ public class BiomeZone : MonoBehaviour
     {
         y = transform.position.y;
 
-        if (biomeData == null) return false;
-
         Vector3 origin = new Vector3(xzPoint.x, xzPoint.y + gizmoRaycastHeight, xzPoint.z);
         float dist = gizmoRaycastHeight * 2f;
 
         // Only hit ground layer for visualization
-        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, dist, biomeData.groundLayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, dist, groundLayer, QueryTriggerInteraction.Ignore))
         {
             y = hit.point.y;
             return true;
@@ -202,7 +211,6 @@ public class BiomeZone : MonoBehaviour
 
         return false;
     }
-
 
     private int Index(int x, int y) => (y * gridWidth) + x;
     private bool InBounds(int x, int y) => x >= 0 && y >= 0 && x < gridWidth && y < gridHeight;
@@ -352,7 +360,10 @@ public class BiomeZone : MonoBehaviour
         if (!drawGridGizmos) return;
 
         Bounds b = GridWorldBounds;
-        Gizmos.DrawWireCube(new Vector3(b.center.x, transform.position.y, b.center.z), new Vector3(b.size.x, 0.05f, b.size.z));
+        Gizmos.DrawWireCube(
+            new Vector3(b.center.x, transform.position.y, b.center.z),
+            new Vector3(b.size.x, 0.05f, b.size.z)
+        );
 
         if (!drawAllowedCells) return;
 
@@ -368,7 +379,7 @@ public class BiomeZone : MonoBehaviour
                 if (!GetAllowed(x, y)) continue;
                 Vector3 c = CellCenterWorld(x, y);
 
-                if (alignGizmosToGround && biomeData != null)
+                if (alignGizmosToGround)
                 {
                     if (TryGetGroundYAt(c, out float groundY))
                         c.y = groundY + gizmoGroundOffset;
@@ -381,7 +392,6 @@ public class BiomeZone : MonoBehaviour
                 }
 
                 Gizmos.DrawCube(c, boxSize);
-
             }
         }
     }
@@ -390,5 +400,4 @@ public class BiomeZone : MonoBehaviour
 
     public int CurrentSpawnCount => spawnedObjects.Count;
     public bool IsPaused => isPaused;
-    public BiomeType BiomeType => biomeData != null ? biomeData.biomeType : default;
 }
