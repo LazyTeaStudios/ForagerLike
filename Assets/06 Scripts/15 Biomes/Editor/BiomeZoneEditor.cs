@@ -10,19 +10,21 @@ public class BiomeZoneEditor : Editor
     private ToolMode _tool = ToolMode.None;
     private float _brushRadius = 2f;
 
-    // Hide/Show state (persisted)
     private bool _showGridAndPainting = true;
     private const string PrefKey = "BiomeZoneEditor_ShowGridAndPainting";
 
-    // Serialized properties
     private SerializedProperty _spawnPrefab;
     private SerializedProperty _maxSpawnCount;
     private SerializedProperty _groundLayer;
 
     private SerializedProperty _raycastHeight;
     private SerializedProperty _ignoreRaycastLayers;
-    private SerializedProperty _maxSpawnAttemptsPerTick;
+    private SerializedProperty _ticksBetweenSpawns;
     private SerializedProperty _maxGroundSlopeAngle;
+
+    private SerializedProperty _growthTicks;
+    private SerializedProperty _startScale;
+    private SerializedProperty _growthSmoothSpeed;
 
     private SerializedProperty _gridWidth;
     private SerializedProperty _gridHeight;
@@ -46,8 +48,12 @@ public class BiomeZoneEditor : Editor
 
         _raycastHeight = serializedObject.FindProperty("raycastHeight");
         _ignoreRaycastLayers = serializedObject.FindProperty("ignoreRaycastLayers");
-        _maxSpawnAttemptsPerTick = serializedObject.FindProperty("maxSpawnAttemptsPerTick");
+        _ticksBetweenSpawns = serializedObject.FindProperty("ticksBetweenSpawns");
         _maxGroundSlopeAngle = serializedObject.FindProperty("maxGroundSlopeAngle");
+
+        _growthTicks = serializedObject.FindProperty("growthTicks");
+        _startScale = serializedObject.FindProperty("startScale");
+        _growthSmoothSpeed = serializedObject.FindProperty("growthSmoothSpeed");
 
         _gridWidth = serializedObject.FindProperty("gridWidth");
         _gridHeight = serializedObject.FindProperty("gridHeight");
@@ -73,7 +79,6 @@ public class BiomeZoneEditor : Editor
     {
         serializedObject.Update();
 
-        // ---- Spawn Settings ----
         EditorGUILayout.LabelField("Spawn Settings", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(_spawnPrefab);
         EditorGUILayout.PropertyField(_maxSpawnCount);
@@ -81,23 +86,27 @@ public class BiomeZoneEditor : Editor
 
         EditorGUILayout.Space(8);
 
-        // ---- Spawning ----
         EditorGUILayout.LabelField("Spawning", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(_raycastHeight);
         EditorGUILayout.PropertyField(_ignoreRaycastLayers);
-        EditorGUILayout.PropertyField(_maxSpawnAttemptsPerTick);
+        EditorGUILayout.PropertyField(_ticksBetweenSpawns);
         EditorGUILayout.PropertyField(_maxGroundSlopeAngle);
+
+        EditorGUILayout.Space(8);
+
+        EditorGUILayout.LabelField("Growth Settings", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_growthTicks);
+        EditorGUILayout.PropertyField(_startScale);
+        EditorGUILayout.PropertyField(_growthSmoothSpeed);
 
         EditorGUILayout.Space(10);
 
-        // ---- Show/Hide button ----
         string btnLabel = _showGridAndPainting ? "Hide Grid & Painting" : "Show Grid & Painting";
         if (GUILayout.Button(btnLabel, GUILayout.Height(26)))
         {
             _showGridAndPainting = !_showGridAndPainting;
             EditorPrefs.SetBool(PrefKey, _showGridAndPainting);
 
-            // If hiding, also disable painting tool to avoid accidental edits
             if (!_showGridAndPainting)
                 _tool = ToolMode.None;
 
@@ -105,7 +114,6 @@ public class BiomeZoneEditor : Editor
             SceneView.RepaintAll();
         }
 
-        // ---- Grid + Painting (optional) ----
         if (_showGridAndPainting)
         {
             EditorGUILayout.Space(10);
@@ -187,16 +195,14 @@ public class BiomeZoneEditor : Editor
 
     private void OnSceneGUI(SceneView view)
     {
-        // Only allow painting when the UI is visible AND a tool is selected
         if (!_showGridAndPainting) return;
 
         var zone = (BiomeZone)target;
         if (_tool == ToolMode.None) return;
 
         Event e = Event.current;
-        if (e.alt) return; // allow orbit
+        if (e.alt) return;
 
-        // Raycast mask: use the BiomeZone's groundLayer
         serializedObject.Update();
         LayerMask paintMask = _groundLayer != null ? (LayerMask)_groundLayer.intValue : ~0;
 
@@ -207,7 +213,6 @@ public class BiomeZoneEditor : Editor
 
         Vector3 p = hit.point;
 
-        // Brush preview
         Handles.color = (_tool == ToolMode.Paint)
             ? new Color(0f, 1f, 0f, 0.25f)
             : new Color(1f, 0f, 0f, 0.25f);
@@ -216,7 +221,6 @@ public class BiomeZoneEditor : Editor
         Handles.color = (_tool == ToolMode.Paint) ? Color.green : Color.red;
         Handles.DrawWireDisc(p, Vector3.up, _brushRadius);
 
-        // Prevent selection while painting
         HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
 
         bool paintEvent =
