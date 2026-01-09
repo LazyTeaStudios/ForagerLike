@@ -3,9 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-/// <summary>
-/// Displays health for whatever object the player is looking at within range.
-/// </summary>
 public class HealthBar : MonoBehaviour
 {
     [Header("UI")]
@@ -13,16 +10,13 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Text healthText;
 
-    [Header("Detection")]
-    [SerializeField] private float lookRange = 10f;
-    [SerializeField] private LayerMask detectLayers;
-
     [Header("Animation")]
     [SerializeField] private float fadeSpeed = 5f;
 
     private Camera mainCamera;
     private HealthSystem currentTarget;
     private Coroutine fadeCoroutine;
+    private float currentFadeTarget = -1f;
 
     private void Awake()
     {
@@ -48,44 +42,46 @@ public class HealthBar : MonoBehaviour
 
     private void CheckLookTarget()
     {
+        var playerData = PlayerDataHandler.Data;
+        if (playerData == null || mainCamera == null)
+        {
+            ClearTarget();
+            FadeTo(0f);
+            return;
+        }
+
         Ray ray = mainCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, lookRange, detectLayers))
+        if (Physics.Raycast(ray, out RaycastHit hit, playerData.clickRange, playerData.clickLayers))
         {
             HealthSystem newTarget = hit.collider.GetComponentInParent<HealthSystem>();
 
             if (newTarget != null && !newTarget.IsDead)
             {
-                // ?? If this health system belongs to a SeedBed plant,
-                // only show the bar once the SeedBed says it's fully grown.
-                SeedBed seedBed = newTarget.GetComponentInParent<SeedBed>();
+                if (newTarget != currentTarget)
+                    SetTarget(newTarget);
 
-                if (seedBed != null && !seedBed.IsFullyGrown())
+                PlantGrowth growth = currentTarget.GetComponent<PlantGrowth>();
+                bool show = growth == null || growth.IsFullyGrown;
+
+                if (show)
                 {
-                    // It's a growing plant in a seed bed and not harvestable yet,
-                    // so treat it as "no valid target".
+                    UpdateHealthBar(currentTarget.CurrentHealth, currentTarget.MaxHealth);
+                    FadeTo(1f);
                 }
                 else
                 {
-                    // Either:
-                    // - not part of a SeedBed (natural prefab / enemy / etc), OR
-                    // - part of a SeedBed but fully grown => show health bar
-                    if (newTarget != currentTarget)
-                    {
-                        SetTarget(newTarget);
-                    }
-                    FadeTo(1f);
-                    return;
+                    if (healthText != null)
+                        healthText.text = string.Empty;
+
+                    FadeTo(0f);
                 }
+
+                return;
             }
         }
 
-        // No valid target or blocked by SeedBed gating
-        if (currentTarget != null)
-        {
-            ClearTarget();
-        }
-
+        ClearTarget();
         FadeTo(0f);
     }
 
@@ -100,8 +96,6 @@ public class HealthBar : MonoBehaviour
         currentTarget = newTarget;
         currentTarget.OnHealthChanged += UpdateHealthBar;
         currentTarget.OnDeath += OnTargetDeath;
-
-        UpdateHealthBar(currentTarget.CurrentHealth, currentTarget.MaxHealth);
     }
 
     private void ClearTarget()
@@ -126,9 +120,7 @@ public class HealthBar : MonoBehaviour
     private void UpdateHealthBar(float current, float max)
     {
         if (healthFillImage != null)
-        {
-            healthFillImage.fillAmount = current / max;
-        }
+            healthFillImage.fillAmount = max > 0f ? current / max : 0f;
 
         if (healthText != null)
         {
@@ -141,6 +133,9 @@ public class HealthBar : MonoBehaviour
     private void FadeTo(float targetAlpha)
     {
         if (canvasGroup == null) return;
+        if (Mathf.Approximately(currentFadeTarget, targetAlpha)) return;
+
+        currentFadeTarget = targetAlpha;
 
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);

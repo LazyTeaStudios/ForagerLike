@@ -1,42 +1,26 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum EntityType
 {
-    Resource,
-    Enemy,
-    Building,
-    Other
+    Player,
+    Plant,
+    Fungus,
 }
 
-/// <summary>
-/// Manages health, damage, and death for any entity in the game.
-/// </summary>
 public class HealthSystem : MonoBehaviour
 {
-    [Header("Health")]
-    [SerializeField] private float maxHealth = 100f;
+    [Header("Health (overridden by SeedData for plants)")]
+    [SerializeField] private float maxHealth = 10f;
     [SerializeField] private float currentHealth;
 
     [Header("Entity")]
-    [SerializeField] private EntityType entityType = EntityType.Other;
+    [SerializeField] private EntityType entityType = EntityType.Plant;
 
     [Header("Death")]
     [SerializeField] private bool destroyOnDeath = true;
-
-    [Tooltip("Optional prefab to spawn when this entity dies.")]
-    [SerializeField] private GameObject spawnOnDeathPrefab;
-
-    [Tooltip("Local offset from this transform where the death prefab will spawn.")]
+    [SerializeField] private GameObject onDeathParticles;
     [SerializeField] private Vector3 spawnOnDeathOffset = Vector3.zero;
-
-    [Tooltip("If true, spawned prefab uses this object's rotation. If false, uses identity.")]
-    [SerializeField] private bool spawnWithOwnerRotation = true;
-
-    [Header("Events")]
-    [SerializeField] private UnityEvent<float, float> onHealthChanged;
-    [SerializeField] private UnityEvent onDeath;
 
     public event Action<float, float> OnHealthChanged;
     public event Action OnDeath;
@@ -46,19 +30,48 @@ public class HealthSystem : MonoBehaviour
     public EntityType Type => entityType;
     public bool IsDead => currentHealth <= 0f;
 
+    private PlantGrowth plantGrowth;
+    private bool initialized;
+
     private void Awake()
     {
+        plantGrowth = GetComponent<PlantGrowth>();
+
+        if (plantGrowth != null)
+            plantGrowth.OnFullyGrown += OnPlantFullyGrown;
+        else
+            InitializeHealth();
+    }
+
+    private void OnDestroy()
+    {
+        if (plantGrowth != null)
+            plantGrowth.OnFullyGrown -= OnPlantFullyGrown;
+    }
+
+    private void OnPlantFullyGrown()
+    {
+        if (!initialized)
+            InitializeHealth();
+    }
+
+    private void InitializeHealth()
+    {
+        if (plantGrowth != null && plantGrowth.SeedData != null)
+            maxHealth = plantGrowth.SeedData.maxHealth;
+
         currentHealth = maxHealth;
+        initialized = true;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     public void TakeDamage(float damage)
     {
         if (IsDead) return;
+        if (plantGrowth != null && !plantGrowth.IsFullyGrown) return;
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
-
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        onHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (IsDead)
             Die();
@@ -66,17 +79,13 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
-        // Spawn death prefab (loot, particles, corpse, etc.)
-        if (spawnOnDeathPrefab != null)
+        if (onDeathParticles != null)
         {
             Vector3 spawnPos = transform.TransformPoint(spawnOnDeathOffset);
-            Quaternion spawnRot = spawnWithOwnerRotation ? transform.rotation : Quaternion.identity;
-
-            Instantiate(spawnOnDeathPrefab, spawnPos, spawnRot);
+            Instantiate(onDeathParticles, spawnPos, Quaternion.identity);
         }
 
         OnDeath?.Invoke();
-        onDeath?.Invoke();
 
         if (destroyOnDeath)
             Destroy(gameObject);
@@ -88,6 +97,5 @@ public class HealthSystem : MonoBehaviour
 
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
-        onHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 }

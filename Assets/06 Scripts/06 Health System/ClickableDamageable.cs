@@ -3,21 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(HealthSystem))]
 public class ClickableDamageable : MonoBehaviour
 {
-    [Header("Damage")]
-    [SerializeField] private float damagePerClick = 10f;
-
-    [Header("Range")]
-    [SerializeField] private float clickRange = 10f;
-    [SerializeField] private LayerMask clickLayers;
-
     [Header("Collider")]
     [SerializeField] private Collider coll;
 
-    [Header("Feedback")]
-    [SerializeField] private float scaleMultiplier = 1.05f;
-    [SerializeField] private float scaleDuration = 0.15f;
-
     private HealthSystem healthSystem;
+    private PlantGrowth plantGrowth;
     private Camera mainCamera;
     private Vector3 originalScale;
     private bool isScaling;
@@ -27,6 +17,7 @@ public class ClickableDamageable : MonoBehaviour
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
+        plantGrowth = GetComponent<PlantGrowth>();
         mainCamera = Camera.main;
         originalScale = transform.localScale;
     }
@@ -46,23 +37,32 @@ public class ClickableDamageable : MonoBehaviour
 
     private void CheckForClick()
     {
+        if (healthSystem.IsDead) return;
+
+        var playerData = PlayerDataHandler.Data;
+        if (playerData == null || mainCamera == null) return;
+
         Ray ray = mainCamera.ScreenPointToRay(
             InputHandler.GetValue<Vector2>(GameAction.GameplayMousePosition)
         );
 
-        if (Physics.Raycast(ray, out RaycastHit hit, clickRange, clickLayers))
+        if (Physics.Raycast(ray, out RaycastHit hit, playerData.clickRange, playerData.clickLayers))
         {
-            if (hit.collider == coll)
-            {
-                healthSystem.TakeDamage(damagePerClick);
-                TriggerScaleFeedback();
-            }
+            if (hit.collider != coll) return;
+
+            if (plantGrowth != null && !plantGrowth.IsFullyGrown) return;
+
+            healthSystem.TakeDamage(playerData.damagePerClick);
+            TriggerScaleFeedback();
         }
     }
 
     private void TriggerScaleFeedback()
     {
-        targetScale = originalScale * scaleMultiplier;
+        var playerData = PlayerDataHandler.Data;
+        if (playerData == null) return;
+
+        targetScale = originalScale * playerData.scaleMultiplier;
         transform.localScale = targetScale;
         isScaling = true;
         scaleTimer = 0f;
@@ -70,8 +70,16 @@ public class ClickableDamageable : MonoBehaviour
 
     private void UpdateScale()
     {
+        var playerData = PlayerDataHandler.Data;
+        if (playerData == null)
+        {
+            transform.localScale = originalScale;
+            isScaling = false;
+            return;
+        }
+
         scaleTimer += Time.deltaTime;
-        float progress = scaleTimer / scaleDuration;
+        float progress = scaleTimer / playerData.scaleDuration;
 
         if (progress >= 1f)
         {
@@ -82,11 +90,5 @@ public class ClickableDamageable : MonoBehaviour
         {
             transform.localScale = Vector3.Lerp(targetScale, originalScale, progress);
         }
-    }
-
-    private void OnDestroy()
-    {
-        if (transform != null)
-            transform.localScale = originalScale;
     }
 }

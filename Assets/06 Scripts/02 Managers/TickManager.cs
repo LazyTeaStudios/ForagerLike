@@ -18,7 +18,6 @@ public class TickManager : Singleton<TickManager>
     void Update()
     {
         tickTimer -= Time.deltaTime;
-
         if (tickTimer <= 0)
         {
             tickTimer = tickInterval;

@@ -19,7 +19,22 @@ public class ItemData : ScriptableObject
     public int growthStages = 5;
 
     [ShowIf(nameof(itemType), ItemType.Seed)]
+    public float maxHealth = 100f;
+
+    [ShowIf(nameof(itemType), ItemType.Seed)]
     public GameObject plantPrefab;
+
+    [ShowIf(nameof(itemType), ItemType.Seed)]
+    public DropEntry[] drops;
+}
+
+[System.Serializable]
+public class DropEntry
+{
+    public ItemData item;
+    [Range(1, 100)] public int quantity = 1;
+
+    public GameObject GetPrefab() => item != null ? item.itemPrefab : null;
 }
 
 public enum ItemType

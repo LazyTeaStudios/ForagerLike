@@ -7,32 +7,19 @@ public class SeedBed : MonoBehaviour
     [SerializeField] private GameObject readyToHarvestIndicator;
 
     [Header("Visual Smoothing")]
-    [Tooltip("How quickly the plant scale moves toward the target each second. Higher = snappier.")]
     [SerializeField] private float growthSmoothSpeed = 6f;
-
-    [Tooltip("Starting scale of the plant when planted.")]
     [SerializeField] private float minScale = 0.2f;
-
-    [Tooltip("Final scale of the plant when fully grown.")]
     [SerializeField] private float maxScale = 1f;
 
     private ItemData currentSeed;
     private GameObject currentPlant;
+    private PlantGrowth currentPlantGrowth;
+    private int currentGrowthStage;
+    private float targetGrowthPercent;
+    private float visualGrowthPercent;
+    private bool isGrowing;
 
-    // NEW: clickable reference on the planted instance
-    private ClickableDamageable currentClickable;
-
-    private int currentGrowthStage = 0;
-
-    // Tick-driven "target" (where the plant should be after the latest tick)
-    private float targetGrowthPercent = 0f;
-
-    // What we're currently displaying (smoothed)
-    private float visualGrowthPercent = 0f;
-
-    private bool isGrowing = false;
-
-    void Awake()
+    private void Awake()
     {
         if (plantPosition == null)
             plantPosition = transform;
@@ -41,39 +28,39 @@ public class SeedBed : MonoBehaviour
             readyToHarvestIndicator.SetActive(false);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         TickManager.OnTick += GrowTick;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         TickManager.OnTick -= GrowTick;
     }
 
-    void Update()
+    private void Update()
     {
         if (currentSeed == null || currentPlant == null)
             return;
 
-        // Smoothly move the visual growth toward the tick-based target.
         visualGrowthPercent = Mathf.Lerp(
             visualGrowthPercent,
             targetGrowthPercent,
             1f - Mathf.Exp(-growthSmoothSpeed * Time.deltaTime)
         );
 
+        if (targetGrowthPercent >= 1f && visualGrowthPercent > 0.999f)
+            visualGrowthPercent = 1f;
+
         float scale = Mathf.Lerp(minScale, maxScale, visualGrowthPercent);
         currentPlant.transform.localScale = Vector3.one * scale;
-    }
 
-    void OnMouseEnter()
-    {
-        // Show growth info when hovering (use visual so it matches what you see)
-        if ((isGrowing || IsFullyGrown()) && currentSeed != null)
+        if (currentPlantGrowth != null)
         {
-            float percent = visualGrowthPercent * 100f;
-            Debug.Log($"Growth: {percent:F0}%");
+            if (visualGrowthPercent >= 1f)
+                currentPlantGrowth.SetFullyGrown();
+            else
+                currentPlantGrowth.SetGrowthPercent(visualGrowthPercent);
         }
     }
 
@@ -88,19 +75,15 @@ public class SeedBed : MonoBehaviour
         currentSeed = seed;
         currentGrowthStage = 0;
         isGrowing = true;
-
         targetGrowthPercent = 0f;
         visualGrowthPercent = 0f;
 
         currentPlant = Instantiate(seed.plantPrefab, plantPosition.position, plantPosition.rotation, plantPosition);
         currentPlant.transform.localScale = Vector3.one * minScale;
 
-        // ?? Find clickable component on the planted instance and disable it while growing
-        currentClickable = currentPlant.GetComponentInChildren<ClickableDamageable>();
-        if (currentClickable != null)
-        {
-            currentClickable.enabled = false;
-        }
+        currentPlantGrowth = currentPlant.GetComponent<PlantGrowth>();
+        if (currentPlantGrowth != null)
+            currentPlantGrowth.Initialize(seed);
 
         if (readyToHarvestIndicator)
             readyToHarvestIndicator.SetActive(false);
@@ -108,40 +91,30 @@ public class SeedBed : MonoBehaviour
         return true;
     }
 
-    // Called by TickManager
-    void GrowTick()
+    private void GrowTick()
     {
         if (!isGrowing || currentSeed == null || currentPlant == null)
             return;
 
         currentGrowthStage++;
-
-        // Update the target growth based on the new stage.
         targetGrowthPercent = Mathf.Clamp01(currentGrowthStage / (float)currentSeed.growthStages);
 
         if (currentGrowthStage >= currentSeed.growthStages)
         {
             isGrowing = false;
-            targetGrowthPercent = 1f; // ensure final
-
-            // ?? Fully grown: now allow clicking on this planted instance
-            if (currentClickable != null)
-            {
-                currentClickable.enabled = true;
-            }
+            targetGrowthPercent = 1f;
 
             if (readyToHarvestIndicator)
                 readyToHarvestIndicator.SetActive(true);
         }
     }
 
-    public bool IsOccupied()
-    {
-        return isGrowing || currentPlant != null;
-    }
+    public bool IsOccupied() => isGrowing || currentPlant != null;
 
     public bool IsFullyGrown()
     {
+        if (currentPlantGrowth != null)
+            return currentPlantGrowth.IsFullyGrown;
         return currentSeed != null && currentGrowthStage >= currentSeed.growthStages;
     }
 
@@ -155,13 +128,10 @@ public class SeedBed : MonoBehaviour
 
         currentSeed = null;
         currentPlant = null;
+        currentPlantGrowth = null;
         currentGrowthStage = 0;
-
         targetGrowthPercent = 0f;
         visualGrowthPercent = 0f;
         isGrowing = false;
-
-        // Clear clickable reference
-        currentClickable = null;
     }
 }

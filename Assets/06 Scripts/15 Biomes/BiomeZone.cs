@@ -2,47 +2,35 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spawns and manages plants within a paintable grid zone.
+/// Note: Wild plants spawned here won't have SeedData - configure drops/health on prefab directly.
+/// </summary>
 public class BiomeZone : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    [Tooltip("The single prefab this biome zone will spawn.")]
     [SerializeField] private GameObject spawnPrefab;
-
-    [Tooltip("Maximum number of spawned instances allowed at once.")]
     [Min(0)][SerializeField] private int maxSpawnCount = 10;
-
-    [Tooltip("What counts as 'ground' for spawning and gizmos.")]
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("Zone Grid (centered on this GameObject)")]
+    [Header("Zone Grid")]
     [Min(1)][SerializeField] private int gridWidth = 64;
     [Min(1)][SerializeField] private int gridHeight = 64;
     [Min(0.1f)][SerializeField] private float cellSize = 1f;
-
-    [Tooltip("Which cells are allowed to spawn in (stored as width*height bools).")]
     [SerializeField] private bool[] allowedCells;
 
     [Header("Spawning")]
     [SerializeField] private float raycastHeight = 100f;
-    [Tooltip("Layers to ignore when checking the FIRST hit (e.g. zone trigger volumes, helper colliders).")]
     [SerializeField] private LayerMask ignoreRaycastLayers;
-
-    [Tooltip("Number of ticks between spawn attempts.")]
     [Min(1)][SerializeField] private int ticksBetweenSpawns = 10;
 
     [Header("Growth Settings")]
-    [Tooltip("Number of ticks for a plant to fully grow.")]
     [Min(1)][SerializeField] private int growthTicks = 20;
-
-    [Tooltip("Starting scale when spawned.")]
     [Range(0.01f, 0.5f)][SerializeField] private float startScale = 0.1f;
-
-    [Tooltip("Growth animation smoothing speed.")]
     [SerializeField] private float growthSmoothSpeed = 6f;
 
     [Header("Slope Limit")]
-    [Range(0f, 89f)]
-    [SerializeField] private float maxGroundSlopeAngle = 10f;
+    [Range(0f, 89f)][SerializeField] private float maxGroundSlopeAngle = 10f;
 
     [Header("Debug")]
     [SerializeField] private bool drawGridGizmos = true;
@@ -57,10 +45,10 @@ public class BiomeZone : MonoBehaviour
     private class SpawnedPlant
     {
         public GameObject gameObject;
+        public PlantGrowth plantGrowth;
         public int growthStage;
         public float targetScale;
         public float currentScale;
-        public ClickableDamageable clickable;
     }
 
     private readonly List<SpawnedPlant> spawnedPlants = new List<SpawnedPlant>();
@@ -69,8 +57,6 @@ public class BiomeZone : MonoBehaviour
 
     [NonSerialized] private List<int> _allowedIndexCache;
     [NonSerialized] private bool _cacheDirty = true;
-
-    // -------------------- Unity --------------------
 
     private void OnValidate()
     {
@@ -101,9 +87,22 @@ public class BiomeZone : MonoBehaviour
                 1f - Mathf.Exp(-growthSmoothSpeed * Time.deltaTime)
             );
 
+            if (plant.targetScale >= 1f && plant.currentScale > 0.999f)
+                plant.currentScale = 1f;
+
             plant.gameObject.transform.localScale = Vector3.one * plant.currentScale;
+
+            if (plant.plantGrowth != null)
+            {
+                float percent = Mathf.InverseLerp(startScale, 1f, plant.currentScale);
+                if (percent >= 1f)
+                    plant.plantGrowth.SetFullyGrown();
+                else
+                    plant.plantGrowth.SetGrowthPercent(percent);
+            }
         }
     }
+
 
     private void OnTick()
     {
@@ -135,16 +134,9 @@ public class BiomeZone : MonoBehaviour
                 plant.growthStage++;
                 float growthPercent = plant.growthStage / (float)growthTicks;
                 plant.targetScale = Mathf.Lerp(startScale, 1f, growthPercent);
-
-                if (plant.growthStage >= growthTicks && plant.clickable != null)
-                {
-                    plant.clickable.enabled = true;
-                }
             }
         }
     }
-
-    // -------------------- Spawning --------------------
 
     private void TrySpawnObject()
     {
@@ -166,16 +158,9 @@ public class BiomeZone : MonoBehaviour
 
         Vector3 rayOrigin = new Vector3(basePoint.x, basePoint.y + raycastHeight, basePoint.z);
         float maxDist = raycastHeight * 2f;
-
         int mask = Physics.DefaultRaycastLayers & ~ignoreRaycastLayers.value;
 
-        RaycastHit[] hits = Physics.RaycastAll(
-            rayOrigin,
-            Vector3.down,
-            maxDist,
-            mask,
-            QueryTriggerInteraction.Ignore
-        );
+        RaycastHit[] hits = Physics.RaycastAll(rayOrigin, Vector3.down, maxDist, mask, QueryTriggerInteraction.Ignore);
 
         if (hits == null || hits.Length == 0)
             return false;
@@ -205,19 +190,16 @@ public class BiomeZone : MonoBehaviour
         GameObject spawned = Instantiate(spawnPrefab, position, rot, transform);
         spawned.transform.localScale = Vector3.one * startScale;
 
+        var plantGrowth = spawned.GetComponent<PlantGrowth>();
+
         var plant = new SpawnedPlant
         {
             gameObject = spawned,
+            plantGrowth = plantGrowth,
             growthStage = 0,
             targetScale = startScale,
-            currentScale = startScale,
-            clickable = spawned.GetComponentInChildren<ClickableDamageable>()
+            currentScale = startScale
         };
-
-        if (plant.clickable != null)
-        {
-            plant.clickable.enabled = false;
-        }
 
         spawnedPlants.Add(plant);
     }
@@ -243,8 +225,6 @@ public class BiomeZone : MonoBehaviour
         }
     }
 
-    // -------------------- Grid API (used by editor painting & runtime sampling) --------------------
-
     private void EnsureGridSize()
     {
         gridWidth = Mathf.Max(1, gridWidth);
@@ -266,7 +246,6 @@ public class BiomeZone : MonoBehaviour
     private bool TryGetGroundYAt(Vector3 xzPoint, out float y)
     {
         y = transform.position.y;
-
         Vector3 origin = new Vector3(xzPoint.x, xzPoint.y + gizmoRaycastHeight, xzPoint.z);
         float dist = gizmoRaycastHeight * 2f;
 
@@ -275,13 +254,11 @@ public class BiomeZone : MonoBehaviour
             y = hit.point.y;
             return true;
         }
-
         return false;
     }
 
     private int Index(int x, int y) => (y * gridWidth) + x;
     private bool InBounds(int x, int y) => x >= 0 && y >= 0 && x < gridWidth && y < gridHeight;
-
     private float HalfWidthWorld => (gridWidth * cellSize) * 0.5f;
     private float HalfHeightWorld => (gridHeight * cellSize) * 0.5f;
 
@@ -348,7 +325,6 @@ public class BiomeZone : MonoBehaviour
         EnsureGridSize();
         for (int i = 0; i < allowedCells.Length; i++)
             allowedCells[i] = value;
-
         _cacheDirty = true;
     }
 
@@ -357,7 +333,6 @@ public class BiomeZone : MonoBehaviour
         EnsureGridSize();
 
         Vector3 origin = GridOriginWorld;
-
         int minX = Mathf.FloorToInt(((world.x - radius) - origin.x) / cellSize);
         int maxX = Mathf.FloorToInt(((world.x + radius) - origin.x) / cellSize);
         int minY = Mathf.FloorToInt(((world.z - radius) - origin.z) / cellSize);
@@ -419,8 +394,6 @@ public class BiomeZone : MonoBehaviour
 
     private bool IsInLayerMask(int layer, LayerMask mask) => (mask.value & (1 << layer)) != 0;
 
-    // -------------------- Gizmos --------------------
-
     private void OnDrawGizmosSelected()
     {
         if (!drawGridGizmos) return;
@@ -461,8 +434,6 @@ public class BiomeZone : MonoBehaviour
             }
         }
     }
-
-    // -------------------- Public info --------------------
 
     public int CurrentSpawnCount => spawnedPlants.Count;
     public bool IsPaused => isPaused;
