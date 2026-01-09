@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.46079564, g: 0.72931135, b: 0.8962264, a: 1}
+  m_FogColor: {r: 0.35684407, g: 0.5125593, b: 0.764151, a: 1}
   m_FogMode: 2
-  m_FogDensity: 0.002
+  m_FogDensity: 0.004
   m_LinearFogStart: 0
   m_LinearFogEnd: 122.7
   m_AmbientSkyColor: {r: 0.43526012, g: 0.24608402, b: 0.6603774, a: 1}
@@ -219,6 +219,10 @@ PrefabInstance:
     - target: {fileID: 809480354545550459, guid: a356cd5d4215640419741ccc2c5b504f, type: 3}
       propertyPath: m_Name
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029885257269689213, guid: a356cd5d4215640419741ccc2c5b504f, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2170402768297931495, guid: a356cd5d4215640419741ccc2c5b504f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7998,20 +8002,32 @@ PrefabInstance:
       value: P_Sky
       objectReference: {fileID: 0}
     - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.704939
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.304692
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -33.23109
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.33392006
+      value: 0.13195397
       objectReference: {fileID: 0}
     - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.21589614
+      value: -0.00229711
       objectReference: {fileID: 0}
     - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8238982
+      value: -0.94163066
       objectReference: {fileID: 0}
     - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.4038294
+      value: 0.30970076
       objectReference: {fileID: 0}
     - target: {fileID: 7983387141204798544, guid: f9742f22ce012934789af86d90b7d197, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
