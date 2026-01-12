@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: c3e841bc54a498a4fb14d69c949c9741
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/Scripts/Editor/Utils/EditorUtils.cs
+  uploadId: 835506

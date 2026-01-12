@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c0e2a23005c4a254a8dd59b4cb693533
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/Shaders/ASE/Surface/Nicrom_FireWood.shader
+  uploadId: 835506

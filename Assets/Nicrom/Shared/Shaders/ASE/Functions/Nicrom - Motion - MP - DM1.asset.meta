@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ffc03598493c08049a461f3a9693a182
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/Shaders/ASE/Functions/Nicrom - Motion - MP - DM1.asset
+  uploadId: 835506

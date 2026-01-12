@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c7dee0860cb84e649b5ed939a9ad0754
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8600000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/3D_Art/StylizedPolyNature/Assets/RenderTextures/SPN_RT_CloudShadows_01.asset
+  uploadId: 835506

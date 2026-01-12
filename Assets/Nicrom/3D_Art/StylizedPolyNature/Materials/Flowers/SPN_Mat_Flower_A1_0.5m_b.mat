@@ -1,0 +1,313 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SPN_Mat_Flower_A1_0.5m_b
+  m_Shader: {fileID: 4800000, guid: 39ce4c9b7f25a0b45b9dcb5dc16a8a62, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _DETAILMOTION2_ON
+  - _DISTANCEFADE_ON
+  - _FLOWERCOLORS_FOUR
+  - _MAINMOTION_ON
+  - _SLOPECORRECTION_ON
+  m_InvalidKeywords:
+  - _ENABLEHORIZONTALBENDING_ON
+  - _ENABLEHORIZONTALMOVEMENT_ON
+  - _ENABLEMAINBENDING_ON
+  - _ENABLESLOPEAJUSTMENT1_ON
+  - _ENABLESLOPECORRECTION2_ON
+  - _ENABLESLOPECORRECTION_ON
+  - _GVAMPLITUDESCALE_ON
+  - _GVBENDINGSCALE_ON
+  - _GVDIRECTIONANGLE_ON
+  - _GVTIME_ON
+  - _HASSTEM_ON
+  - _HORIZONTALDETAILBENDING_ON
+  - _MAINBENDING_ON
+  - _VERTICALDETAILBENDING_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: bb4b705ecaf2fc740b84f155bee74343, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorMask1:
+        m_Texture: {fileID: 2800000, guid: 3f2177041fdbf3446a44371de1e390b3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorMask2:
+        m_Texture: {fileID: 2800000, guid: 82febdc2f6b03bc4b874f0d22503f3f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorMaskTexture:
+        m_Texture: {fileID: 2800000, guid: f923a8460551abd48971146757b846b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ColorVariationTexture:
+        m_Texture: {fileID: 2800000, guid: 82febdc2f6b03bc4b874f0d22503f3f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowerColorMask1:
+        m_Texture: {fileID: 2800000, guid: ae9fc9fc936ffd241a74d56c9a18d392, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowerColorMask2:
+        m_Texture: {fileID: 2800000, guid: 82febdc2f6b03bc4b874f0d22503f3f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowerColorMaskTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowerColorTexture:
+        m_Texture: {fileID: 2800000, guid: 96ca571ab8c0837449e597b000497bc3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowerColorVarNoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 82febdc2f6b03bc4b874f0d22503f3f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowerTexture:
+        m_Texture: {fileID: 2800000, guid: 0bf2af6593eb01f4089b46023740897a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 47567013576870f44a531c3826b90121, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MotionNoise:
+        m_Texture: {fileID: 2800000, guid: aeb84ddb9b6bcbd47aa1a1401776e6b1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MotionNoiseTexture:
+        m_Texture: {fileID: 2800000, guid: aeb84ddb9b6bcbd47aa1a1401776e6b1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 0ba2f77a3a58f524989d4849701ae3f8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ScaleVarNoise:
+        m_Texture: {fileID: 2800000, guid: 82febdc2f6b03bc4b874f0d22503f3f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ScaleVarNoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 82febdc2f6b03bc4b874f0d22503f3f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _StemTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TerrainAlbedo:
+        m_Texture: {fileID: 2800000, guid: 57ef7416f605cc440b57a8cad6efc10b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaCutoff: 0.5
+    - _AlphaCutoff1: 0.5
+    - _BWTBottom: 1
+    - _BWTTop: 0
+    - _BlendWithTerrain: 0
+    - _CenterColorEnd: 0.15
+    - _CenterColorStart: 0
+    - _Cluster: 0
+    - _Color2Opacity: 1
+    - _ColorBlendEnd: 0.098
+    - _ColorBlendStart: 0.06
+    - _ColorMask2GV: 0
+    - _ColorMask2Opacity: 1
+    - _ColorMask2SharpMax: 0.5
+    - _ColorMask2SharpMin: 0
+    - _ColorMask2Tiling: 0.05
+    - _ColorMaskMax: 0.2
+    - _ColorMaskMin: 0.12
+    - _ColorMaskSource: 0
+    - _ColorVariationMax: 0.424
+    - _ColorVariationMin: 0.104
+    - _ColorVariationTiling: 0.05
+    - _DBHorizontalAmplitude: 20
+    - _DBHorizontalFrequency: 1.16
+    - _DBHorizontalMaxDistance: 0.1
+    - _DBHorizontalMaxRadius: 0.05
+    - _DBHorizontalPhase: 1
+    - _DETAILMOTION2: 1
+    - _DM1Amplitude: 1
+    - _DM1FoliageLength: 1
+    - _DM1Speed: 1
+    - _DM2Amplitude: 16
+    - _DM2ObjectRadius: 0.2
+    - _DM2Speed: 0.75
+    - _Debug: 0
+    - _DetailMotion1: 0
+    - _DetailMotion2: 1
+    - _DistanceFade: 1
+    - _DistanceFadeLength: 50
+    - _DistanceFadeStart: 50
+    - _DistanceFadeUseGV: 0
+    - _EnableHasStem: 0
+    - _EnableHorizontalBending: 1
+    - _EnableHorizontalMovement: 1
+    - _EnableMainBending: 1
+    - _EnableSlopeAjustment: 1
+    - _EnableSlopeAjustment1: 1
+    - _EnableSlopeCorrection: 1
+    - _EnableSlopeCorrection2: 1
+    - _FLOWERSTEM: 0
+    - _FlowerColor2Opacity: 1
+    - _FlowerColorMask1End: 0.25
+    - _FlowerColorMask1Source: 0
+    - _FlowerColorMask1Start: 0.08
+    - _FlowerColorMask2Preview: 0
+    - _FlowerColorMask2SharpMax: 0.5
+    - _FlowerColorMask2SharpMin: 0
+    - _FlowerColorMask2Tiling: 0.05
+    - _FlowerColorMaskEnd: 0.2
+    - _FlowerColorMaskSource: 1
+    - _FlowerColorMaskStart: 0.12
+    - _FlowerColorVarNoiseMax: 0.825
+    - _FlowerColorVarNoiseMin: 0.22
+    - _FlowerColorVarNoiseTiling: 0.83
+    - _FlowerColorVarOpacity: 1
+    - _FlowerColors: 1
+    - _FlowerWithStem: 0
+    - _GVAmplitudeScale: 1
+    - _GVBendingScale: 1
+    - _GVDirectionAngle: 1
+    - _GVTime: 1
+    - _HDBAmplitude: 8
+    - _HDBObjectRadius: 0.1
+    - _HDBSpeed: 0.5
+    - _HORIZONTALDETAILBENDING: 1
+    - _HasStem: 1
+    - _InnerRadius: 0.1
+    - _MAINBENDING: 1
+    - _MBAmplitude: 6
+    - _MBAmplitudeOffset: 2
+    - _MBBending: 10
+    - _MBBendingOffset: 2
+    - _MBDefaultBending: 0
+    - _MBDirection: 0
+    - _MBDirectionShift: 10
+    - _MBDirectionShiftNoiseScale: 1
+    - _MBDirectionShiftOffset: 20
+    - _MBDirectionShiftSpeed: 0.1
+    - _MBDirectionSource: 1
+    - _MBDirectionWaveLength: 6
+    - _MBDirectionWaveOffset: 3.7
+    - _MBFrequency: 0.2
+    - _MBFrequencyOffset: 0.2
+    - _MBGlobalWind: 0
+    - _MBMaxHeight: 0.5
+    - _MBObjectHeight: 0.5
+    - _MBObjectHeightSource: 0
+    - _MBPhase: 10
+    - _MBPhaseShiftScale: 1
+    - _MBPhaseShiftSource: 1
+    - _MBSpeed: 0.4
+    - _MBWindDir: 0
+    - _MBWindDirBlend: 0
+    - _MBWindDirOffset: 154
+    - _MBWindDirVariation: 123
+    - _MBWindDirection: 0
+    - _MMAmplitude: 2
+    - _MMAmplitudeOffset: 1
+    - _MMBending: 10
+    - _MMBendingOffset: 2
+    - _MMDirectionAngle: 0
+    - _MMDirectionShift: 20
+    - _MMDirectionShiftNoiseScale: 1
+    - _MMDirectionShiftOffset: 10
+    - _MMDirectionShiftSpeed: 0.5
+    - _MMLocalPivotSource: 1
+    - _MMObjectHeight: 0.5
+    - _MMObjectHeightSource: 0
+    - _MMPhaseShiftScale: 1
+    - _MMPhaseShiftSource: 0
+    - _MMSineWaveLength: 1
+    - _MMSpeed: 0.5
+    - _MainMotion: 1
+    - _MotionNoiseTiling: 0.1
+    - _OuterRadius: 0.15
+    - _SLOPECORRECTION: 0
+    - _STEM: 0
+    - _ScaleOffset: 0
+    - _ScaleVarMax: 0.1
+    - _ScaleVarMin: -0.15
+    - _ScaleVarNoiseSharpMax: 1
+    - _ScaleVarNoiseSharpMin: 0
+    - _ScaleVarNoiseTiling: 1
+    - _ScaleVariation: 0
+    - _SlopeCorrection: 1
+    - _SlopeCorrectionMagnitude: 1
+    - _SlopeCorrectionMagnitude2: 1
+    - _SlopeCorrectionOffset: 0
+    - _StaticNoiseTiling: 1
+    - _StemColorBlendEnd: 1
+    - _StemColorBlendStart: 0
+    - _StemColorMaskEnd: 1
+    - _StemColorMaskStart: 0
+    - _TERRAINBLEND: 0
+    - _TerrainBlendBottom: 1
+    - _TerrainBlendTop: 0
+    - _TerrainSize: 1000
+    - _VDBAmplitude: 1
+    - _VDBFoliageLength: 1
+    - _VDBSpeed: 1
+    - _VERTICALDETAILBENDING: 1
+    - __dirty: 0
+    m_Colors:
+    - _Color1Center: {r: 0.6784314, g: 0.44313726, b: 0.21960777, a: 1}
+    - _Color1Edge: {r: 1, g: 1, b: 1, a: 1}
+    - _Color2Center: {r: 0.6784314, g: 0.44313726, b: 0.21960777, a: 1}
+    - _Color2Edge: {r: 0.9433962, g: 0.9309318, b: 0.39668408, a: 1}
+    - _FlowerColor1: {r: 1, g: 0.7463415, b: 0, a: 1}
+    - _FlowerColor1A: {r: 0, g: 0.4053073, b: 1, a: 1}
+    - _FlowerColor1B: {r: 0.21960784, g: 0.359156, b: 0.6784314, a: 1}
+    - _FlowerColor1Center: {r: 0.15780908, g: 0.37662342, b: 0.5471698, a: 1}
+    - _FlowerColor1Edge: {r: 0.41377205, g: 0.5641451, b: 0.6792453, a: 1}
+    - _FlowerColor2: {r: 0, g: 0.5638194, b: 1, a: 1}
+    - _FlowerColor2A: {r: 0.6521193, g: 0.39607847, b: 0.94509804, a: 1}
+    - _FlowerColor2B: {r: 0.3834484, g: 0.06005839, b: 0.4501347, a: 1}
+    - _FlowerColor2Center: {r: 0.08176523, g: 0.34990934, b: 0.5566038, a: 1}
+    - _FlowerColor2Edge: {r: 0, g: 0.5647059, b: 1, a: 1}
+    - _MBNoiseTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _MBWindDirOffsetNoiseTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _MBWindDirPannerSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _MBWindDirVariationSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _MBWindDirVariationSpeed1: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _MBWindDirVariationTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _MBWindDirVariationTiling1: {r: 1, g: 1, b: 0, a: 0}
+    - _MBWorldNoiseTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _MBWorldNoiseTiling1: {r: 1, g: 1, b: 0, a: 0}
+    - _NoisePannerSpeed: {r: 0.05, g: 0.03, b: 0, a: 0}
+    - _NoiseTextureTilling: {r: 1, g: 1, b: 1, a: 1}
+    - _StemColor: {r: 0.39607838, g: 0.5647059, b: 0.10196077, a: 1}
+    - _StemColorBottom: {r: 0.28512886, g: 0.40566036, b: 0.07489953, a: 1}
+    - _StemColorTop: {r: 0.39607838, g: 0.5647059, b: 0.10196077, a: 1}
+    - _TerrainPosition: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

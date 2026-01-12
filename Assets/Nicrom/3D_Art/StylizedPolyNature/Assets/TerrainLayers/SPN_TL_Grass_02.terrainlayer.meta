@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b2c3d741f1ca85848af1bf9b0ed58fd1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8574412962073106934
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/3D_Art/StylizedPolyNature/Assets/TerrainLayers/SPN_TL_Grass_02.terrainlayer
+  uploadId: 835506

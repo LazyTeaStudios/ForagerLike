@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5663811f2e800b24d9c08b67b12d528e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/Shaders/ASE/Functions/Nicrom - Rotation Axis.asset
+  uploadId: 835506

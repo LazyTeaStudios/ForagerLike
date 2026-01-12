@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8d961293c00dce34b8fb7fc92390d26f
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/Shaders/ASE/Vegetation/Nicrom_Vegetation_Leaves_SSS.shader
+  uploadId: 835506

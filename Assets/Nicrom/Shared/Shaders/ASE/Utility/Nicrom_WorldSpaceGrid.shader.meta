@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 561311d5a8dc4724bb8d30b129df0b8b
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/Shaders/ASE/Utility/Nicrom_WorldSpaceGrid.shader
+  uploadId: 835506

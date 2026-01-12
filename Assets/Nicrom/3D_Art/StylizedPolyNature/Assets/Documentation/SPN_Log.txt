@@ -1,0 +1,42 @@
+Release Notes:
+
+v2.2.1
+- Added support for Unity 6.2 and 6.3
+- Fixed cloud shadows flicker in Unity 6.1+
+- Fixed Environment manager properties not being applied to the Skybox material.
+
+v2.2.0
+- Added moon light. 
+- Added skybox moon.
+- Added stars cubemap rotation.
+- Added sun/moon Intensity info to the Environment Manager inspector.
+- Added PPV Weight info the Environment Manager inspector.
+- Added the option to disable/enable sun/moon orbit and circle gizmos.
+- Added override toggles to all the properties of an Environment Profile.
+- Added sun/moon bottom fade when near equator.
+- Updated sun bloom at sunset and sunrise. Made the bloom more noticeable.
+- Updated documentation.
+- Changed PPV Manager Start/End Time properties to a range slider.
+
+
+v2.1.0
+- Added a new documentation PDF file.
+- Added quick access to the documentation in managers footer.
+- Added the ability to change the Environment Manager gizmos colors.
+
+- Fixed error generated when a new environment profile was created.
+- Fixed quit key not working in build.
+- Fixed missing material in water prefab.
+
+
+v2.0.2
+- Fixed error that was generated when trying to create a build.
+- Renamed a shader to better reflect its features.
+- Moved environment sounds from the StylizedPolyNature folder to the Shared folder.
+- Added a menu for run time control of some of the Environment and Wind settings, to the Mountains scene.  
+
+v2.0.1
+- Fixed incorrectly uploaded files.
+
+v2.0.0
+- Initial Release

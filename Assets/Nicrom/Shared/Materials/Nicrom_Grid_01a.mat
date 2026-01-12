@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Nicrom_Grid_01a
+  m_Shader: {fileID: 4800000, guid: 561311d5a8dc4724bb8d30b129df0b8b, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _GRID2_ON
+  - _GRID3_ON
+  m_InvalidKeywords:
+  - _ENABLEGRID11_ON
+  - _ENABLEGRID2_ON
+  - _ENABLEGRID3_ON
+  - _ENABLELARGEGRID_ON
+  - _GRID11_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainGridMask:
+        m_Texture: {fileID: 2800000, guid: 223a59ffe79aec14ea8951cd37000daa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture0:
+        m_Texture: {fileID: 2800000, guid: 6fca88773cdf18844850150e5f5037d1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Blend: 1
+    - _CFrequency: 5
+    - _CheckerboardFrequency: 0.5
+    - _CheckerboardSpacing: 1
+    - _DistanceFade: 0
+    - _EnableGrid11: 1
+    - _EnableGrid2: 1
+    - _EnableGrid3: 1
+    - _EnableLargeGrid: 1
+    - _EnableSmallGrid: 0
+    - _Fade: 1
+    - _FadeDistance: 100
+    - _FadeFalloff: 5
+    - _Grid1: 0
+    - _Grid11: 1
+    - _Grid11LineThickness: 0.1
+    - _Grid11Spacing: 0.1
+    - _Grid1FadeLength: 20
+    - _Grid1FadeStart: 5
+    - _Grid1LineThickness: 0.1
+    - _Grid1Spacing: 0.1
+    - _Grid2: 1
+    - _Grid2LineThickness: 0.2
+    - _Grid2Spacing: 1
+    - _Grid3: 1
+    - _Grid3LineThickness: 0.3
+    - _Grid3Spacing: 10
+    - _GridFadeDistance: 100
+    - _GridFadeFalloff: 5
+    - _GridSpacing: 1
+    - _LargeGridLineThickness: 0.5
+    - _LargeGridSpacing: 10
+    - _LineThickness: 0.5
+    - _MainGridSpacing: 2
+    - _MediumGridLineThickness: 0.2
+    - _MediumGridSpacing: 1
+    - _Metallic: 0
+    - _MidGridFadeDistance: 100
+    - _MidGridFadeFalloff: 5
+    - _MidGridLineThickness: 0.2
+    - _MidGridSpacing: 1
+    - _Size: 0.01
+    - _SmallGridLineThickness: 0.1
+    - _SmallGridSpacing: 0.1
+    - _Smoothness: 0
+    - __dirty: 0
+    m_Colors:
+    - _BaseColor: {r: 0.454902, g: 0.454902, b: 0.454902, a: 1}
+    - _BaseColor2: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
+    - _CColor1: {r: 1, g: 1, b: 1, a: 1}
+    - _CColor2: {r: 0.5566038, g: 0.2708005, b: 0.2708005, a: 1}
+    - _Grid11Color: {r: 0.517647, g: 0.517647, b: 0.517647, a: 1}
+    - _Grid1Color: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
+    - _Grid2Color: {r: 0.602, g: 0.602, b: 0.602, a: 1}
+    - _Grid3Color: {r: 0.65, g: 0.65, b: 0.65, a: 1}
+    - _GridColor: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
+    - _LargeGridColor: {r: 0.6320754, g: 0.599705, b: 0.599705, a: 1}
+    - _MainGridColor1: {r: 0.45490196, g: 0.45490196, b: 0.45490196, a: 1}
+    - _MainGridColor2: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
+    - _MediumGridColor: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
+    - _MidGridColor: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _SmallGridColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
+    - _Tiling: {r: 500, g: 500, b: 0, a: 0}
+  m_BuildTextureStacks: []

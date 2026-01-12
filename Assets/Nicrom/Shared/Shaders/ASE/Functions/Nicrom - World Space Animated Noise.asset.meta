@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: effa4121554c6ea4e9455e6d71b18864
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/Shaders/ASE/Functions/Nicrom - World Space Animated
+    Noise.asset
+  uploadId: 835506

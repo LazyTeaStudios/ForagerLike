@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 62c5bd07e807cda4799a979a280207c6
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279961
+  packageName: Stylized Poly Nature - 3D Environment + Day Night Cycle & Dynamic
+    Cloud Shadows
+  packageVersion: 2.2.1
+  assetPath: Assets/Nicrom/Shared/UI/uGUI/Menus/EnvAndWindMenu.prefab
+  uploadId: 835506

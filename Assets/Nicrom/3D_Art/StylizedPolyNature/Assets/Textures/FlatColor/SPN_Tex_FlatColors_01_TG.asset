@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e385b20f6cdf54f89b327c2248de7a, type: 3}
+  m_Name: SPN_Tex_FlatColors_01_TG
+  m_EditorClassIdentifier: 
+  gridColorMode: 1
+  gridColor: {r: 1, g: 1, b: 1, a: 1}
+  gridsList:
+  - handlesPos: 0
+    vLinesOnCanvasGrid:
+    - 0
+    - 25.125
+    - 50.25
+    - 75.375
+    - 100.5
+    - 125.625
+    - 150.75
+    - 175.875
+    - 201
+    - 226.125
+    - 251.25
+    - 276.375
+    - 301.5
+    - 326.625
+    - 351.75
+    - 376.875
+    - 402
+    - 427.125
+    - 452.25
+    - 477.375
+    - 502.5
+    - 527.625
+    - 552.75
+    - 577.875
+    - 603
+    - 628.125
+    - 653.25
+    - 678.375
+    - 703.5
+    - 728.625
+    - 753.75
+    - 778.875
+    - 804
+    hLinesOnCanvasGrid:
+    - 804
+    - 778.875
+    - 753.75
+    - 728.625
+    - 703.5
+    - 678.375
+    - 653.25
+    - 628.125
+    - 603
+    - 577.875
+    - 552.75
+    - 527.625
+    - 502.5
+    - 477.375
+    - 452.25
+    - 427.125
+    - 402
+    - 376.875
+    - 351.75
+    - 326.625
+    - 301.5
+    - 276.375
+    - 251.25
+    - 226.125
+    - 201
+    - 175.875
+    - 150.75
+    - 125.625
+    - 100.5
+    - 75.375
+    - 50.25
+    - 25.125
+    - 0
+    tg: {fileID: 11400000}
+    gridOnCanvas:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 804
+      height: 804
+    mouseInsideRectPos: {x: 965, y: 149}
+    gridColor:
+      serializedVersion: 2
+      rgba: 4294967295
+    gridLabel: Flat Color Grid
+    editGridName: 0
+    isSelected: 1
+    showGridOptions: 1
+    isSelectionLocked: 0
+    isHandleSelected: 0
+    isGridPosLocked: 0
+    isOverlapping: 0
+    handleID: -1
+    vLinesOnTexGrid: 00000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000000010000100100002001000030010000400100005001000060010000700100008001000090010000a0010000b0010000c0010000d0010000e0010000f001000000020000
+    hLinesOnTexGrid: 00000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000000010000100100002001000030010000400100005001000060010000700100008001000090010000a0010000b0010000c0010000d0010000e0010000f001000000020000
+    tintColor:
+      serializedVersion: 2
+      rgba: 4294967295
+    emptySpaceColor:
+      serializedVersion: 2
+      rgba: 4294967295
+    gridPos: {x: 0, y: 0}
+    gridWidth: 512
+    gridHeight: 512
+    gridColumns: 32
+    gridRows: 32
+    hasEmptySpace: 0
+    isTexPattern: 0
+  copyList: []
+  texAtlas: {fileID: 2800000, guid: 24474770dd82e4d48b6ba514e8cb163e, type: 3}
+  originTexAtlas: {fileID: 0}
+  originOffset: {x: 563, y: 50}
+  sizeOffset: {x: 292, y: 292}
+  showShortcuts: 0
+  zoomSpeed: 80
+  handleSize: 10
+  canvasBorder: 50
+  panelDefaultWidth: 250
+  sidePanelWidth: 250
+  showPanel: 1
+  drawAxes: 1
+  drawGrid: 1
+  texAtlasSize: {x: 512, y: 512}
