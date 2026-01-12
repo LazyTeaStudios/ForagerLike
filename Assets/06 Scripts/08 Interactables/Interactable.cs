@@ -10,9 +10,9 @@ public abstract class Interactable : MonoBehaviour
     protected bool isHighlighted;
 
     static int uiLockCount;
-    bool uiLockAcquired;
+    bool hasUILock;
 
-    public static bool IsUIOpen => uiLockCount > 0;
+    public static bool IsUILocked => uiLockCount > 0;
 
     protected virtual void Awake()
     {
@@ -32,17 +32,17 @@ public abstract class Interactable : MonoBehaviour
         outlineComponent.enabled = false;
     }
 
-    protected void AcquireUILock()
+    protected void LockUI()
     {
-        if (uiLockAcquired) return;
-        uiLockAcquired = true;
+        if (hasUILock) return;
+        hasUILock = true;
         uiLockCount++;
     }
 
-    protected void ReleaseUILock()
+    protected void UnlockUI()
     {
-        if (!uiLockAcquired) return;
-        uiLockAcquired = false;
+        if (!hasUILock) return;
+        hasUILock = false;
         uiLockCount = Mathf.Max(0, uiLockCount - 1);
     }
 
@@ -65,6 +65,6 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        ReleaseUILock();
+        UnlockUI();
     }
 }

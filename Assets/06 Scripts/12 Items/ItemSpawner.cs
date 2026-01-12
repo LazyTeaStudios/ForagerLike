@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemDropper : MonoBehaviour
+public class ItemSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
     [SerializeField] private Transform spawnPoint;
@@ -15,7 +15,7 @@ public class ItemDropper : MonoBehaviour
 
     public void SetSpawnPoint(Transform point) => spawnPoint = point;
 
-    public void Drop(GameObject prefab)
+    public void SpawnItem(GameObject prefab)
     {
         if (prefab == null) return;
 
@@ -33,15 +33,15 @@ public class ItemDropper : MonoBehaviour
         }
     }
 
-    public void Drop(GameObject prefab, int quantity)
+    public void SpawnItem(GameObject prefab, int quantity)
     {
         for (int i = 0; i < quantity; i++)
-            Drop(prefab);
+            SpawnItem(prefab);
     }
 
-    public void Drop(ItemData item, int quantity)
+    public void SpawnItem(ItemData item, int quantity)
     {
         if (item?.itemPrefab == null) return;
-        Drop(item.itemPrefab, quantity);
+        SpawnItem(item.itemPrefab, quantity);
     }
 }

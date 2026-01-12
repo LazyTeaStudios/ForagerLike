@@ -12,7 +12,7 @@ public class InteractableManager : MonoBehaviour
 
     void Update()
     {
-        if (Interactable.IsUIOpen)
+        if (Interactable.IsUILocked)
         {
             ClearTarget();
             return;
@@ -60,7 +60,6 @@ public class InteractableManager : MonoBehaviour
     void SetTarget(Interactable newTarget)
     {
         if (currentTarget == newTarget) return;
-
         currentTarget?.SetHighlighted(false);
         currentTarget = newTarget;
         currentTarget.SetHighlighted(true);

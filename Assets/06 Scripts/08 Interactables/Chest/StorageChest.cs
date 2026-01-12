@@ -7,9 +7,8 @@ public class StorageChest : Interactable
     [SerializeField] private GameObject storagePanel;
     [SerializeField] private SlotUI[] slotUIElements;
 
-    [Header("Drop Settings")]
-    [SerializeField] private float dropSpawnRadius = 1f;
-    [SerializeField] private float dropThrowForce = 3f;
+    [Header("Drops")]
+    [SerializeField] private ItemDropper itemDropper;
 
     InventorySlot[] slots;
 
@@ -17,6 +16,8 @@ public class StorageChest : Interactable
     {
         base.Awake();
         InitializeStorage();
+        EnsureDropper();
+
         if (storagePanel != null)
             storagePanel.SetActive(false);
     }
@@ -36,6 +37,14 @@ public class StorageChest : Interactable
         }
     }
 
+    void EnsureDropper()
+    {
+        if (itemDropper == null)
+            itemDropper = GetComponent<ItemDropper>();
+        if (itemDropper == null)
+            itemDropper = gameObject.AddComponent<ItemDropper>();
+    }
+
     public InventorySlot[] GetSlots() => slots;
 
     public void DropStoredItems()
@@ -47,42 +56,24 @@ public class StorageChest : Interactable
             if (slot == null || slot.IsEmpty()) continue;
             if (slot.item?.itemPrefab == null) continue;
 
-            for (int q = 0; q < slot.quantity; q++)
-                SpawnDroppedItem(slot.item.itemPrefab);
-
+            itemDropper.Drop(slot.item, slot.quantity);
             slot.Set(null, 0);
         }
 
         RefreshDisplay();
     }
 
-    void SpawnDroppedItem(GameObject itemPrefab)
-    {
-        Vector3 offset = Random.insideUnitSphere * dropSpawnRadius;
-        offset.y = Mathf.Abs(offset.y + 0.5f);
-
-        var item = Instantiate(itemPrefab, transform.position + offset, Random.rotation);
-
-        var rb = item.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            Vector3 dir = Random.onUnitSphere;
-            dir.y = Mathf.Abs(dir.y);
-            rb.AddForce(dir * dropThrowForce, ForceMode.Impulse);
-        }
-    }
-
     public override void Interact()
     {
         if (storagePanel == null || storagePanel.activeSelf) return;
-        OpenStorage();
+        Open();
     }
 
-    void OpenStorage()
+    void Open()
     {
         storagePanel.SetActive(true);
         RefreshDisplay();
-        AcquireUILock();
+        LockUI();
         InputHandler.SetMap(ActionMap.UI);
 
         if (GameManager.Instance != null)
@@ -97,15 +88,15 @@ public class StorageChest : Interactable
     void Update()
     {
         if (storagePanel != null && storagePanel.activeSelf && InputHandler.Pressed(GameAction.CloseChest))
-            CloseStorage();
+            Close();
     }
 
-    public void CloseStorage()
+    public void Close()
     {
         if (storagePanel != null)
             storagePanel.SetActive(false);
 
-        ReleaseUILock();
+        UnlockUI();
         InputHandler.SetMap(ActionMap.Gameplay);
 
         if (GameManager.Instance != null)
@@ -123,9 +114,10 @@ public class StorageChest : Interactable
             if (slotUI != null) slotUI.UpdateDisplay();
     }
 
-    void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         if (storagePanel != null && storagePanel.activeSelf)
-            CloseStorage();
+            Close();
     }
 }
