@@ -7,6 +7,8 @@ public class ItemDropper : MonoBehaviour
     [SerializeField] private float spawnRadius = 0.5f;
     [SerializeField] private float throwForce = 3f;
 
+    private HealthSystem healthSystem;
+
     void Awake()
     {
         if (spawnPoint == null)
