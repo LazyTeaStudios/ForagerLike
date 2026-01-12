@@ -26,19 +26,16 @@ public class RadialMenu : MonoBehaviour
     [SerializeField] private float normalScale = 1f;
     [SerializeField] private float hoverScale = 1.25f;
 
-    private List<RadialMenuButton> buttons = new List<RadialMenuButton>();
-    private RadialMenuButton selectedButton;
-    private float fillAmount;
-    private bool isOpen;
-    private bool clickProcessed = false;
+    readonly List<RadialMenuButton> buttons = new List<RadialMenuButton>();
+    RadialMenuButton selectedButton;
+    float fillAmount;
+    bool isOpen;
+    bool clickProcessed;
 
     public bool IsOpen => isOpen;
     public System.Action OnClosed;
 
-    private void Start()
-    {
-        Close();
-    }
+    void Start() => Close();
 
     public void Open()
     {
@@ -56,7 +53,7 @@ public class RadialMenu : MonoBehaviour
         OnClosed?.Invoke();
     }
 
-    public void SetButtons(List<RadialButtonData> buttonData, int defaultSelectionIndex = 0)
+    public void SetButtons(List<RadialButtonData> buttonData, int defaultSelection = 0)
     {
         ClearButtons();
         clickProcessed = false;
@@ -73,8 +70,8 @@ public class RadialMenu : MonoBehaviour
             btn.gameObject.SetActive(true);
 
             float angle = i * angleStep + 270f;
-            float positionRad = angle * Mathf.Deg2Rad;
-            btn.transform.localPosition = new Vector2(Mathf.Cos(positionRad), Mathf.Sin(positionRad)) * radius;
+            float rad = angle * Mathf.Deg2Rad;
+            btn.transform.localPosition = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * radius;
             btn.name = (i * angleStep).ToString();
 
             var data = buttonData[i];
@@ -82,19 +79,14 @@ public class RadialMenu : MonoBehaviour
             buttons.Add(btn);
         }
 
-        if (selectionFill != null)
-            selectionFill.fillAmount = fillAmount;
-        if (selectionFillInner != null)
-            selectionFillInner.fillAmount = fillAmount;
+        if (selectionFill != null) selectionFill.fillAmount = fillAmount;
+        if (selectionFillInner != null) selectionFillInner.fillAmount = fillAmount;
 
-        // Set default selection
-        if (buttons.Count > 0 && defaultSelectionIndex >= 0 && defaultSelectionIndex < buttons.Count)
-        {
-            selectedButton = buttons[defaultSelectionIndex];
-        }
+        if (buttons.Count > 0 && defaultSelection >= 0 && defaultSelection < buttons.Count)
+            selectedButton = buttons[defaultSelection];
     }
 
-    private void ClearButtons()
+    void ClearButtons()
     {
         foreach (var btn in buttons)
             if (btn != null) Destroy(btn.gameObject);
@@ -106,24 +98,19 @@ public class RadialMenu : MonoBehaviour
         if (centerIcon != null) centerIcon.texture = null;
     }
 
-    private void Update()
+    void Update()
     {
         if (!isOpen) return;
-
         UpdateSelection();
         UpdateVisuals();
         HandleInput();
     }
 
-    private void HandleInput()
+    void HandleInput()
     {
-        // Reset click flag when mouse is released
         if (!Input.GetMouseButton(0))
-        {
             clickProcessed = false;
-        }
 
-        // Handle click on the currently selected button
         if (Input.GetMouseButtonDown(0) && selectedButton != null && !clickProcessed)
         {
             clickProcessed = true;
@@ -131,23 +118,14 @@ public class RadialMenu : MonoBehaviour
         }
     }
 
-    private void UpdateSelection()
+    void UpdateSelection()
     {
         if (buttons.Count == 0) return;
 
         Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-        Vector2 mousePos = Input.mousePosition;
-        Vector2 mouseDir = (Vector2)mousePos - screenCenter;
+        Vector2 mouseDir = (Vector2)Input.mousePosition - screenCenter;
 
-        float distanceFromCenter = mouseDir.magnitude;
-
-        // Only update selection if mouse is outside the dead zone
-        // If inside dead zone, keep the current selection (don't clear it)
-        if (distanceFromCenter < deadZoneRadius)
-        {
-            // Don't change selection when hovering over center
-            return;
-        }
+        if (mouseDir.magnitude < deadZoneRadius) return;
 
         float mouseAngle = Mathf.Atan2(mouseDir.y, mouseDir.x) * Mathf.Rad2Deg - 270f;
         if (mouseAngle < 0) mouseAngle += 360f;
@@ -169,44 +147,27 @@ public class RadialMenu : MonoBehaviour
         selectedButton = nearest;
     }
 
-    private void UpdateVisuals()
+    void UpdateVisuals()
     {
         foreach (var btn in buttons)
             btn.SetHighlight(btn == selectedButton, normalColor, hoverColor, normalScale, hoverScale);
 
-        if (selectedButton != null)
-        {
-            if (centerLabel != null)
-                centerLabel.text = selectedButton.Label;
-            if (centerDescription != null)
-                centerDescription.text = selectedButton.Description;
-            if (centerIcon != null)
-                centerIcon.texture = selectedButton.Icon;
+        if (selectedButton == null) return;
 
-            float btnAngle = float.Parse(selectedButton.name);
-            float halfFillDegrees = fillAmount * 180f;
-            float targetRotation = btnAngle + halfFillDegrees;
+        if (centerLabel != null) centerLabel.text = selectedButton.Label;
+        if (centerDescription != null) centerDescription.text = selectedButton.Description;
+        if (centerIcon != null) centerIcon.texture = selectedButton.Icon;
 
-            Quaternion targetQuat = Quaternion.Euler(0, 0, targetRotation + 180);
+        float btnAngle = float.Parse(selectedButton.name);
+        float halfFill = fillAmount * 180f;
+        Quaternion targetQuat = Quaternion.Euler(0, 0, btnAngle + halfFill + 180);
+        float lerpSpeed = 15f * Time.unscaledDeltaTime;
 
-            if (selectionFill != null)
-            {
-                selectionFill.transform.localRotation = Quaternion.Slerp(
-                    selectionFill.transform.localRotation,
-                    targetQuat,
-                    15f * Time.unscaledDeltaTime
-                );
-            }
+        if (selectionFill != null)
+            selectionFill.transform.localRotation = Quaternion.Slerp(selectionFill.transform.localRotation, targetQuat, lerpSpeed);
 
-            if (selectionFillInner != null && selectionFillInner.transform.parent != selectionFill.transform)
-            {
-                selectionFillInner.transform.localRotation = Quaternion.Slerp(
-                    selectionFillInner.transform.localRotation,
-                    targetQuat,
-                    15f * Time.unscaledDeltaTime
-                );
-            }
-        }
+        if (selectionFillInner != null && selectionFillInner.transform.parent != selectionFill.transform)
+            selectionFillInner.transform.localRotation = Quaternion.Slerp(selectionFillInner.transform.localRotation, targetQuat, lerpSpeed);
 
         if (canvasGroup != null)
             canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, 10f * Time.unscaledDeltaTime);

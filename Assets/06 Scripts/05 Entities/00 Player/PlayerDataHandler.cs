@@ -1,24 +1,19 @@
 using UnityEngine;
 
-/// <summary>
-/// Provides global access to PlayerData. Attach to player or a manager object.
-/// </summary>
 public class PlayerDataHandler : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
 
     public static PlayerData Data { get; private set; }
 
-    private void Awake()
+    void Awake()
     {
         if (Data != null && Data != playerData)
-        {
-            Debug.LogWarning("Multiple PlayerDataProviders detected.");
-        }
+            Debug.LogWarning("Multiple PlayerDataHandlers detected.");
         Data = playerData;
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         if (Data == playerData)
             Data = null;

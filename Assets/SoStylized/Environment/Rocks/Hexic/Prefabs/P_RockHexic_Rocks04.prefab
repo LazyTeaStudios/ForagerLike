@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockHexic_Rocks04
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e1a84f10d7d932a48a24ab4b17e52922, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

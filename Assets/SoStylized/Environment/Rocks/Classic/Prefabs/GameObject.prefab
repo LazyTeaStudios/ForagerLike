@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6939304141347371722}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,6 +56,10 @@ PrefabInstance:
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_Name
       value: P_BoulderClassic5 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -136,6 +140,10 @@ PrefabInstance:
       value: P_BoulderClassic5 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -212,6 +220,10 @@ PrefabInstance:
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_Name
       value: P_BoulderClassic5 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -291,6 +303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_BoulderClassic4 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2678328572102290975, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3341817200454399141, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4988999
@@ -360,6 +376,10 @@ PrefabInstance:
     - target: {fileID: 2678328572102290975, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
       propertyPath: m_Name
       value: P_BoulderClassic4 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678328572102290975, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3341817200454399141, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
       propertyPath: m_LocalScale.x
@@ -434,6 +454,10 @@ PrefabInstance:
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_Name
       value: P_BoulderClassic5 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -514,6 +538,10 @@ PrefabInstance:
       value: P_BoulderClassic5 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -592,6 +620,10 @@ PrefabInstance:
       value: P_BoulderClassic5 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -668,6 +700,10 @@ PrefabInstance:
     - target: {fileID: 1701000163381655886, guid: ec2fabdbec682e241991705084e4e887, type: 3}
       propertyPath: m_Name
       value: P_BoulderClumpClassic1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701000163381655886, guid: ec2fabdbec682e241991705084e4e887, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1701000163381655886, guid: ec2fabdbec682e241991705084e4e887, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -751,6 +787,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_BoulderClumpClassic1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1701000163381655886, guid: ec2fabdbec682e241991705084e4e887, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2076434368394355700, guid: ec2fabdbec682e241991705084e4e887, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.3085
@@ -820,6 +860,10 @@ PrefabInstance:
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_Name
       value: P_BoulderClassic5 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -900,6 +944,10 @@ PrefabInstance:
       value: P_BoulderClumpClassic1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1701000163381655886, guid: ec2fabdbec682e241991705084e4e887, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701000163381655886, guid: ec2fabdbec682e241991705084e4e887, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -968,6 +1016,10 @@ PrefabInstance:
     - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_Name
       value: P_BoulderClassic5 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270559258662539535, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8047342867073616821, guid: 645afe493a7ad4a4ba4e82e68f75c4de, type: 3}
       propertyPath: m_LocalScale.x
@@ -1042,6 +1094,10 @@ PrefabInstance:
     - target: {fileID: 2678328572102290975, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
       propertyPath: m_Name
       value: P_BoulderClassic4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678328572102290975, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3341817200454399141, guid: 9015de009792e0845b23b6025f8ca1e4, type: 3}
       propertyPath: m_LocalPosition.x

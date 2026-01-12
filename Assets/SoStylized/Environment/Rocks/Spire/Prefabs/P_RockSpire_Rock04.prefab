@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockSpire_Rock04
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7bf37249e0231b24f897ea97e2e9a25d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -3,9 +3,9 @@ using UnityEngine;
 public class StorageChest : Interactable
 {
     [Header("Storage")]
-    [SerializeField] int storageSlots = 20;
-    [SerializeField] GameObject storagePanel;
-    [SerializeField] SlotUI[] slotUIElements;
+    [SerializeField] private int storageSlots = 20;
+    [SerializeField] private GameObject storagePanel;
+    [SerializeField] private SlotUI[] slotUIElements;
 
     [Header("Drop Settings")]
     [SerializeField] private float dropSpawnRadius = 1f;
@@ -17,7 +17,6 @@ public class StorageChest : Interactable
     {
         base.Awake();
         InitializeStorage();
-
         if (storagePanel != null)
             storagePanel.SetActive(false);
     }
@@ -31,30 +30,24 @@ public class StorageChest : Interactable
         for (int i = 0; i < slotUIElements.Length && i < slots.Length; i++)
         {
             if (slotUIElements[i] == null) continue;
-
             int index = i;
             slotUIElements[i].Setup(100 + i, false);
             slotUIElements[i].SetCustomSlotProvider(() => slots[index]);
         }
     }
 
-    public InventorySlot[] GetSlots()
-    {
-        return slots;
-    }
+    public InventorySlot[] GetSlots() => slots;
 
     public void DropStoredItems()
     {
         if (slots == null) return;
 
-        for (int i = 0; i < slots.Length; i++)
+        foreach (var slot in slots)
         {
-            var slot = slots[i];
             if (slot == null || slot.IsEmpty()) continue;
-            if (slot.item == null || slot.item.itemPrefab == null) continue;
+            if (slot.item?.itemPrefab == null) continue;
 
-            int amount = slot.quantity;
-            for (int q = 0; q < amount; q++)
+            for (int q = 0; q < slot.quantity; q++)
                 SpawnDroppedItem(slot.item.itemPrefab);
 
             slot.Set(null, 0);
@@ -65,26 +58,23 @@ public class StorageChest : Interactable
 
     void SpawnDroppedItem(GameObject itemPrefab)
     {
-        Vector3 randomOffset = Random.insideUnitSphere * dropSpawnRadius;
-        randomOffset.y = Mathf.Abs(randomOffset.y + 0.5f);
-        Vector3 spawnPosition = transform.position + randomOffset;
+        Vector3 offset = Random.insideUnitSphere * dropSpawnRadius;
+        offset.y = Mathf.Abs(offset.y + 0.5f);
 
-        GameObject item = Instantiate(itemPrefab, spawnPosition, Random.rotation);
+        var item = Instantiate(itemPrefab, transform.position + offset, Random.rotation);
 
-        Rigidbody rb = item.GetComponent<Rigidbody>();
+        var rb = item.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 throwDirection = Random.onUnitSphere;
-            throwDirection.y = Mathf.Abs(throwDirection.y);
-            rb.AddForce(throwDirection * dropThrowForce, ForceMode.Impulse);
+            Vector3 dir = Random.onUnitSphere;
+            dir.y = Mathf.Abs(dir.y);
+            rb.AddForce(dir * dropThrowForce, ForceMode.Impulse);
         }
     }
 
     public override void Interact()
     {
-        if (storagePanel == null) return;
-        if (storagePanel.activeSelf) return;
-
+        if (storagePanel == null || storagePanel.activeSelf) return;
         OpenStorage();
     }
 
@@ -92,7 +82,7 @@ public class StorageChest : Interactable
     {
         storagePanel.SetActive(true);
         RefreshDisplay();
-
+        AcquireUILock();
         InputHandler.SetMap(ActionMap.UI);
 
         if (GameManager.Instance != null)
@@ -106,11 +96,8 @@ public class StorageChest : Interactable
 
     void Update()
     {
-        if (storagePanel != null && storagePanel.activeSelf &&
-            InputHandler.Pressed(GameAction.CloseChest))
-        {
+        if (storagePanel != null && storagePanel.activeSelf && InputHandler.Pressed(GameAction.CloseChest))
             CloseStorage();
-        }
     }
 
     public void CloseStorage()
@@ -118,6 +105,7 @@ public class StorageChest : Interactable
         if (storagePanel != null)
             storagePanel.SetActive(false);
 
+        ReleaseUILock();
         InputHandler.SetMap(ActionMap.Gameplay);
 
         if (GameManager.Instance != null)
@@ -132,10 +120,7 @@ public class StorageChest : Interactable
     void RefreshDisplay()
     {
         foreach (var slotUI in slotUIElements)
-        {
-            if (slotUI != null)
-                slotUI.UpdateDisplay();
-        }
+            if (slotUI != null) slotUI.UpdateDisplay();
     }
 
     void OnDestroy()

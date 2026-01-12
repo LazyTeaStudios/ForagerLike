@@ -12,37 +12,32 @@ public class PlacedBuilding : MonoBehaviour
 
     public void DropResources()
     {
-        if (buildItem == null || buildItem.requiredResources == null) return;
+        if (buildItem?.requiredResources == null) return;
 
-        foreach (var requirement in buildItem.requiredResources)
+        foreach (var req in buildItem.requiredResources)
         {
-            if (requirement.item == null || requirement.item.itemPrefab == null) continue;
+            if (req.item?.itemPrefab == null) continue;
 
-            int amountToDrop = returnFullResources
-                ? requirement.quantity
-                : Mathf.CeilToInt(requirement.quantity * resourceReturnRate);
+            int amount = returnFullResources ? req.quantity : Mathf.CeilToInt(req.quantity * resourceReturnRate);
 
-            for (int i = 0; i < amountToDrop; i++)
-            {
-                SpawnDroppedItem(requirement.item.itemPrefab);
-            }
+            for (int i = 0; i < amount; i++)
+                SpawnDroppedItem(req.item.itemPrefab);
         }
     }
 
-    private void SpawnDroppedItem(GameObject itemPrefab)
+    void SpawnDroppedItem(GameObject itemPrefab)
     {
-        Vector3 randomOffset = Random.insideUnitSphere * dropSpawnRadius;
-        randomOffset.y = Mathf.Abs(randomOffset.y + 0.5f);
-        Vector3 spawnPosition = transform.position + randomOffset;
+        Vector3 offset = Random.insideUnitSphere * dropSpawnRadius;
+        offset.y = Mathf.Abs(offset.y + 0.5f);
 
-        GameObject item = Instantiate(itemPrefab, spawnPosition, Random.rotation);
+        var item = Instantiate(itemPrefab, transform.position + offset, Random.rotation);
 
-        Rigidbody rb = item.GetComponent<Rigidbody>();
+        var rb = item.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 throwDirection = Random.onUnitSphere;
-            throwDirection.y = Mathf.Abs(throwDirection.y);
-            rb.AddForce(throwDirection * dropThrowForce, ForceMode.Impulse);
+            Vector3 dir = Random.onUnitSphere;
+            dir.y = Mathf.Abs(dir.y);
+            rb.AddForce(dir * dropThrowForce, ForceMode.Impulse);
         }
     }
 }

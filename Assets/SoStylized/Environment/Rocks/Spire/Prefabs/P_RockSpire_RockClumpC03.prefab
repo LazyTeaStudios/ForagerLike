@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockSpire_RockClumpC03
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1835b8f57d9474b43b909e193d3b28b8, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

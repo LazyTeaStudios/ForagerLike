@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_CubicCliffPiece04
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 475bca8ffc1e89047a235f178e7e6e2f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

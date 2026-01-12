@@ -1,87 +1,173 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class BuildingMenuController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private RadialMenu radialMenu;
     [SerializeField] private BuildingSystem buildingSystem;
-    [Header("Build Items")]
-    [SerializeField] private List<BuildItemSO> buildItems = new List<BuildItemSO>();
-    [Header("Menu Icons")]
-    [SerializeField] private Texture2D buildIcon;
+
+    [Header("Menu Definition")]
+    [SerializeField] private RadialMenuDefinition mainMenuDef;
+
+    [Header("Default Icons")]
     [SerializeField] private Texture2D destroyIcon;
     [SerializeField] private Texture2D backIcon;
-    private MenuState currentState = MenuState.Closed;
-    private enum MenuState { Closed, Main, BuildSelect }
-    private void Update()
+
+    readonly Stack<RadialMenuDefinition> menuStack = new Stack<RadialMenuDefinition>();
+    bool isOpen;
+
+    void Update()
     {
         if (InputHandler.Pressed(GameAction.ToggleBuildModeAction))
             ToggleMenu();
     }
-    private void ToggleMenu()
+
+    void ToggleMenu()
     {
-        if (currentState == MenuState.Closed)
-            OpenMainMenu();
+        if (!isOpen)
+            OpenMenu(mainMenuDef);
         else
             CloseMenu();
     }
-    private void OpenMainMenu()
+
+    void OpenMenu(RadialMenuDefinition menuDef)
     {
+        if (menuDef == null) return;
+
         InputHandler.SetMap(ActionMap.UI);
-        buildingSystem.ExitBuildMode();
-        buildingSystem.ExitDestroyMode();
-        var buttons = new List<RadialButtonData>
-        {
-            new RadialButtonData("Destroy", "Remove existing structures", destroyIcon, EnterDestroyMode),
-            new RadialButtonData("Build", "Place new structures", buildIcon, OpenBuildMenu),
-        };
-        // Pass 0 to select the first button (Build) by default
-        radialMenu.SetButtons(buttons, 1);
+        buildingSystem.ExitAllModes();
+
+        menuStack.Push(menuDef);
+        ShowCurrentMenu();
+
         radialMenu.OnClosed = OnMenuClosed;
         radialMenu.Open();
-        currentState = MenuState.Main;
+        isOpen = true;
     }
-    private void OpenBuildMenu()
+
+    void ShowCurrentMenu()
     {
+        if (menuStack.Count == 0) return;
+
+        var current = menuStack.Peek();
         var buttons = new List<RadialButtonData>();
-        buttons.Add(new RadialButtonData("Back", "Return to main menu", backIcon, OpenMainMenu));
-        foreach (var item in buildItems)
+
+        // Add back button if we're in a submenu
+        if (menuStack.Count > 1)
+            buttons.Add(new RadialButtonData("Back", "Return to previous menu", backIcon, GoBack));
+
+        foreach (var entry in current.entries)
         {
-            if (item == null || item.prefab == null) continue;
-            var capturedItem = item;
-            Texture2D icon = item.icon != null ? item.icon.texture : null;
-            buttons.Add(new RadialButtonData(item.displayName, item.description, icon, () => SelectBuildItem(capturedItem)));
+            var captured = entry;
+            switch (entry.type)
+            {
+                case RadialMenuEntry.EntryType.SubMenu:
+                    buttons.Add(new RadialButtonData(
+                        entry.displayName,
+                        entry.description,
+                        entry.icon,
+                        () => NavigateToSubMenu(captured.subMenu)
+                    ));
+                    break;
+
+                case RadialMenuEntry.EntryType.BuildItem:
+                    if (entry.buildItem != null)
+                    {
+                        Texture2D icon = entry.icon != null ? entry.icon :
+                            (entry.buildItem.icon != null ? entry.buildItem.icon.texture : null);
+                        buttons.Add(new RadialButtonData(
+                            entry.displayName ?? entry.buildItem.displayName,
+                            entry.description ?? entry.buildItem.description,
+                            icon,
+                            () => SelectBuildItem(captured.buildItem)
+                        ));
+                    }
+                    break;
+
+                case RadialMenuEntry.EntryType.Action:
+                    buttons.Add(new RadialButtonData(
+                        entry.displayName,
+                        entry.description,
+                        entry.icon,
+                        () => ExecuteAction(captured.actionId)
+                    ));
+                    break;
+
+                case RadialMenuEntry.EntryType.Back:
+                    buttons.Add(new RadialButtonData(
+                        entry.displayName ?? "Back",
+                        entry.description ?? "Return to previous menu",
+                        entry.icon ?? backIcon,
+                        GoBack
+                    ));
+                    break;
+            }
         }
-        // You can also specify a default selection for the build menu
-        // For example, select "Back" button (index 0) or first build item (index 1)
-        radialMenu.SetButtons(buttons, 1); // Select first build item by default
-        currentState = MenuState.BuildSelect;
+
+        int defaultIndex = menuStack.Count > 1 ? 1 : 0;
+        radialMenu.SetButtons(buttons, Mathf.Min(defaultIndex, buttons.Count - 1));
     }
-    private void SelectBuildItem(BuildItemSO item)
+
+    void NavigateToSubMenu(RadialMenuDefinition subMenu)
+    {
+        if (subMenu == null) return;
+        menuStack.Push(subMenu);
+        ShowCurrentMenu();
+    }
+
+    void GoBack()
+    {
+        if (menuStack.Count <= 1)
+        {
+            CloseMenu();
+            return;
+        }
+
+        menuStack.Pop();
+        ShowCurrentMenu();
+    }
+
+    void ExecuteAction(string actionId)
+    {
+        switch (actionId)
+        {
+            case "destroy":
+                buildingSystem.EnterDestroyMode();
+                CloseMenu();
+                RestoreCursor();
+                break;
+
+            default:
+                Debug.LogWarning($"Unknown action: {actionId}");
+                break;
+        }
+    }
+
+    void SelectBuildItem(BuildItemSO item)
     {
         buildingSystem.SetBuildItem(item);
         buildingSystem.EnterBuildMode();
         CloseMenu();
         RestoreCursor();
     }
-    private void EnterDestroyMode()
-    {
-        buildingSystem.EnterDestroyMode();
-        CloseMenu();
-        RestoreCursor();
-    }
-    private void CloseMenu()
+
+    void CloseMenu()
     {
         radialMenu.Close();
+        menuStack.Clear();
         InputHandler.SetMap(ActionMap.Gameplay);
-        currentState = MenuState.Closed;
+        isOpen = false;
     }
-    private void OnMenuClosed()
+
+    void OnMenuClosed()
     {
-        currentState = MenuState.Closed;
+        menuStack.Clear();
+        isOpen = false;
         RestoreCursor();
     }
-    private void RestoreCursor()
+
+    void RestoreCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

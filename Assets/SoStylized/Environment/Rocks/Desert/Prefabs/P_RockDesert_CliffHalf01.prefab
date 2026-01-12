@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockDesert_CliffHalf01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2d9c78c3f6427794d84292ccc25e83d9, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

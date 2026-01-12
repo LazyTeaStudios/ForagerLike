@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b6843490b556b014183f2c39a73275f8, type: 3}
   maxStackSize: 64
   itemType: 1
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 765830019208060021, guid: 8d48cb546d0202545824590648c2e38d, type: 3}
   growthStages: 3
   maxHealth: 10
   plantPrefab: {fileID: 6967365203733630599, guid: 646231e4f76bc6f4e895b8e690516c5e, type: 3}

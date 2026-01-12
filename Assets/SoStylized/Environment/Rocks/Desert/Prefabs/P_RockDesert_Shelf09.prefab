@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockDesert_Shelf09
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0d1767eee2588e449192db126ddaa0a, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

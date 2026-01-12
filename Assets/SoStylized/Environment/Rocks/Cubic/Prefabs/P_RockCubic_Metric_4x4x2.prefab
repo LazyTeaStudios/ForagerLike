@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockCubic_Metric_4x4x2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a70b7fd02e126264c87171b84e0025e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

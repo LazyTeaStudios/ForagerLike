@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5de85ead481c54f99fee7c07fa401e, type: 3}
+  m_Name: Main Menu
+  m_EditorClassIdentifier: 
+  menuName: Main Menu
+  menuIcon: {fileID: 0}
+  menuDescription: Create planters for growing resoruces.
+  entries:
+  - type: 0
+    displayName: Destroy
+    description: 
+    icon: {fileID: 2800000, guid: 2974ebd4af0277749822ffc1f366500d, type: 3}
+    subMenu: {fileID: 11400000, guid: 59f3e10beac594d428f4d14073340c31, type: 2}
+    buildItem: {fileID: 0}
+    actionId: destroy
+  - type: 1
+    displayName: Building
+    description: 
+    icon: {fileID: 2800000, guid: bc68e189fa8b7204e8b96330754dbdc8, type: 3}
+    subMenu: {fileID: 11400000, guid: 4d7ab4365748a3346ac4b4c24f51eea8, type: 2}
+    buildItem: {fileID: 0}
+    actionId: 

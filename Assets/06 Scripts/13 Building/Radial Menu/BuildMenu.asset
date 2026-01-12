@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5de85ead481c54f99fee7c07fa401e, type: 3}
+  m_Name: BuildMenu
+  m_EditorClassIdentifier: 
+  menuName: Build Menu
+  menuIcon: {fileID: 2800000, guid: bc68e189fa8b7204e8b96330754dbdc8, type: 3}
+  menuDescription: 
+  entries:
+  - type: 1
+    displayName: 
+    description: 
+    icon: {fileID: 2800000, guid: b917faf218dd8c149ace2663b786e0b3, type: 3}
+    subMenu: {fileID: 11400000, guid: 75b8e1d4f667c5b4fa6c65cbf0905ab6, type: 2}
+    buildItem: {fileID: 0}
+    actionId: 
+  - type: 1
+    displayName: 
+    description: 
+    icon: {fileID: 2800000, guid: f9118449f119a044390c8573b9a3aa03, type: 3}
+    subMenu: {fileID: 11400000, guid: 76e35867db15de241b7761e691024d75, type: 2}
+    buildItem: {fileID: 0}
+    actionId: 
+  - type: 1
+    displayName: 
+    description: 
+    icon: {fileID: 2800000, guid: f9118449f119a044390c8573b9a3aa03, type: 3}
+    subMenu: {fileID: 11400000, guid: 6b130e5c4b8ee4745b9a9afbf9f12d33, type: 2}
+    buildItem: {fileID: 0}
+    actionId: 

@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockDesert_Layered02
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0b79e0a5f9196664aad8fd6d6c608574, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

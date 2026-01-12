@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockClassic16
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bfc9fd3a88ca9ea4ca2c5fde92942417, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

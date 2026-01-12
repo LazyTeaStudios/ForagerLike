@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_RockDesert_HoodooCliff09
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a5c93eabbd0ea024488a3efe7f29d0b4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
