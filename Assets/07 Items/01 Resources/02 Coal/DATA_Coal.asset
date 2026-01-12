@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d49365a8cf94e824da4260bbdf8b, type: 3}
+  m_Name: DATA_Coal
+  m_EditorClassIdentifier: 
+  itemName: Coall
+  icon: {fileID: 4863366681507355622, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  maxStackSize: 64
+  itemType: 0
+  itemPrefab: {fileID: 1784502518683212841, guid: cc0ad5817e59eab48b6794d6169aa41a, type: 3}
+  growthStages: 0
+  maxHealth: 100
+  plantPrefab: {fileID: 0}
+  drops: []
