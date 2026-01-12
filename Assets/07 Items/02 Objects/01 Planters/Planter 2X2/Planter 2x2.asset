@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45211c38b7d8412438389504ade5927f, type: 3}
-  m_Name: Planter 1x1
+  m_Name: Planter 2x2
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
-  displayName: Planter 1x1
-  description: 1x1 Planter for Growing up to 4 Flowers
-  icon: {fileID: -1184960675, guid: ccf0a6f8996424c4184b5a194f31c962, type: 3}
-  prefab: {fileID: 144784770610736651, guid: c7463142d1a41e5499b628607eb171e8, type: 3}
+  displayName: Planter 2x2
+  description: 2x2 Shaped Planter for Growing up to 16 Flowers
+  icon: {fileID: -1184960675, guid: b917faf218dd8c149ace2663b786e0b3, type: 3}
+  prefab: {fileID: 144784770610736651, guid: 8455c9470a80eeb479d09fba3d21984e, type: 3}
   requiredResources:
   - item: {fileID: 11400000, guid: 0457bc9d02301f5408fcfa9250ff0c56, type: 2}
-    quantity: 5
+    quantity: 20
   allowedSurfaces: 0
   maxGroundAngle: 0
   maxWallAngle: 0

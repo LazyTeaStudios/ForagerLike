@@ -27,6 +27,8 @@ public enum GameAction
     Click,
     RightClick,
 
+    CloseChest,
+
     //Gameplay Action Map
     GameplayPause,
     GameplayMousePosition,

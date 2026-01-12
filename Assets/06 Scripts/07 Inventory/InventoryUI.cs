@@ -3,7 +3,6 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] GameObject craftingContainer;
     [SerializeField] SlotUI[] hotbarSlotUIs;
 
     bool inventoryOpen;
@@ -20,7 +19,6 @@ public class InventoryUI : MonoBehaviour
             UpdateHotbarSelection(InventoryManager.Instance.GetSelectedHotbarIndex());
         }
 
-        craftingContainer.SetActive(false);
         RefreshAllSlots();
     }
 
@@ -52,7 +50,6 @@ public class InventoryUI : MonoBehaviour
     void ToggleInventory()
     {
         inventoryOpen = !inventoryOpen;
-        craftingContainer.SetActive(inventoryOpen);
         OnInventoryToggled?.Invoke(inventoryOpen);
 
         InputHandler.SetMap(inventoryOpen ? ActionMap.UI : ActionMap.Gameplay);
@@ -73,7 +70,6 @@ public class InventoryUI : MonoBehaviour
         if (!inventoryOpen) return;
 
         inventoryOpen = false;
-        craftingContainer.SetActive(false);
         InputHandler.SetMap(ActionMap.Gameplay);
 
         if (GameManager.Instance != null)

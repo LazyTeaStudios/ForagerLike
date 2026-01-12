@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 public class SlotUI : MonoBehaviour,
     IPointerClickHandler,
@@ -16,20 +17,47 @@ public class SlotUI : MonoBehaviour,
     [SerializeField] Color selectedColor = Color.yellow;
 
     int slotIndex;
+    bool isHotbar;
 
-    // Shared drag state across all slots
-    private static int draggingFromIndex = -1;
-    private static bool isDragging = false;
+    Func<InventorySlot> customSlotProvider;
+    Action<int, int> customSwapHandler;
+
+    static int draggingFromIndex = -1;
+    static bool isDragging = false;
+    static bool draggingFromHotbar = false;
+    static SlotUI dragSource;
 
     public void Setup(int index, bool hotbar)
     {
         slotIndex = index;
+        isHotbar = hotbar;
         UpdateDisplay();
+    }
+
+    public void SetCustomSlotProvider(Func<InventorySlot> provider)
+    {
+        customSlotProvider = provider;
+    }
+
+    public void SetSwapHandler(Action<int, int> handler)
+    {
+        customSwapHandler = handler;
+    }
+
+    InventorySlot GetSlot()
+    {
+        if (customSlotProvider != null)
+            return customSlotProvider();
+
+        if (isHotbar)
+            return InventoryManager.Instance.GetHotbarSlot(slotIndex);
+
+        return null;
     }
 
     public void UpdateDisplay()
     {
-        InventorySlot slot = InventoryManager.Instance.GetHotbarSlot(slotIndex);
+        InventorySlot slot = GetSlot();
         bool isEmpty = slot == null || slot.IsEmpty();
 
         if (iconImage)
@@ -45,15 +73,12 @@ public class SlotUI : MonoBehaviour,
     public void SetSelected(bool selected)
     {
         if (outlineImage)
-        {
             outlineImage.SetActive(selected);
-            //outlineImage.color = selectedColor;
-        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left && isHotbar)
             InventoryManager.Instance.SelectHotbarSlot(slotIndex);
     }
 
@@ -61,11 +86,13 @@ public class SlotUI : MonoBehaviour,
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
 
-        InventorySlot slot = InventoryManager.Instance.GetHotbarSlot(slotIndex);
+        InventorySlot slot = GetSlot();
         if (slot == null || slot.IsEmpty()) return;
 
         draggingFromIndex = slotIndex;
         isDragging = true;
+        draggingFromHotbar = isHotbar;
+        dragSource = this;
 
         if (DragVisualManager.Instance != null)
             DragVisualManager.Instance.StartDrag(slot.item.icon, slot.quantity, eventData.position);
@@ -85,6 +112,8 @@ public class SlotUI : MonoBehaviour,
 
         isDragging = false;
         draggingFromIndex = -1;
+        draggingFromHotbar = false;
+        dragSource = null;
 
         if (DragVisualManager.Instance != null)
             DragVisualManager.Instance.EndDrag();
@@ -92,15 +121,35 @@ public class SlotUI : MonoBehaviour,
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (!isDragging) return;
+        if (!isDragging || dragSource == null) return;
         if (draggingFromIndex < 0) return;
 
-        // Swap the dragged slot with this slot
-        InventoryManager.Instance.SwapHotbarSlots(draggingFromIndex, slotIndex);
+        InventorySlot sourceSlot = dragSource.GetSlot();
+        InventorySlot targetSlot = GetSlot();
 
-        // End drag visual immediately
+        if (sourceSlot == null || targetSlot == null) return;
+
+        /// Swap the items
+        ItemData tempItem = sourceSlot.item;
+        int tempQty = sourceSlot.quantity;
+
+        sourceSlot.Set(targetSlot.item, targetSlot.quantity);
+        targetSlot.Set(tempItem, tempQty);
+
+        /// Update displays
+        dragSource.UpdateDisplay();
+        UpdateDisplay();
+
+        /// Trigger inventory events if hotbar was involved
+        if (draggingFromHotbar || isHotbar)
+        {
+            InventoryManager.Instance.OnInventoryChanged?.Invoke();
+        }
+
         isDragging = false;
         draggingFromIndex = -1;
+        draggingFromHotbar = false;
+        dragSource = null;
 
         if (DragVisualManager.Instance != null)
             DragVisualManager.Instance.EndDrag();

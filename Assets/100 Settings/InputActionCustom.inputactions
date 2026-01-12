@@ -7,15 +7,6 @@
             "id": "9d66ef5a-88a8-4869-90e8-4324d7f0e1a3",
             "actions": [
                 {
-                    "name": "ToggleInventory",
-                    "type": "Button",
-                    "id": "afcf9971-f15a-4e87-a5ee-652723a3c3bd",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ToggleBuildModeAction",
                     "type": "Button",
                     "id": "9c4e2352-b394-4262-bc1e-6365520ce393",
@@ -243,17 +234,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShiftModifier",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6bdd3c12-fd0b-41a8-a274-d4dd9962738f",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ToggleInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -670,6 +650,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "CloseChest",
+                    "type": "Button",
+                    "id": "65cfdbd5-b87e-464e-a980-afa0eb7dbf76",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Navigate",
                     "type": "PassThrough",
                     "id": "c95b2375-e6d9-4b88-9c4c-c5e76515df4b",
@@ -1008,6 +997,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
                     "action": "UIPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14ca153c-bfe0-4bac-82cc-291f7d01e8d0",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseChest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
