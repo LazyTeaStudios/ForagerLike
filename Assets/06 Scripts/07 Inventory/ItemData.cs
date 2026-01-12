@@ -11,7 +11,6 @@ public class ItemData : ScriptableObject
     public ItemType itemType;
 
     [Header("Prefab Reference")]
-    [ShowIf(nameof(itemType), ItemType.Material)]
     public GameObject itemPrefab;
 
     [Header("Seed Properties")]

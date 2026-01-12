@@ -263,8 +263,12 @@ public class BuildingSystem : MonoBehaviour
             {
                 ClearHighlight();
 
-                /// Drop resources before destroying
+                var chest = building.GetComponentInChildren<StorageChest>();
+                if (chest != null)
+                    chest.DropStoredItems();
+
                 building.DropResources();
+                Destroy(building.gameObject);
 
                 Destroy(building.gameObject);
             }

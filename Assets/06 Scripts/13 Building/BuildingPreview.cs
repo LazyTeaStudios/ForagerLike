@@ -3,46 +3,43 @@ using UnityEngine;
 public class BuildingPreview : MonoBehaviour
 {
     [Header("Overlap")]
-    [SerializeField] private float overlapEpsilon = 0.01f; // shrink checks a tiny bit for flush placement
+    [SerializeField] private float overlapEpsilon = 0.01f;
+    [SerializeField] private float groundIgnoreThreshold = 0.1f; // How far below ground to ignore
 
     private LayerMask overlapMask;
+    private LayerMask groundMask; // Store ground mask to exclude it
 
     private Renderer[] renderers;
     private MaterialPropertyBlock mpb;
 
-    // We use colliders ONLY as shape references for overlap checks.
-    // (They can stay enabled or disabled; doesn't matter for OverlapBox/Sphere/Capsule.)
     private Collider[] cachedColliders;
     private readonly Collider[] overlapResults = new Collider[64];
 
-    // Shader property IDs (covers Standard + URP/HDRP common cases)
     private static readonly int ColorId = Shader.PropertyToID("_Color");
     private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
     private static readonly int TintColorId = Shader.PropertyToID("_TintColor");
 
-    // Optional: if you want all meshes to use the preview material
     private Material previewMaterialInstance;
 
     public void Initialize(Material previewMaterial, LayerMask overlapMask, LayerMask groundMask)
     {
-        this.overlapMask = overlapMask;
+        // Store ground mask and exclude it from overlap checks
+        this.groundMask = groundMask;
+        this.overlapMask = overlapMask & ~groundMask; // Remove ground from overlap mask
 
         renderers = GetComponentsInChildren<Renderer>(true);
         cachedColliders = GetComponentsInChildren<Collider>(true);
 
         mpb = new MaterialPropertyBlock();
 
-        // Put preview on Ignore Raycast so it doesn't interfere with raycasts.
         int ignore = LayerMask.NameToLayer("Ignore Raycast");
         if (ignore >= 0)
             SetLayerRecursively(gameObject, ignore);
 
-        // Make sure we don't mutate the asset material
         if (previewMaterial != null)
         {
             previewMaterialInstance = new Material(previewMaterial);
 
-            // Force all renderer slots to use the preview material instance
             for (int i = 0; i < renderers.Length; i++)
             {
                 var r = renderers[i];
@@ -63,8 +60,6 @@ public class BuildingPreview : MonoBehaviour
             }
         }
 
-        // Optional but recommended: disable preview colliders so the preview doesn't physically block things
-        // (our overlap checks do NOT rely on these colliders being enabled)
         for (int i = 0; i < cachedColliders.Length; i++)
         {
             if (cachedColliders[i] != null)
@@ -82,10 +77,7 @@ public class BuildingPreview : MonoBehaviour
     {
         if (renderers == null) return;
 
-        // Use property block so we don't need unique materials per renderer
         mpb.Clear();
-
-        // Set all likely colour properties; shader will ignore unknown ones
         mpb.SetColor(ColorId, c);
         mpb.SetColor(BaseColorId, c);
         mpb.SetColor(TintColorId, c);
@@ -155,7 +147,6 @@ public class BuildingPreview : MonoBehaviour
         }
         else
         {
-            // Fallback: bounds-based, axis-aligned (don’t rotate it)
             Bounds b = col.bounds;
             Vector3 halfExtents = b.extents - Vector3.one * overlapEpsilon;
             halfExtents = Max(halfExtents, Vector3.zero);
@@ -165,7 +156,7 @@ public class BuildingPreview : MonoBehaviour
             );
         }
 
-        // Filter: ignore self (preview)
+        // Filter out self and ground collisions
         for (int i = 0; i < hitCount; i++)
         {
             var hit = overlapResults[i];
@@ -174,10 +165,18 @@ public class BuildingPreview : MonoBehaviour
             if (hit == null) continue;
             if (hit.transform.IsChildOf(transform)) continue;
 
+            // Skip if this collider is on ground layer
+            if (IsOnGroundLayer(hit.gameObject)) continue;
+
             return true;
         }
 
         return false;
+    }
+
+    private bool IsOnGroundLayer(GameObject obj)
+    {
+        return ((1 << obj.layer) & groundMask) != 0;
     }
 
     private static void GetCapsuleWorldPoints(CapsuleCollider cap, out Vector3 p0, out Vector3 p1, out float radius)
@@ -185,7 +184,7 @@ public class BuildingPreview : MonoBehaviour
         Transform t = cap.transform;
         Vector3 scale = Abs(t.lossyScale);
 
-        int dir = cap.direction; // 0=x, 1=y, 2=z
+        int dir = cap.direction;
         float height = cap.height * scale[dir];
 
         float rScale = (dir == 0) ? Mathf.Max(scale.y, scale.z)
