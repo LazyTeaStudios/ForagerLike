@@ -137,7 +137,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cloud_Opacity: 1.18
-    - _Cloudiness: 1
+    - _Cloudiness: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
