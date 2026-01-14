@@ -28,4 +28,7 @@ public class BuildItemSO : ScriptableObject
     [Header("Snapping")]
     [Tooltip("If true, this item will NEVER snap to grid even if snapping is enabled/toggled on.")]
     public bool cantSnapToGrid = false;
+
+    [Header("Research")]
+    public bool unlockedByDefault = true;
 }

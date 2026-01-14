@@ -210,6 +210,13 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-1247078081-0
         - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-1533964191824972717-0
         - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-5511978134763257274-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-1522056180-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-4360587027269034694-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-6889463619343125499-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-7037344338419858378-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-7908274810059714692-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-1055124104-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-395112572-0
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -357,6 +364,34 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 0
           iconNameOrGuid: SphereCollider Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 9
+          iconNameOrGuid: Settings Icon
           isIconRecursive: 0
           isColorRecursive: 0
     - goDatas_byGlobalId:
