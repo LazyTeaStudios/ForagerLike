@@ -207,6 +207,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-1008696177-0
         - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-188773166-0
         - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-55316565-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-1247078081-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-1533964191824972717-0
+        - globalObjectIdString: GlobalObjectId_V1-2-d7c09a18abd7dfa41a98b0303426195d-5511978134763257274-0
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -342,6 +345,18 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 0
           iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 5
+          iconNameOrGuid: DirectionalLight Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: SphereCollider Icon
           isIconRecursive: 0
           isColorRecursive: 0
     - goDatas_byGlobalId:

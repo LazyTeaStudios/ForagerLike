@@ -136,7 +136,8 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cloud_Opacity: 0.4
+    - _Cloud_Opacity: 1.18
+    - _Cloudiness: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -170,9 +171,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _ZenithBlend: 0.33
+    - _isCloudy: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Cloud_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Cloud_Color: {r: 0.41509432, g: 0.40138838, b: 0.40138838, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GroundColor: {r: 0.3066038, g: 0.90094346, b: 1, a: 1}
