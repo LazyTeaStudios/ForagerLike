@@ -288,6 +288,9 @@ MonoBehaviour:
   inputSlotUI: {fileID: 1983752149809579824}
   recipes:
   - {fileID: 11400000, guid: d0069af79ef4bdd4e9e253c4c40db074, type: 2}
+  - {fileID: 11400000, guid: fb32fe82028b86f4bbadf422f9ef1d96, type: 2}
+  - {fileID: 11400000, guid: 2b939e6929bce8e468d8f1e0811cf16a, type: 2}
+  - {fileID: 11400000, guid: 4fe7194887b245547a2836319ffdbf24, type: 2}
   itemDropper: {fileID: 0}
   outputPoint: {fileID: 8409895800965011040}
 --- !u!114 &2140404408483896056
