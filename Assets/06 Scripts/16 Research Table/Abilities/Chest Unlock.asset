@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6cfe7841f1fa4499ee1c2c4483fde8, type: 3}
   m_Name: Chest Unlock
   m_EditorClassIdentifier: 
-  abilityName: 'Unlock: Seed Maker'
-  description: Will allow you to harvest seeds form raw materials. Time to grow a
-    garden!
-  icon: {fileID: -1721002306866770218, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  abilityName: 'Unlock: Wooden Chest'
+  description: Allow you to store up to 4 Items.
+  icon: {fileID: -4270508270548783589, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
     quantity: 5
-  - item: {fileID: 11400000, guid: 221aa63806171094bbe81a22912b6fda, type: 2}
-    quantity: 3
-  prerequisites: []
+  prerequisites:
+  - {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
   unlocksAbilities: []
-  unlockedBuilding: {fileID: 11400000, guid: 8b78974ced3490c498bc90184f8d0fc1, type: 2}
+  unlockedBuilding: {fileID: 11400000, guid: 5a1722e0ab1c66144adc8ef40601c064, type: 2}

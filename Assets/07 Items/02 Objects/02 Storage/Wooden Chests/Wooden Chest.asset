@@ -23,3 +23,4 @@ MonoBehaviour:
   maxGroundAngle: 20
   maxWallAngle: 0
   cantSnapToGrid: 0
+  unlockedByDefault: 0

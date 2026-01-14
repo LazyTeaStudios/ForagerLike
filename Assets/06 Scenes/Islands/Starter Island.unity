@@ -6788,6 +6788,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   allAbilities:
   - {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
+  - {fileID: 11400000, guid: 91f2e23867438d246bab118a47c0e343, type: 2}
 --- !u!4 &397737992 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4417300580678323213, guid: e6d1db783d593d943b89ed359bf43b91, type: 3}
@@ -17444,7 +17445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6451607872300482043, guid: afa17c86d5065ec4da1353ea325811eb, type: 3}
       propertyPath: itemsToAdd.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6451607872300482043, guid: afa17c86d5065ec4da1353ea325811eb, type: 3}
       propertyPath: itemsToAdd.Array.data[0].item
@@ -17453,7 +17454,7 @@ PrefabInstance:
     - target: {fileID: 6451607872300482043, guid: afa17c86d5065ec4da1353ea325811eb, type: 3}
       propertyPath: itemsToAdd.Array.data[1].item
       value: 
-      objectReference: {fileID: 11400000, guid: 0457bc9d02301f5408fcfa9250ff0c56, type: 2}
+      objectReference: {fileID: 11400000, guid: 221aa63806171094bbe81a22912b6fda, type: 2}
     - target: {fileID: 6451607872300482043, guid: afa17c86d5065ec4da1353ea325811eb, type: 3}
       propertyPath: itemsToAdd.Array.data[2].item
       value: 
@@ -17464,7 +17465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6451607872300482043, guid: afa17c86d5065ec4da1353ea325811eb, type: 3}
       propertyPath: itemsToAdd.Array.data[1].amount
-      value: 12
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6451607872300482043, guid: afa17c86d5065ec4da1353ea325811eb, type: 3}
       propertyPath: itemsToAdd.Array.data[2].amount

@@ -30,10 +30,3 @@ MonoBehaviour:
     subMenu: {fileID: 11400000, guid: 76e35867db15de241b7761e691024d75, type: 2}
     buildItem: {fileID: 0}
     actionId: 
-  - type: 1
-    displayName: 
-    description: 
-    icon: {fileID: 2800000, guid: f9118449f119a044390c8573b9a3aa03, type: 3}
-    subMenu: {fileID: 11400000, guid: 6b130e5c4b8ee4745b9a9afbf9f12d33, type: 2}
-    buildItem: {fileID: 0}
-    actionId: 
