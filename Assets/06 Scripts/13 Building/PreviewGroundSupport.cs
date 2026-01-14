@@ -7,7 +7,7 @@ public class PreviewGroundSupport : MonoBehaviour
 
     [Header("Raycast")]
     [SerializeField] private LayerMask groundMask = ~0;
-    private float rayDistance = 0.2f;
+    private float rayDistance = 0.5f;
     private float cornerInset = 0.02f;
 
     [Header("Debug")]
