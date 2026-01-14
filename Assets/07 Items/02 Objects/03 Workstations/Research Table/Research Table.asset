@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45211c38b7d8412438389504ade5927f, type: 3}
-  m_Name: Seed Maker
+  m_Name: Research Table
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
-  displayName: Seed Maker
-  description: Place in items, get seeds.
-  icon: {fileID: 21300000, guid: b763715666937f747ac92667146bffa4, type: 3}
-  prefab: {fileID: 5125780599337610684, guid: f2cfc6aeed6220446bfd8ddfbc7c8bca, type: 3}
+  displayName: Research Table
+  description: Unlock new upgrades and buildings.
+  icon: {fileID: 21300000, guid: 07b27d8e5740b414d942f36a6bd63535, type: 3}
+  prefab: {fileID: 4523224898451388996, guid: 8778ca47f3b2d8447be93fa47bf62ae9, type: 3}
   requiredResources:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
     quantity: 1

@@ -30,3 +30,10 @@ MonoBehaviour:
     subMenu: {fileID: 0}
     buildItem: {fileID: 11400000, guid: 8b78974ced3490c498bc90184f8d0fc1, type: 2}
     actionId: 
+  - type: 2
+    displayName: Research Table
+    description: 
+    icon: {fileID: 2800000, guid: 07b27d8e5740b414d942f36a6bd63535, type: 3}
+    subMenu: {fileID: 0}
+    buildItem: {fileID: 11400000, guid: f2422c05afa7c5e479c9da00862b890b, type: 2}
+    actionId: 

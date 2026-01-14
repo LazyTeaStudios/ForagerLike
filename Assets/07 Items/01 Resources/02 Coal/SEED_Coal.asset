@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SEED_Coal
   m_EditorClassIdentifier: 
   itemName: Coal Seed
-  icon: {fileID: 4863366681507355622, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  icon: {fileID: 21300000, guid: e2528590dd95b3747a900163e8880c93, type: 3}
   maxStackSize: 64
   itemType: 1
   itemPrefab: {fileID: 765830019208060021, guid: ecea8bc1ed38be34fa1e2826d73363bb, type: 3}
