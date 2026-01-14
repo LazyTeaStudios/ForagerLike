@@ -22,9 +22,6 @@
             "m_Id": "314c8c7949864977be79fefa1f6d0eff"
         },
         {
-            "m_Id": "3b2de9180e494eeca6f12c648b0c9a82"
-        },
-        {
             "m_Id": "39bc3b771fa441adb432e7d6cc013fd8"
         }
     ],
@@ -1517,29 +1514,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.BooleanShaderProperty",
-    "m_ObjectId": "3b2de9180e494eeca6f12c648b0c9a82",
-    "m_Guid": {
-        "m_GuidSerialized": "b6f962dd-623e-4dd8-b0b5-b7b20082bec2"
-    },
-    "m_Name": "isCloudy",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "isCloudy",
-    "m_DefaultReferenceName": "_isCloudy",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": true
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "3f4c33c232934d58b6fc8e09f88610fc",
     "m_Id": 2,
@@ -1600,10 +1574,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -942.9998779296875,
-            "y": 553.9999389648438,
+            "x": -923.0,
+            "y": 559.0,
             "width": 169.0,
-            "height": 34.0
+            "height": 34.00006103515625
         }
     },
     "m_Slots": [
@@ -2313,9 +2287,6 @@
         },
         {
             "m_Id": "e897ff7bc7354c0d9ac2bcea0d3108f9"
-        },
-        {
-            "m_Id": "3b2de9180e494eeca6f12c648b0c9a82"
         },
         {
             "m_Id": "39bc3b771fa441adb432e7d6cc013fd8"
@@ -4060,21 +4031,21 @@
     "m_Value": {
         "serializedVersion": "2",
         "key0": {
-            "r": 0.7169811725616455,
-            "g": 0.7169811725616455,
-            "b": 0.7169811725616455,
+            "r": 0.5094339847564697,
+            "g": 0.5094339847564697,
+            "b": 0.5094339847564697,
             "a": 1.0
         },
         "key1": {
-            "r": 0.39943042397499087,
-            "g": 0.4325871467590332,
-            "b": 0.4528301954269409,
+            "r": 0.5088814496994019,
+            "g": 0.5088814496994019,
+            "b": 0.5088814496994019,
             "a": 1.0
         },
         "key2": {
-            "r": 0.27358490228652956,
-            "g": 0.27358490228652956,
-            "b": 0.27358490228652956,
+            "r": 0.4507858455181122,
+            "g": 0.4507858455181122,
+            "b": 0.4507858455181122,
             "a": 0.0
         },
         "key3": {

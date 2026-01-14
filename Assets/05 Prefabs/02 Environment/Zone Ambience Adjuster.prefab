@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2905339654990691929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7264970959654842407}
+  - component: {fileID: 1120960786585593339}
+  - component: {fileID: 383652099024558408}
+  m_Layer: 0
+  m_Name: Zone Ambience Adjuster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7264970959654842407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2905339654990691929}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -21.6, y: 128.1, z: -17.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1120960786585593339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2905339654990691929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180cf3f124cf67240bdadac485d85fa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredTag: Player
+  transitionDuration: 8
+  useUnscaledTime: 0
+  setFogEnabled: 1
+  fogEnabledInside: 1
+  setFogColor: 1
+  fogColorInside: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+  fogDensityInside: 0.02
+  cloudinessProperty: _Cloudiness
+  cloudinessInside: 1
+  createSkyboxInstance: 0
+  saturationMaterial: {fileID: 2100000, guid: 84a6249350373bc4da08b9c3833a599f, type: 2}
+  createSaturationMaterialInstance: 0
+  saturationProperty: _Saturation
+  saturationInside: 1
+  waterMaterial: {fileID: 2100000, guid: b4b0dbbac4bc75a4d864cbd8a2b99296, type: 2}
+  createWaterMaterialInstance: 0
+  waterSaturationMultiplierProperty: _Water_Saturation_Multiplier
+  waterSaturationMultiplierInside: 0.3
+  revertOnExit: 1
+--- !u!65 &383652099024558408
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2905339654990691929}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 257.8196, y: 200, z: 200}
+  m_Center: {x: 28.909744, y: 0, z: 0}
