@@ -5,7 +5,11 @@ public abstract class Interactable : MonoBehaviour
     [Header("Interactable Settings")]
     [SerializeField] protected bool usePlayerDataRange = true;
     [SerializeField] protected float customInteractRange = 5f;
-    [SerializeField] protected Outline outlineComponent;
+    [SerializeField] protected Outline highlightComponent;
+
+    [Header("Hover Scale Settings")]
+    [SerializeField] protected float hoverScaleMultiplier = 1.1f;
+    [SerializeField] protected float hoverLerpSpeed = 20f;
 
     protected bool isHighlighted;
 
@@ -16,20 +20,19 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void Awake()
     {
-        SetupOutline();
+        SetupHighlight();
     }
 
-    void SetupOutline()
+    void SetupHighlight()
     {
-        if (outlineComponent == null)
-            outlineComponent = GetComponent<Outline>();
-        if (outlineComponent == null)
-            outlineComponent = gameObject.AddComponent<Outline>();
+        if (highlightComponent == null)
+            highlightComponent = GetComponent<Outline>();
+        if (highlightComponent == null)
+            highlightComponent = gameObject.AddComponent<Outline>();
 
-        outlineComponent.OutlineMode = Outline.Mode.OutlineAll;
-        outlineComponent.OutlineColor = Color.white;
-        outlineComponent.OutlineWidth = 3f;
-        outlineComponent.enabled = false;
+        highlightComponent.scaleMultiplier = hoverScaleMultiplier;
+        highlightComponent.lerpSpeed = hoverLerpSpeed;
+        highlightComponent.SetHighlighted(false);
     }
 
     protected void LockUI()
@@ -52,8 +55,8 @@ public abstract class Interactable : MonoBehaviour
     {
         if (isHighlighted == highlighted) return;
         isHighlighted = highlighted;
-        if (outlineComponent != null)
-            outlineComponent.enabled = highlighted;
+        if (highlightComponent != null)
+            highlightComponent.SetHighlighted(highlighted);
     }
 
     public float GetInteractRange()
