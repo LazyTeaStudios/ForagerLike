@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RPY_Ingot
   m_EditorClassIdentifier: 
   inputItem: {fileID: 11400000, guid: 582c622d833a1a54bb0a2205391acfd3, type: 2}
-  inputQuantity: 1
-  outputItem: {fileID: 11400000, guid: 9c2b6a98d151b5c4a8328f4de23b0c42, type: 2}
-  outputQuantity: 5
-  processingTime: 0.1
+  inputQuantity: 10
+  outputItem: {fileID: 11400000, guid: 47715040fa056874a90ad9d5c3278367, type: 2}
+  outputQuantity: 1
+  processingTime: 5
