@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5983d49365a8cf94e824da4260bbdf8b, type: 3}
+  m_Name: SEED_Fiber
+  m_EditorClassIdentifier: 
+  itemName: Fiber seed
+  icon: {fileID: 21300000, guid: 9a9a909c97996d2469af0972b5a35619, type: 3}
+  maxStackSize: 64
+  itemType: 1
+  itemPrefab: {fileID: 765830019208060021, guid: 2dd81fc6888228e41acaf933d72f6309, type: 3}
+  growthStages: 3
+  maxHealth: 10
+  plantPrefab: {fileID: 6967365203733630599, guid: 6e6aa5d1220be4f45a436eb2247b5947, type: 3}
+  drops:
+  - item: {fileID: 11400000, guid: f9534097a3b83554382fccbb35da457d, type: 2}
+    quantity: 1
