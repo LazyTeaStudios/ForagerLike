@@ -673,6 +673,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-1225854480-0
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-1222185078-0
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-523640500-0
+        - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-2905339654990691929-825126262
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -847,6 +848,10 @@ MonoBehaviour:
           isIconRecursive: 0
           isColorRecursive: 0
         - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
           iconNameOrGuid: Settings Icon
           isIconRecursive: 0
           isColorRecursive: 0
