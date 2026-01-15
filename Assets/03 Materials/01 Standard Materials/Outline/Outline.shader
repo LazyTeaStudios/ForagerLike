@@ -1,61 +1,53 @@
-Shader "Custom/SimpleOutline"
+Shader "Custom/WhiteOverlay"
 {
     Properties
     {
-        _OutlineColor ("Outline Color", Color) = (1,1,1,1)
-        _Outline ("Outline width", Range (0, 0.1)) = 0.03
+        _OverlayColor ("Overlay Color", Color) = (1,1,1,0.25)
     }
-    
+
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry+1" }
-        
-        // Outline pass
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+
         Pass
         {
-            Name "Outline"
-            Cull Front
-            ZWrite On
-            ColorMask RGB
+            Tags { "LightMode"="SRPDefaultUnlit" }
+            ZWrite Off
+            ZTest LEqual
+            Cull Back
             Blend SrcAlpha OneMinusSrcAlpha
-            
-            CGPROGRAM
+
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
-            
+
+            float4 _OverlayColor;
+
             struct appdata
             {
                 float4 vertex : POSITION;
-                float3 normal : NORMAL;
             };
-            
+
             struct v2f
             {
                 float4 pos : SV_POSITION;
             };
-            
-            float _Outline;
-            float4 _OutlineColor;
-            
-            v2f vert (appdata v)
+
+            v2f vert(appdata v)
             {
                 v2f o;
-                float4 pos = mul(UNITY_MATRIX_MV, v.vertex);
-                float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);
-                normal.z = -0.5;
-                pos = pos + float4(normalize(normal), 0) * _Outline;
-                o.pos = mul(UNITY_MATRIX_P, pos);
+                o.pos = UnityObjectToClipPos(v.vertex);
                 return o;
             }
-            
-            float4 frag (v2f i) : SV_Target
+
+            float4 frag(v2f i) : SV_Target
             {
-                return _OutlineColor;
+                return _OverlayColor;
             }
-            ENDCG
+            ENDHLSL
         }
     }
-    
-    Fallback "Diffuse"
+
+    Fallback Off
 }
