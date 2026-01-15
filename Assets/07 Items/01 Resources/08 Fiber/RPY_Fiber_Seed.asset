@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe29149f0c997f0449240061521d29dc, type: 3}
   m_Name: RPY_Fiber_Seed
   m_EditorClassIdentifier: 
-  inputItem: {fileID: 11400000, guid: f9534097a3b83554382fccbb35da457d, type: 2}
-  inputQuantity: 1
+  inputItem1: {fileID: 11400000, guid: f9534097a3b83554382fccbb35da457d, type: 2}
+  inputQuantity1: 1
+  inputItem2: {fileID: 0}
+  inputQuantity2: 1
   outputItem: {fileID: 11400000, guid: 06c3adb09f944d44b95ea3c04350c56c, type: 2}
   outputQuantity: 5
   processingTime: 0.1

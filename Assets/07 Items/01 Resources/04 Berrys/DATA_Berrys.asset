@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5983d49365a8cf94e824da4260bbdf8b, type: 3}
   m_Name: DATA_Berrys
   m_EditorClassIdentifier: 
-  itemName: Berrys
-  icon: {fileID: 21300000, guid: bbc90532220f30e4dab8ceddd8024716, type: 3}
+  itemName: Iron Berrys
+  icon: {fileID: 21300000, guid: 8f2f407818c05454388f432ec5718ff6, type: 3}
   maxStackSize: 64
   itemType: 0
   itemPrefab: {fileID: 1784502518683212841, guid: c977d03801b96d24085e21e2573668a3, type: 3}

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +25,8 @@ public class RadialMenu : MonoBehaviour
     [SerializeField] private Color hoverColor = Color.white;
     [SerializeField] private float normalScale = 1f;
     [SerializeField] private float hoverScale = 1.25f;
+
+    private static readonly int FillAmountId = Shader.PropertyToID("_FillAmount");
 
     readonly List<RadialMenuButton> buttons = new List<RadialMenuButton>();
     RadialMenuButton selectedButton;
@@ -84,6 +86,8 @@ public class RadialMenu : MonoBehaviour
 
         if (buttons.Count > 0 && defaultSelection >= 0 && defaultSelection < buttons.Count)
             selectedButton = buttons[defaultSelection];
+
+        ApplyShaderFillAmount(fillAmount);
     }
 
     void ClearButtons()
@@ -171,6 +175,25 @@ public class RadialMenu : MonoBehaviour
 
         if (canvasGroup != null)
             canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, 10f * Time.unscaledDeltaTime);
+    }
+
+    private void ApplyShaderFillAmount(float amount01)
+    {
+        // If you're using unique instances per Image, materialForRendering is safest for UI masking.
+        if (selectionFill != null)
+        {
+            var mat = selectionFill.materialForRendering;
+            if (mat != null) mat.SetFloat(FillAmountId, amount01);
+        }
+
+        if (selectionFillInner != null)
+        {
+            var mat = selectionFillInner.materialForRendering;
+            if (mat != null) mat.SetFloat(FillAmountId, amount01);
+        }
+
+        // Optional: if you still want the UI Image's built-in fillAmount ignored, do nothing else.
+        // (Your shader uses _FillAmount, not Image.fillAmount.)
     }
 }
 

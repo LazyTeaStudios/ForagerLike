@@ -50,35 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   itemData: {fileID: 11400000, guid: 5a345fa05706f8343b120df47f1aa810, type: 2}
   amount: 1
-  attractRadius: 3
-  pickupRadius: 1
-  moveSpeed: 5
-  acceleration: 10
-  speedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  yOffset: 1
+  pickupRadius: 2
+  autoPickup: 1
 --- !u!33 &8189645169992634565
 MeshFilter:
   m_ObjectHideFlags: 0

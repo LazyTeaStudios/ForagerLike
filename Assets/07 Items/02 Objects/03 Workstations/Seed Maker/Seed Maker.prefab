@@ -283,16 +283,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usePlayerDataRange: 1
   customInteractRange: 5
-  outlineComponent: {fileID: 2140404408483896056}
+  highlightComponent: {fileID: 0}
+  hoverScaleMultiplier: 1.1
+  hoverLerpSpeed: 20
   machinePanel: {fileID: 8730417720368399983}
-  inputSlotUI: {fileID: 1983752149809579824}
+  inputSlotUI1: {fileID: 1983752149809579824}
+  inputSlotUI2: {fileID: 0}
   recipes:
   - {fileID: 11400000, guid: d0069af79ef4bdd4e9e253c4c40db074, type: 2}
   - {fileID: 11400000, guid: fb32fe82028b86f4bbadf422f9ef1d96, type: 2}
   - {fileID: 11400000, guid: 2b939e6929bce8e468d8f1e0811cf16a, type: 2}
   - {fileID: 11400000, guid: 4fe7194887b245547a2836319ffdbf24, type: 2}
-  itemDropper: {fileID: 0}
+  - {fileID: 11400000, guid: 86b4141a6766cf644a3b73018c20e397, type: 2}
+  itemDropper: {fileID: 5072753654645824068}
   outputPoint: {fileID: 8409895800965011040}
+  processingVisualObject: {fileID: 1945179668599765112}
 --- !u!114 &2140404408483896056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,11 +310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98f87ad60b3a044ca43a3b5e0527659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OutlineMode: 0
-  OutlineColor: {r: 1, g: 1, b: 1, a: 1}
-  OutlineWidth: 1
-  WidthToShaderScale: 1
-  OutlineShader: {fileID: 4800000, guid: abced92e9104e484a854d5eb475a25ca, type: 3}
+  scaleMultiplier: 1.1
+  lerpSpeed: 20
 --- !u!33 &7714060205747732337
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -685,7 +687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5803612524545972371, guid: d27ab6372575b674ba2820ce22cfe1cd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 531.4
+      value: -321
       objectReference: {fileID: 0}
     - target: {fileID: 5803612524545972371, guid: d27ab6372575b674ba2820ce22cfe1cd, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -720,6 +722,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d27ab6372575b674ba2820ce22cfe1cd, type: 3}
+--- !u!1 &1945179668599765112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 561317834392388766, guid: d27ab6372575b674ba2820ce22cfe1cd, type: 3}
+  m_PrefabInstance: {fileID: 2104475163755003110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1983752149809579824 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 482779144920169430, guid: d27ab6372575b674ba2820ce22cfe1cd, type: 3}

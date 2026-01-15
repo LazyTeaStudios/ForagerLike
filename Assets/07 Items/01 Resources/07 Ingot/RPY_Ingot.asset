@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe29149f0c997f0449240061521d29dc, type: 3}
   m_Name: RPY_Ingot
   m_EditorClassIdentifier: 
-  inputItem: {fileID: 11400000, guid: 582c622d833a1a54bb0a2205391acfd3, type: 2}
-  inputQuantity: 10
+  inputItem1: {fileID: 11400000, guid: 2b1a0d901c1a179438a98733743fa568, type: 2}
+  inputQuantity1: 1
+  inputItem2: {fileID: 11400000, guid: 582c622d833a1a54bb0a2205391acfd3, type: 2}
+  inputQuantity2: 1
   outputItem: {fileID: 11400000, guid: 47715040fa056874a90ad9d5c3278367, type: 2}
   outputQuantity: 1
   processingTime: 5
