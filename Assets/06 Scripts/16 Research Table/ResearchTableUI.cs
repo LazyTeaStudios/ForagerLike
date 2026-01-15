@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
@@ -68,21 +68,33 @@ public class ResearchTableUI : MonoBehaviour
             if (item != null) Destroy(item);
         costItems.Clear();
 
-        // Create cost items
+        // Create cost items with icons
         if (costContainer != null && costItemPrefab != null)
         {
             foreach (var cost in ability.itemCosts)
             {
                 var costItem = Instantiate(costItemPrefab, costContainer);
-                var texts = costItem.GetComponentsInChildren<TextMeshProUGUI>();
-                if (texts.Length > 0)
+
+                // Set item icon
+                var img = costItem.GetComponentInChildren<Image>();
+                if (img != null && cost.item.icon != null)
                 {
-                    texts[0].text = $"{cost.item.itemName} x{cost.quantity}";
+                    img.sprite = cost.item.icon;
+                    img.enabled = true;
+                }
+
+                // Set quantity text with color coding
+                var text = costItem.GetComponentInChildren<TextMeshProUGUI>();
+                if (text != null)
+                {
+                    int currentCount = InventoryManager.Instance.GetItemCount(cost.item);
+                    text.text = $"{currentCount}/{cost.quantity}";
 
                     // Color based on availability
-                    bool hasEnough = InventoryManager.Instance.HasResources(cost.item, cost.quantity);
-                    texts[0].color = hasEnough ? Color.green : Color.red;
+                    bool hasEnough = currentCount >= cost.quantity;
+                    text.color = hasEnough ? Color.green : Color.red;
                 }
+
                 costItems.Add(costItem);
             }
         }
@@ -117,6 +129,7 @@ public class ResearchTableUI : MonoBehaviour
     {
         if (tooltipPanel != null)
             tooltipPanel.SetActive(false);
+
         selectedAbility = null;
     }
 }

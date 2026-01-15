@@ -93,7 +93,7 @@ public class ProcessingMachine : Interactable
         }
     }
 
-    void TryStartProcessing()
+    public virtual void TryStartProcessing()
     {
         // Check if any slots have items
         if (inputSlot1.IsEmpty() && inputSlot2.IsEmpty()) return;
@@ -158,7 +158,7 @@ public class ProcessingMachine : Interactable
             processingVisualObject.SetActive(false);
     }
 
-    ProcessingRecipe FindMatchingRecipe()
+    public ProcessingRecipe FindMatchingRecipe()
     {
         if (recipes == null) return null;
 
@@ -215,7 +215,7 @@ public class ProcessingMachine : Interactable
         }
     }
 
-    void RefreshDisplay()
+    public virtual void RefreshDisplay()
     {
         if (inputSlotUI1 != null)
             inputSlotUI1.UpdateDisplay();

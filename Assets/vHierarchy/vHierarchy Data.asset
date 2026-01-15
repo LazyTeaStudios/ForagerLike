@@ -443,6 +443,8 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-64c0a0ffdb4ebfd4cb91d2c53c5110ae-1533964191824972717-0
         - globalObjectIdString: GlobalObjectId_V1-2-64c0a0ffdb4ebfd4cb91d2c53c5110ae-5511978134763257274-0
         - globalObjectIdString: GlobalObjectId_V1-2-64c0a0ffdb4ebfd4cb91d2c53c5110ae-642473258-0
+        - globalObjectIdString: GlobalObjectId_V1-2-64c0a0ffdb4ebfd4cb91d2c53c5110ae-671879749-0
+        - globalObjectIdString: GlobalObjectId_V1-2-64c0a0ffdb4ebfd4cb91d2c53c5110ae-1199378779-0
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -590,6 +592,14 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 0
           iconNameOrGuid: SphereCollider Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 5
+          iconNameOrGuid: Favorite
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 5
+          iconNameOrGuid: Favorite
           isIconRecursive: 0
           isColorRecursive: 0
         - colorIndex: 5

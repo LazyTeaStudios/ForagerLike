@@ -18,4 +18,4 @@ MonoBehaviour:
   inputQuantity2: 1
   outputItem: {fileID: 11400000, guid: 00fdab18faef8164d83cc282e44120cb, type: 2}
   outputQuantity: 5
-  processingTime: 0.1
+  processingTime: 1
