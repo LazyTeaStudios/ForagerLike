@@ -4,7 +4,8 @@ public class ProcessingMachine : Interactable
 {
     [Header("UI")]
     [SerializeField] protected GameObject machinePanel;
-    [SerializeField] protected SlotUI inputSlotUI;
+    [SerializeField] protected SlotUI inputSlotUI1;
+    [SerializeField] protected SlotUI inputSlotUI2; // Optional second slot
 
     [Header("Recipes")]
     [SerializeField] protected ProcessingRecipe[] recipes;
@@ -13,7 +14,13 @@ public class ProcessingMachine : Interactable
     [SerializeField] protected ItemDropper itemDropper;
     [SerializeField] protected Transform outputPoint;
 
-    protected InventorySlot inputSlot;
+    [Header("Processing Visual")]
+    [SerializeField] protected GameObject processingVisualObject;
+
+    protected InventorySlot inputSlot1;
+    protected InventorySlot inputSlot2;
+    protected InventorySlot processingSlot1;
+    protected InventorySlot processingSlot2;
     protected ProcessingRecipe currentRecipe;
     protected float processTimer;
     protected bool isProcessing;
@@ -23,21 +30,33 @@ public class ProcessingMachine : Interactable
     protected override void Awake()
     {
         base.Awake();
-        InitializeSlot();
+        InitializeSlots();
         EnsureDropper();
 
         if (machinePanel != null)
             machinePanel.SetActive(false);
+
+        if (processingVisualObject != null)
+            processingVisualObject.SetActive(false);
     }
 
-    void InitializeSlot()
+    void InitializeSlots()
     {
-        inputSlot = new InventorySlot();
+        inputSlot1 = new InventorySlot();
+        inputSlot2 = new InventorySlot();
+        processingSlot1 = new InventorySlot();
+        processingSlot2 = new InventorySlot();
 
-        if (inputSlotUI != null)
+        if (inputSlotUI1 != null)
         {
-            inputSlotUI.Setup(200, false);
-            inputSlotUI.SetCustomSlotProvider(() => inputSlot);
+            inputSlotUI1.Setup(200, false);
+            inputSlotUI1.SetCustomSlotProvider(() => inputSlot1);
+        }
+
+        if (inputSlotUI2 != null)
+        {
+            inputSlotUI2.Setup(201, false);
+            inputSlotUI2.SetCustomSlotProvider(() => inputSlot2);
         }
     }
 
@@ -74,16 +93,47 @@ public class ProcessingMachine : Interactable
         }
     }
 
-    void TryStartProcessing()
+    public virtual void TryStartProcessing()
     {
-        if (inputSlot.IsEmpty()) return;
+        // Check if any slots have items
+        if (inputSlot1.IsEmpty() && inputSlot2.IsEmpty()) return;
 
-        var recipe = FindMatchingRecipe(inputSlot.item, inputSlot.quantity);
+        var recipe = FindMatchingRecipe();
         if (recipe == null) return;
+
+        // Get required amounts for this specific combination
+        recipe.GetRequiredAmounts(inputSlot1.item, inputSlot2.item,
+                                 out int required1, out int required2);
+
+        // Move items to processing slots
+        if (required1 > 0)
+        {
+            processingSlot1.Set(inputSlot1.item, required1);
+            int remaining = inputSlot1.quantity - required1;
+            if (remaining <= 0)
+                inputSlot1.Set(null, 0);
+            else
+                inputSlot1.Set(inputSlot1.item, remaining);
+        }
+
+        if (required2 > 0)
+        {
+            processingSlot2.Set(inputSlot2.item, required2);
+            int remaining = inputSlot2.quantity - required2;
+            if (remaining <= 0)
+                inputSlot2.Set(null, 0);
+            else
+                inputSlot2.Set(inputSlot2.item, remaining);
+        }
+
+        RefreshDisplay();
 
         currentRecipe = recipe;
         isProcessing = true;
         processTimer = 0f;
+
+        if (processingVisualObject != null)
+            processingVisualObject.SetActive(true);
     }
 
     void CompleteProcessing()
@@ -94,27 +144,34 @@ public class ProcessingMachine : Interactable
         if (currentRecipe.outputItem?.itemPrefab != null)
             itemDropper.Drop(currentRecipe.outputItem, currentRecipe.outputQuantity);
 
-        // Consume input
-        int remaining = inputSlot.quantity - currentRecipe.inputQuantity;
-        if (remaining <= 0)
-            inputSlot.Set(null, 0);
-        else
-            inputSlot.Set(inputSlot.item, remaining);
+        // Clear processing slots
+        processingSlot1.Set(null, 0);
+        processingSlot2.Set(null, 0);
 
         RefreshDisplay();
 
         isProcessing = false;
         currentRecipe = null;
         processTimer = 0f;
+
+        if (processingVisualObject != null)
+            processingVisualObject.SetActive(false);
     }
 
-    ProcessingRecipe FindMatchingRecipe(ItemData item, int quantity)
+    public ProcessingRecipe FindMatchingRecipe()
     {
-        if (recipes == null || item == null) return null;
+        if (recipes == null) return null;
+
+        ItemData item1 = inputSlot1.item;
+        int qty1 = inputSlot1.quantity;
+        ItemData item2 = inputSlot2.item;
+        int qty2 = inputSlot2.quantity;
 
         foreach (var recipe in recipes)
-            if (recipe != null && recipe.CanProcess(item, quantity))
+        {
+            if (recipe != null && recipe.CanProcess(item1, qty1, item2, qty2))
                 return recipe;
+        }
 
         return null;
     }
@@ -158,20 +215,32 @@ public class ProcessingMachine : Interactable
         }
     }
 
-    void RefreshDisplay()
+    public virtual void RefreshDisplay()
     {
-        if (inputSlotUI != null)
-            inputSlotUI.UpdateDisplay();
+        if (inputSlotUI1 != null)
+            inputSlotUI1.UpdateDisplay();
+        if (inputSlotUI2 != null)
+            inputSlotUI2.UpdateDisplay();
     }
 
     public void DropAllItems()
     {
-        if (inputSlot == null || inputSlot.IsEmpty()) return;
-        if (inputSlot.item?.itemPrefab == null) return;
+        // Drop all input and processing items
+        DropSlotItems(inputSlot1);
+        DropSlotItems(inputSlot2);
+        DropSlotItems(processingSlot1);
+        DropSlotItems(processingSlot2);
 
-        itemDropper.Drop(inputSlot.item, inputSlot.quantity);
-        inputSlot.Set(null, 0);
         RefreshDisplay();
+    }
+
+    void DropSlotItems(InventorySlot slot)
+    {
+        if (!slot.IsEmpty() && slot.item?.itemPrefab != null)
+        {
+            itemDropper.Drop(slot.item, slot.quantity);
+            slot.Set(null, 0);
+        }
     }
 
     protected override void OnDestroy()

@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   itemData: {fileID: 11400000, guid: 8a972ebf156a92942979b295b1a1b270, type: 2}
   amount: 1
-  pickupRadius: 1
+  pickupRadius: 2
   autoPickup: 1
 --- !u!33 &4645584030601847933
 MeshFilter:

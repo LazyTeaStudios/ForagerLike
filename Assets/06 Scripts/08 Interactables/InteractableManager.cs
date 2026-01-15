@@ -5,40 +5,41 @@ public class InteractableManager : MonoBehaviour
     Camera playerCamera;
     Interactable currentTarget;
 
+    public static InteractableManager Instance { get; private set; }
+
     void Awake()
     {
+        Instance = this;
         playerCamera = Camera.main;
     }
 
     void Update()
     {
-        if (Interactable.IsUILocked)
-        {
-            ClearTarget();
-            return;
-        }
-
         if (InputHandler.IsMapActive(ActionMap.UI)) return;
+        if (Interactable.IsUILocked) return; // Skip when UI is locked
 
         CheckInteractableTarget();
 
         if (currentTarget != null && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
+        {
             currentTarget.Interact();
+        }
     }
 
     void CheckInteractableTarget()
     {
         if (playerCamera == null) return;
 
-        float maxRange = GetMaxInteractRange();
-        Ray ray = playerCamera.ScreenPointToRay(new Vector2(Screen.width * 0.5f, Screen.height * 0.5f));
+        Ray ray = playerCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxRange))
+        if (Physics.Raycast(ray, out RaycastHit hit, 10f))
         {
-            var interactable = hit.collider.GetComponentInParent<Interactable>();
+            Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
+
             if (interactable != null)
             {
                 float distance = Vector3.Distance(transform.position, interactable.transform.position);
+
                 if (distance <= interactable.GetInteractRange())
                 {
                     SetTarget(interactable);
@@ -50,27 +51,28 @@ public class InteractableManager : MonoBehaviour
         ClearTarget();
     }
 
-    float GetMaxInteractRange()
-    {
-        if (PlayerDataHandler.Data != null)
-            return PlayerDataHandler.Data.interactRange;
-        return 10f;
-    }
-
     void SetTarget(Interactable newTarget)
     {
         if (currentTarget == newTarget) return;
-        currentTarget?.SetHighlighted(false);
+
+        if (currentTarget != null)
+            currentTarget.SetHighlighted(false);
+
         currentTarget = newTarget;
         currentTarget.SetHighlighted(true);
     }
 
     void ClearTarget()
     {
-        if (currentTarget == null) return;
-        currentTarget.SetHighlighted(false);
-        currentTarget = null;
+        if (currentTarget != null)
+        {
+            currentTarget.SetHighlighted(false);
+            currentTarget = null;
+        }
     }
 
-    void OnDestroy() => ClearTarget();
+    void OnDestroy()
+    {
+        ClearTarget();
+    }
 }

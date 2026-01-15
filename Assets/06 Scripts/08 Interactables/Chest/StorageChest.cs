@@ -31,6 +31,7 @@ public class StorageChest : Interactable
         for (int i = 0; i < slotUIElements.Length && i < slots.Length; i++)
         {
             if (slotUIElements[i] == null) continue;
+
             int index = i;
             slotUIElements[i].Setup(100 + i, false);
             slotUIElements[i].SetCustomSlotProvider(() => slots[index]);

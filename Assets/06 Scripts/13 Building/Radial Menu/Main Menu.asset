@@ -19,14 +19,14 @@ MonoBehaviour:
   - type: 0
     displayName: Destroy
     description: 
-    icon: {fileID: 2800000, guid: 2974ebd4af0277749822ffc1f366500d, type: 3}
+    icon: {fileID: 2800000, guid: bf3f0f6f5e86abe47ac0b2ff2320072b, type: 3}
     subMenu: {fileID: 11400000, guid: 59f3e10beac594d428f4d14073340c31, type: 2}
     buildItem: {fileID: 0}
     actionId: destroy
   - type: 1
     displayName: Building
     description: 
-    icon: {fileID: 2800000, guid: bc68e189fa8b7204e8b96330754dbdc8, type: 3}
+    icon: {fileID: 2800000, guid: 5330c96cc3c2d04428b653966a4af029, type: 3}
     subMenu: {fileID: 11400000, guid: 4d7ab4365748a3346ac4b4c24f51eea8, type: 2}
     buildItem: {fileID: 0}
     actionId: 

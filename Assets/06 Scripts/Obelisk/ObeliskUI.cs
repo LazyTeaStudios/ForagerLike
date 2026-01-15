@@ -72,24 +72,24 @@ public class ObeliskUI : MonoBehaviour
             {
                 var reqItem = Instantiate(requirementItemPrefab, requirementContainer);
 
-                // Try to find text components for item name and quantity
-                var texts = reqItem.GetComponentsInChildren<TextMeshProUGUI>();
-                if (texts.Length > 0)
-                {
-                    int currentCount = InventoryManager.Instance.GetItemCount(requirement.item);
-                    string itemText = $"{requirement.item.itemName}: {currentCount}/{requirement.quantity}";
-                    texts[0].text = itemText;
-
-                    // Color based on availability
-                    bool hasEnough = currentCount >= requirement.quantity;
-                    texts[0].color = hasEnough ? Color.green : Color.red;
-                }
-
-                // Try to show item icon if there's an Image component
+                // Set item icon
                 var img = reqItem.GetComponentInChildren<Image>();
                 if (img != null && requirement.item.icon != null)
                 {
                     img.sprite = requirement.item.icon;
+                    img.enabled = true;
+                }
+
+                // Set quantity text with color coding
+                var text = reqItem.GetComponentInChildren<TextMeshProUGUI>();
+                if (text != null)
+                {
+                    int currentCount = InventoryManager.Instance.GetItemCount(requirement.item);
+                    text.text = $"{currentCount}/{requirement.quantity}";
+
+                    // Color based on availability
+                    bool hasEnough = currentCount >= requirement.quantity;
+                    text.color = hasEnough ? Color.green : Color.red;
                 }
 
                 requirementItems.Add(reqItem);
