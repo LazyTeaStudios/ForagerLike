@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
   displayName: Seed Maker
   description: Place in items, get seeds.
-  icon: {fileID: 21300000, guid: b763715666937f747ac92667146bffa4, type: 3}
+  icon: {fileID: 21300000, guid: 12eab321d56112b4490362c7e30b9dfc, type: 3}
   prefab: {fileID: 5125780599337610684, guid: f2cfc6aeed6220446bfd8ddfbc7c8bca, type: 3}
   requiredResources:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}

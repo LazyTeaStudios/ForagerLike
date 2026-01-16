@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RadialMenu : MonoBehaviour
 {
@@ -13,8 +14,12 @@ public class RadialMenu : MonoBehaviour
 
     [Header("Center Display")]
     [SerializeField] private RawImage centerIcon;
-    [SerializeField] private Text centerLabel;
-    [SerializeField] private Text centerDescription;
+    [SerializeField] private TMP_Text centerLabel;
+    [SerializeField] private TMP_Text centerDescription;
+
+    [Header("Cost Display")]
+    [SerializeField] private Transform costContainer;
+    [SerializeField] private GameObject costItemPrefab;
 
     [Header("Layout")]
     [SerializeField] private float radius = 160f;
@@ -29,6 +34,7 @@ public class RadialMenu : MonoBehaviour
     private static readonly int FillAmountId = Shader.PropertyToID("_FillAmount");
 
     readonly List<RadialMenuButton> buttons = new List<RadialMenuButton>();
+    readonly List<GameObject> costItems = new List<GameObject>();
     RadialMenuButton selectedButton;
     float fillAmount;
     bool isOpen;
@@ -77,7 +83,7 @@ public class RadialMenu : MonoBehaviour
             btn.name = (i * angleStep).ToString();
 
             var data = buttonData[i];
-            btn.Setup(data.name, data.icon, data.description, data.action);
+            btn.Setup(data.name, data.icon, data.description, data.action, data.requirements);
             buttons.Add(btn);
         }
 
@@ -97,9 +103,56 @@ public class RadialMenu : MonoBehaviour
         buttons.Clear();
         selectedButton = null;
 
+        ClearCostDisplay();
+
         if (centerLabel != null) centerLabel.text = "";
         if (centerDescription != null) centerDescription.text = "";
         if (centerIcon != null) centerIcon.texture = null;
+    }
+
+    void ClearCostDisplay()
+    {
+        foreach (var item in costItems)
+            if (item != null) Destroy(item);
+        costItems.Clear();
+    }
+
+    void UpdateCostDisplay()
+    {
+        ClearCostDisplay();
+
+        if (costContainer == null || costItemPrefab == null) return;
+        if (selectedButton == null || selectedButton.Requirements == null) return;
+
+        foreach (var requirement in selectedButton.Requirements)
+        {
+            if (requirement == null || requirement.item == null) continue;
+
+            var costItem = Instantiate(costItemPrefab, costContainer);
+
+            // Set item icon
+            var img = costItem.GetComponentInChildren<Image>();
+            if (img != null && requirement.item.icon != null)
+            {
+                img.sprite = requirement.item.icon;
+                img.enabled = true;
+            }
+
+            // Set quantity text with color coding
+            var text = costItem.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                int currentCount = InventoryManager.Instance != null
+                    ? InventoryManager.Instance.GetItemCount(requirement.item)
+                    : 0;
+                text.text = $"{currentCount}/{requirement.quantity}";
+
+                bool hasEnough = currentCount >= requirement.quantity;
+                text.color = hasEnough ? Color.green : Color.red;
+            }
+
+            costItems.Add(costItem);
+        }
     }
 
     void Update()
@@ -148,7 +201,11 @@ public class RadialMenu : MonoBehaviour
             }
         }
 
-        selectedButton = nearest;
+        if (nearest != selectedButton)
+        {
+            selectedButton = nearest;
+            UpdateCostDisplay();
+        }
     }
 
     void UpdateVisuals()
@@ -179,7 +236,6 @@ public class RadialMenu : MonoBehaviour
 
     private void ApplyShaderFillAmount(float amount01)
     {
-        // If you're using unique instances per Image, materialForRendering is safest for UI masking.
         if (selectionFill != null)
         {
             var mat = selectionFill.materialForRendering;
@@ -191,9 +247,6 @@ public class RadialMenu : MonoBehaviour
             var mat = selectionFillInner.materialForRendering;
             if (mat != null) mat.SetFloat(FillAmountId, amount01);
         }
-
-        // Optional: if you still want the UI Image's built-in fillAmount ignored, do nothing else.
-        // (Your shader uses _FillAmount, not Image.fillAmount.)
     }
 }
 
@@ -203,6 +256,7 @@ public struct RadialButtonData
     public string description;
     public Texture2D icon;
     public UnityEngine.Events.UnityAction action;
+    public ResourceRequirement[] requirements;
 
     public RadialButtonData(string name, Texture2D icon, UnityEngine.Events.UnityAction action)
     {
@@ -210,13 +264,15 @@ public struct RadialButtonData
         this.description = "";
         this.icon = icon;
         this.action = action;
+        this.requirements = null;
     }
 
-    public RadialButtonData(string name, string description, Texture2D icon, UnityEngine.Events.UnityAction action)
+    public RadialButtonData(string name, string description, Texture2D icon, UnityEngine.Events.UnityAction action, ResourceRequirement[] requirements = null)
     {
         this.name = name;
         this.description = description;
         this.icon = icon;
         this.action = action;
+        this.requirements = requirements;
     }
 }

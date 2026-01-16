@@ -117,20 +117,21 @@ public class BuildingMenuController : MonoBehaviour
                 case RadialMenuEntry.EntryType.BuildItem:
                     if (entry.buildItem != null)
                     {
-                        // Check if building is unlocked
                         if (ResearchManager.Instance != null &&
                             !ResearchManager.Instance.IsBuildingUnlocked(entry.buildItem))
                         {
-                            continue; // Skip this building if not unlocked
+                            continue;
                         }
 
                         Texture2D icon = entry.icon != null ? entry.icon :
                             (entry.buildItem.icon != null ? entry.buildItem.icon.texture : null);
+
                         buttons.Add(new RadialButtonData(
                             entry.displayName ?? entry.buildItem.displayName,
                             entry.description ?? entry.buildItem.description,
                             icon,
-                            () => SelectBuildItem(captured.buildItem)
+                            () => SelectBuildItem(captured.buildItem),
+                            entry.buildItem.requiredResources  // Pass the requirements
                         ));
                     }
                     break;

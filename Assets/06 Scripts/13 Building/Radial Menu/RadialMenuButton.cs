@@ -9,17 +9,20 @@ public class RadialMenuButton : MonoBehaviour
 
     string description;
     UnityAction storedAction;
+    ResourceRequirement[] requirements;
 
     public string Label => label != null ? label.text : "";
     public string Description => description;
     public Texture Icon => iconImage != null ? iconImage.texture : null;
+    public ResourceRequirement[] Requirements => requirements;
 
-    public void Setup(string name, Texture2D icon, string description, UnityAction action)
+    public void Setup(string name, Texture2D icon, string description, UnityAction action, ResourceRequirement[] requirements = null)
     {
         if (label != null) label.text = name;
         if (iconImage != null && icon != null) iconImage.texture = icon;
         this.description = description ?? "";
         this.storedAction = action;
+        this.requirements = requirements;
     }
 
     public void TriggerAction() => storedAction?.Invoke();

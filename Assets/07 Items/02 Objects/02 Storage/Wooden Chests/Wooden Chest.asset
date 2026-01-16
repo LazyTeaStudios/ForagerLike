@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
   displayName: Wooden Chest
   description: For storing up to 3 different Items.
-  icon: {fileID: 21300000, guid: f9118449f119a044390c8573b9a3aa03, type: 3}
+  icon: {fileID: 21300000, guid: 12eab321d56112b4490362c7e30b9dfc, type: 3}
   prefab: {fileID: 7552109070916637432, guid: 0010fde5f0cea2e46a11459258233786, type: 3}
   requiredResources:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}

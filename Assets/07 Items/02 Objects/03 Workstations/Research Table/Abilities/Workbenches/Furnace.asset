@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: 'Unlock: Furnace'
   description: Allow you to smelt resoruces for building and upgrades.
-  icon: {fileID: 21300000, guid: 2a9b849ddb75cbe46bbd4cee3388154b, type: 3}
+  icon: {fileID: 21300000, guid: 5822ddd9acc88f741b366edf580905f0, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
     quantity: 1
