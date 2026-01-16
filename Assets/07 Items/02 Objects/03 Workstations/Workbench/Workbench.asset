@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Workbench
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
   displayName: Workbench
-  description: Get craftin'
+  description: Craft your magical ingredients.
   icon: {fileID: 21300000, guid: f3429bf0bc29828479445c994ad08bed, type: 3}
   prefab: {fileID: 5500381464902592569, guid: 6b7aa43d2623e36409e47ca7bb8e8a6f, type: 3}
   requiredResources:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
-    quantity: 1
+    quantity: 5
   allowedSurfaces: 0
   maxGroundAngle: 20
   maxWallAngle: 0

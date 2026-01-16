@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Research Table
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
   displayName: Research Table
-  description: Unlock new upgrades and buildings.
+  description: Unlock your magical potential.
   icon: {fileID: 21300000, guid: 07b27d8e5740b414d942f36a6bd63535, type: 3}
   prefab: {fileID: 4523224898451388996, guid: 8778ca47f3b2d8447be93fa47bf62ae9, type: 3}
   requiredResources:
@@ -23,3 +23,4 @@ MonoBehaviour:
   maxGroundAngle: 20
   maxWallAngle: 0
   cantSnapToGrid: 0
+  unlockedByDefault: 1

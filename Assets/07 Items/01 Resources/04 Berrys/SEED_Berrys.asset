@@ -17,9 +17,9 @@ MonoBehaviour:
   maxStackSize: 64
   itemType: 1
   itemPrefab: {fileID: 765830019208060021, guid: 0b0d742a26fd717428e23060c75f8c74, type: 3}
-  growthStages: 5
-  maxHealth: 10
+  growthStages: 60
+  maxHealth: 25
   plantPrefab: {fileID: 6967365203733630599, guid: c0c465b4b9a0fe54e9b0348ad3da8acc, type: 3}
   drops:
   - item: {fileID: 11400000, guid: 582c622d833a1a54bb0a2205391acfd3, type: 2}
-    quantity: 5
+    quantity: 2

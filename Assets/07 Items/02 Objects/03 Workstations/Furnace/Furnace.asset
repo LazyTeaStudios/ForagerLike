@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Furnace
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
   displayName: Furnce
-  description: Get smeltin'
+  description: "Thought witches just used cauldrons? They\u2019ve industrialised.\r\nUsed
+    to smelt ingots.\r\n"
   icon: {fileID: 21300000, guid: 5822ddd9acc88f741b366edf580905f0, type: 3}
   prefab: {fileID: 8384637420421834888, guid: e9359d98105836b4aa542c32181889e0, type: 3}
   requiredResources:

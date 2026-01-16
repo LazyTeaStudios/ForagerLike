@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: Planter 1x2
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
   displayName: Planter 1x2
-  description: 1x1 Planter for Growing up to 4 Flowers
+  description: The same thing but longer.
   icon: {fileID: 21300000, guid: dc4fcf471d89fdd46b7920393945232b, type: 3}
   prefab: {fileID: 144784770610736651, guid: 8d60065d7ba29854689dbd6ebff1d968, type: 3}
   requiredResources:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
-    quantity: 10
+    quantity: 12
+  - item: {fileID: 11400000, guid: 221aa63806171094bbe81a22912b6fda, type: 2}
+    quantity: 5
   allowedSurfaces: 0
   maxGroundAngle: 15
   maxWallAngle: 0

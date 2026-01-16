@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Planter 1x2 l
   m_EditorClassIdentifier: Assembly-CSharp::BuildItemSO
   displayName: Planter 1x2 L
-  description: 1x2 L Shaped Planter for Growing up to 12 Flowers
+  description: 'Take the L, and plant in it. '
   icon: {fileID: 21300000, guid: dc4fcf471d89fdd46b7920393945232b, type: 3}
   prefab: {fileID: 144784770610736651, guid: b16edf9c8634a064fb0b12c22acbbae7, type: 3}
   requiredResources:

@@ -17,9 +17,7 @@ MonoBehaviour:
   icon: {fileID: -1721002306866770218, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
-    quantity: 1
-  - item: {fileID: 11400000, guid: 221aa63806171094bbe81a22912b6fda, type: 2}
-    quantity: 1
+    quantity: 2
   prerequisites: []
   unlocksAbilities:
   - {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
