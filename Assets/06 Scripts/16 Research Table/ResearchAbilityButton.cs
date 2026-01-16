@@ -17,6 +17,7 @@ public class ResearchAbilityButton : MonoBehaviour
     [SerializeField] private GameObject unlockedStateObject;
 
     private ResearchTableUI tableUI;
+
     public ResearchAbility Ability => ability;
 
     void Awake()

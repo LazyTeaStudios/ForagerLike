@@ -46,6 +46,43 @@ public class BuildingMenuController : MonoBehaviour
         isOpen = true;
     }
 
+    // Helper method to check if a submenu has any available items
+    bool HasUnlockedItems(RadialMenuDefinition submenu)
+    {
+        if (submenu == null || submenu.entries == null) return false;
+
+        foreach (var entry in submenu.entries)
+        {
+            switch (entry.type)
+            {
+                case RadialMenuEntry.EntryType.BuildItem:
+                    if (entry.buildItem != null)
+                    {
+                        // Check if building is unlocked
+                        if (ResearchManager.Instance == null ||
+                            ResearchManager.Instance.IsBuildingUnlocked(entry.buildItem))
+                        {
+                            return true; // Found at least one unlocked item
+                        }
+                    }
+                    break;
+
+                case RadialMenuEntry.EntryType.SubMenu:
+                    // Recursively check nested submenus
+                    if (HasUnlockedItems(entry.subMenu))
+                        return true;
+                    break;
+
+                case RadialMenuEntry.EntryType.Action:
+                case RadialMenuEntry.EntryType.Back:
+                    // Actions and Back buttons are always available
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     void ShowCurrentMenu()
     {
         if (menuStack.Count == 0) return;
@@ -63,6 +100,12 @@ public class BuildingMenuController : MonoBehaviour
             switch (entry.type)
             {
                 case RadialMenuEntry.EntryType.SubMenu:
+                    // Check if submenu has any unlocked items before adding it
+                    if (!HasUnlockedItems(entry.subMenu))
+                    {
+                        continue; // Skip this submenu if it has no unlocked items
+                    }
+
                     buttons.Add(new RadialButtonData(
                         entry.displayName,
                         entry.description,
@@ -81,7 +124,6 @@ public class BuildingMenuController : MonoBehaviour
                             continue; // Skip this building if not unlocked
                         }
 
-                        // Rest of existing code...
                         Texture2D icon = entry.icon != null ? entry.icon :
                             (entry.buildItem.icon != null ? entry.buildItem.icon.texture : null);
                         buttons.Add(new RadialButtonData(

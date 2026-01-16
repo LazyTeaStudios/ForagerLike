@@ -27,13 +27,10 @@ public class ResearchTableUI : MonoBehaviour
     private List<GameObject> costItems = new List<GameObject>();
     
     void Start()
-    {
-        if (tooltipPanel != null)
-            tooltipPanel.SetActive(false);
-        
+    {        
         if (unlockButton != null)
             unlockButton.onClick.AddListener(UnlockSelectedAbility);
-        
+        ShowTooltip(abilityButtons[0].Ability);
         RefreshDisplay();
     }
     
