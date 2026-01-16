@@ -35,6 +35,9 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private bool requireGroundSupport = true;
     [SerializeField] private float supportRayDistance = 0.5f;
 
+    [Header("Destroy Mode Visual")]
+    [SerializeField] private GameObject destroyModeObject;
+
     BuildingPreview preview;
     PreviewGroundSupport supportCheck;
     Mode currentMode = Mode.None;
@@ -67,8 +70,14 @@ public class BuildingSystem : MonoBehaviour
             destroyMaterialInstance = new Material(previewMaterial);
             ApplyColor(destroyMaterialInstance, destroyColor);
         }
-    }
 
+        SetDestroyModeObjectActive(false);
+    }
+    void SetDestroyModeObjectActive(bool active)
+    {
+        if (destroyModeObject != null)
+            destroyModeObject.SetActive(active);
+    }
     void OnDestroy()
     {
         if (destroyMaterialInstance != null)
@@ -113,13 +122,18 @@ public class BuildingSystem : MonoBehaviour
         currentMode = Mode.Destroy;
         inputCooldown = true;
         EnsureDestroyMaterial();
+
+        SetDestroyModeObjectActive(true);
     }
 
     public void ExitDestroyMode()
     {
         if (currentMode != Mode.Destroy) return;
+
         ClearHighlight();
         currentMode = Mode.None;
+
+        SetDestroyModeObjectActive(false);
     }
 
     public void ExitAllModes()

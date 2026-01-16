@@ -186,8 +186,12 @@ public class ProcessingMachine : Interactable
     {
         machinePanel.SetActive(true);
         RefreshDisplay();
+
         LockUI();
         InputHandler.SetMap(ActionMap.UI);
+
+        if (InteractableManager.Instance != null)
+            InteractableManager.Instance.enabled = false;
 
         if (GameManager.Instance != null)
             GameManager.Instance.SetCursorLocked(false);
@@ -198,6 +202,7 @@ public class ProcessingMachine : Interactable
         }
     }
 
+
     public void Close()
     {
         if (machinePanel != null)
@@ -205,6 +210,11 @@ public class ProcessingMachine : Interactable
 
         UnlockUI();
         InputHandler.SetMap(ActionMap.Gameplay);
+
+        if (InteractableManager.Instance != null && !Interactable.IsUILocked)
+            InteractableManager.Instance.enabled = true;
+
+        InteractableManager.SetInputCooldown(0.15f);
 
         if (GameManager.Instance != null)
             GameManager.Instance.SetCursorLocked(true);

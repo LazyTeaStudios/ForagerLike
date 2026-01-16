@@ -70,12 +70,22 @@ public class StorageChest : Interactable
         Open();
     }
 
+
+    void Update()
+    {
+        if (storagePanel != null && storagePanel.activeSelf && InputHandler.Pressed(GameAction.CloseChest))
+            Close();
+    }
     void Open()
     {
         storagePanel.SetActive(true);
         RefreshDisplay();
+
         LockUI();
         InputHandler.SetMap(ActionMap.UI);
+
+        if (InteractableManager.Instance != null)
+            InteractableManager.Instance.enabled = false;
 
         if (GameManager.Instance != null)
             GameManager.Instance.SetCursorLocked(false);
@@ -86,12 +96,6 @@ public class StorageChest : Interactable
         }
     }
 
-    void Update()
-    {
-        if (storagePanel != null && storagePanel.activeSelf && InputHandler.Pressed(GameAction.CloseChest))
-            Close();
-    }
-
     public void Close()
     {
         if (storagePanel != null)
@@ -99,6 +103,13 @@ public class StorageChest : Interactable
 
         UnlockUI();
         InputHandler.SetMap(ActionMap.Gameplay);
+
+        // Only re-enable if nothing else is still locking UI
+        if (InteractableManager.Instance != null && !Interactable.IsUILocked)
+            InteractableManager.Instance.enabled = true;
+
+        // Prevent "close click" from instantly interacting again
+        InteractableManager.SetInputCooldown(0.15f);
 
         if (GameManager.Instance != null)
             GameManager.Instance.SetCursorLocked(true);
