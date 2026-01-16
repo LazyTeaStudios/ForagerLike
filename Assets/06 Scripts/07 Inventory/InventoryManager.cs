@@ -51,7 +51,18 @@ public class InventoryManager : Singleton<InventoryManager>
     void Update()
     {
         if (InputHandler.IsMapActive(ActionMap.UI)) return;
+
         HandleHotbarSelection();
+        HandleItemDrop(); // Add this line
+    }
+
+    void HandleItemDrop()
+    {
+        if (InputHandler.Pressed(GameAction.DropItem))
+        {
+            bool dropAll = InputHandler.Held(GameAction.ShiftModifier);
+            DropSelectedItem(dropAll);
+        }
     }
 
     void HandleHotbarSelection()
@@ -203,6 +214,69 @@ public class InventoryManager : Singleton<InventoryManager>
         slotB.Set(aItem, aQty);
 
         OnInventoryChanged?.Invoke();
+    }
+
+    // Add this method to InventoryManager class
+    public void DropSelectedItem(bool dropAll = false)
+    {
+        InventorySlot selectedSlot = GetSelectedHotbarSlot();
+
+        if (selectedSlot == null || selectedSlot.IsEmpty())
+            return;
+
+        // Calculate drop amount
+        int dropAmount = dropAll ? selectedSlot.quantity : 1;
+
+        // Spawn the dropped item in the world
+        SpawnDroppedItem(selectedSlot.item, dropAmount);
+
+        // Remove from inventory
+        int newQuantity = selectedSlot.quantity - dropAmount;
+
+        if (newQuantity <= 0)
+        {
+            selectedSlot.Clear();
+        }
+        else
+        {
+            selectedSlot.Set(selectedSlot.item, newQuantity);
+        }
+
+        // Notify UI to update
+        OnInventoryChanged?.Invoke();
+    }
+
+    private void SpawnDroppedItem(ItemData item, int amount)
+    {
+        if (item == null || item.itemPrefab == null)
+            return;
+
+        // Get player position for spawning
+        Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player == null)
+            return;
+
+        // Calculate spawn position (in front of player)
+        Vector3 spawnPosition = player.position + player.forward * 2f + Vector3.up * 0.5f;
+
+        // Spawn the item
+        GameObject droppedItem = Instantiate(item.itemPrefab, spawnPosition, Quaternion.identity);
+
+        // Add some physics to make it "drop"
+        Rigidbody rb = droppedItem.GetComponent<Rigidbody>();
+        if (rb == null)
+            rb = droppedItem.AddComponent<Rigidbody>();
+
+        // Add a small forward and upward force
+        rb.AddForce(player.forward * 3f + Vector3.up * 2f, ForceMode.Impulse);
+
+        // If the dropped item has a component to track quantity, set it
+        // (You might have a PickupItem component or similar)
+        var pickup = droppedItem.GetComponent<ItemPickup>();
+        if (pickup != null)
+        {
+            pickup.SetItem(item, amount);
+        }
     }
 
 

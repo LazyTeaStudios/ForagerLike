@@ -39,6 +39,7 @@ public enum GameAction
     Crouch,
     Look,
     Attack,
+    DropItem,
 
     // Inventory Actions (Global)
     ToggleInventory,
