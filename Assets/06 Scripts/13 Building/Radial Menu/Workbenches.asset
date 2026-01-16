@@ -17,11 +17,11 @@ MonoBehaviour:
   menuDescription: 
   entries:
   - type: 2
-    displayName: Wooden Chest
-    description: 
-    icon: {fileID: 2800000, guid: f9118449f119a044390c8573b9a3aa03, type: 3}
+    displayName: Workbench
+    description: Used for crafting basic resources.
+    icon: {fileID: 2800000, guid: 2d96588da085c2149b25df30a39c974a, type: 3}
     subMenu: {fileID: 0}
-    buildItem: {fileID: 11400000, guid: 5a1722e0ab1c66144adc8ef40601c064, type: 2}
+    buildItem: {fileID: 11400000, guid: 4021de479c79d4c4f9574e810fd07eb1, type: 2}
     actionId: 
   - type: 2
     displayName: Seed Maker
@@ -31,9 +31,9 @@ MonoBehaviour:
     buildItem: {fileID: 11400000, guid: 8b78974ced3490c498bc90184f8d0fc1, type: 2}
     actionId: 
   - type: 2
-    displayName: Research Table
-    description: 
-    icon: {fileID: 2800000, guid: 07b27d8e5740b414d942f36a6bd63535, type: 3}
+    displayName: Furnace
+    description: Used for smelting ingots from oreberries.
+    icon: {fileID: 2800000, guid: 2a9b849ddb75cbe46bbd4cee3388154b, type: 3}
     subMenu: {fileID: 0}
-    buildItem: {fileID: 11400000, guid: f2422c05afa7c5e479c9da00862b890b, type: 2}
+    buildItem: {fileID: 11400000, guid: 4c58e0b31f0d4e24a81a8f5dd017b5e3, type: 2}
     actionId: 

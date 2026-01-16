@@ -28,11 +28,24 @@ public class PlantingInteraction : MonoBehaviour
     void TryPlantSeed()
     {
         InventorySlot selectedSlot = InventoryManager.Instance.GetSelectedHotbarSlot();
-        if (selectedSlot == null || selectedSlot.IsEmpty())
+        if (selectedSlot == null)
+            return;
+
+
+        if (selectedSlot.item == null)
             return;
 
         if (selectedSlot.item.itemType != ItemType.Seed)
             return;
+
+        if (playerCamera == null)
+            playerCamera = Camera.main;
+
+        if (playerCamera == null)
+        {
+            Debug.LogError("PlantingInteraction: No camera found (Camera.main is null). Tag a camera as MainCamera.");
+            return;
+        }
 
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         if (Physics.Raycast(ray, out RaycastHit hit, interactionRange, seedBedMask))
@@ -44,7 +57,7 @@ public class PlantingInteraction : MonoBehaviour
             if (seedBed.PlantSeed(selectedSlot.item))
             {
                 InventoryManager.Instance.RemoveItem(selectedSlot.item, 1);
-                Debug.Log($"Planted {selectedSlot.item.itemName}");
+                //Debug.Log($"Planted {selectedSlot.item.itemName}");
             }
             else
             {
@@ -52,4 +65,5 @@ public class PlantingInteraction : MonoBehaviour
             }
         }
     }
+
 }

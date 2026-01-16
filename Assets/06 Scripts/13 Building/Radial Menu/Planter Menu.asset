@@ -17,6 +17,20 @@ MonoBehaviour:
   menuDescription: 
   entries:
   - type: 2
+    displayName: Planter 2x2
+    description: 
+    icon: {fileID: 2800000, guid: b917faf218dd8c149ace2663b786e0b3, type: 3}
+    subMenu: {fileID: 0}
+    buildItem: {fileID: 11400000, guid: c0e19874f86b62d4db61587e2f6cee39, type: 2}
+    actionId: 
+  - type: 2
+    displayName: Planter 1x2L
+    description: 
+    icon: {fileID: 2800000, guid: b917faf218dd8c149ace2663b786e0b3, type: 3}
+    subMenu: {fileID: 0}
+    buildItem: {fileID: 11400000, guid: 4e6fcf7d572ab3c499abc3de7b90e384, type: 2}
+    actionId: 
+  - type: 2
     displayName: Planter 1x2
     description: 
     icon: {fileID: 2800000, guid: b917faf218dd8c149ace2663b786e0b3, type: 3}

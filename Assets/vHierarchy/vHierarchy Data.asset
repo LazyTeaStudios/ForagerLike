@@ -677,6 +677,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-782618179169028534-0
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-3517742304544159684-507488393787888853
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-710295355-0
+        - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-1863705166-0
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -860,6 +861,10 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 2
           iconNameOrGuid: AvatarMask On Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
           isIconRecursive: 0
           isColorRecursive: 0
         - colorIndex: 0
