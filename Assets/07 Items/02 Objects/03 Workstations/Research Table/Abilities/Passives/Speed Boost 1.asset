@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6cfe7841f1fa4499ee1c2c4483fde8, type: 3}
   m_Name: Speed Boost 1
   m_EditorClassIdentifier: 
-  abilityName: Passive Speed Boost 1
-  description: Increase your movement speed by 3 (base speed = 8)
+  abilityName: 'Passive: Speed Boost 1'
+  description: Increase your movement speed by 3.
   icon: {fileID: 21300000, guid: ce830d5dbbe2b93489c42944d9bec609, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
@@ -24,4 +24,4 @@ MonoBehaviour:
   unlockedBuilding: {fileID: 0}
   passiveModifier:
     type: 1
-    value: 20
+    value: 3

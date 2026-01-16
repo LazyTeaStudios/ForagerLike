@@ -11,6 +11,13 @@ public class ResearchManager : Singleton<ResearchManager>
 
     public System.Action<BuildItemSO> OnBuildingUnlocked;
 
+    [Header("Current Modifiers")]
+    private float moveSpeedBonus = 0f;
+    private float doubleClickChance = 0f;
+
+    public float GetMoveSpeedBonus() => moveSpeedBonus;
+    public float GetDoubleClickChance() => doubleClickChance;
+
     public override void Awake()
     {
         base.Awake();
@@ -19,21 +26,18 @@ public class ResearchManager : Singleton<ResearchManager>
 
     void InitializeAbilities()
     {
-        // Reset all abilities to locked state on game start
         foreach (var ability in allAbilities)
-        {
             if (ability != null)
                 ability.IsUnlocked = false;
-        }
+
+        moveSpeedBonus = 0f;
+        doubleClickChance = 0f;
     }
 
     public bool IsBuildingUnlocked(BuildItemSO building)
     {
         if (building == null) return false;
-
-        // Check if building should be unlocked by default
         if (building.unlockedByDefault) return true;
-
         return unlockedBuildings.Contains(building);
     }
 
@@ -49,26 +53,6 @@ public class ResearchManager : Singleton<ResearchManager>
         return allAbilities;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    [Header("Current Modifiers")]
-    private float moveSpeedBonus = 0f;
-    private float doubleClickChance = 0f;
-
-    public float GetMoveSpeedBonus() => moveSpeedBonus;
-    public float GetDoubleClickChance() => doubleClickChance;
-
-
-
     public void ApplyPassiveAbility(PassiveAbilityModifier modifier)
     {
         if (modifier == null) return;
@@ -81,7 +65,7 @@ public class ResearchManager : Singleton<ResearchManager>
                 break;
 
             case PassiveAbilityType.DoubleClickChance:
-                doubleClickChance = Mathf.Clamp01(doubleClickChance + modifier.value);
+                doubleClickChance = Mathf.Clamp01(doubleClickChance + (modifier.value / 100f));
                 break;
         }
     }
@@ -89,15 +73,12 @@ public class ResearchManager : Singleton<ResearchManager>
     private void ApplyMoveSpeedToPlayer()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            var controller = player.GetComponent<FirstPersonController>();
-            if (controller != null)
-            {
-                // Apply bonus to base speeds
-                controller.MoveSpeed = PlayerDataHandler.Data.moveSpeed + moveSpeedBonus;
-                controller.SprintSpeed = PlayerDataHandler.Data.sprintSpeed + moveSpeedBonus;
-            }
-        }
+        if (player == null) return;
+
+        var controller = player.GetComponent<FirstPersonController>();
+        if (controller == null) return;
+
+        controller.MoveSpeed = PlayerDataHandler.Data.moveSpeed + moveSpeedBonus;
+        controller.SprintSpeed = PlayerDataHandler.Data.sprintSpeed + moveSpeedBonus;
     }
 }

@@ -10,10 +10,11 @@ public class ResearchAbilityButton : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Button button;
     [SerializeField] private Image iconImage;
-    // Show this when prerequisites are NOT met (truly locked)
-    [SerializeField] private GameObject lockOverlay;
-    // Show this when the ability is unlocked
-    [SerializeField] private GameObject unlockedGlow;
+
+    [Header("State Visuals")]
+    [SerializeField] private GameObject lockedStateObject;
+    [SerializeField] private GameObject canUnlockStateObject;
+    [SerializeField] private GameObject unlockedStateObject;
 
     private ResearchTableUI tableUI;
     public ResearchAbility Ability => ability;
@@ -48,24 +49,27 @@ public class ResearchAbilityButton : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        // Update icon
-        //if (iconImage != null && ability.icon != null)
-         //   iconImage.sprite = ability.icon;
-
         bool isUnlocked = ability.IsUnlocked;
         bool hasPrerequisites = ability.ArePrerequisitesMet();
-        bool hasResources = ability.HasRequiredItems();
+        bool canUnlock = !isUnlocked && ability.CanUnlock();
 
-        // Lock overlay only shows when prerequisites are not met
-        // NOT when you simply lack resources
-        if (lockOverlay != null)
-            lockOverlay.SetActive(!isUnlocked && !hasPrerequisites);
+        if (lockedStateObject != null) lockedStateObject.SetActive(false);
+        if (canUnlockStateObject != null) canUnlockStateObject.SetActive(false);
+        if (unlockedStateObject != null) unlockedStateObject.SetActive(false);
 
-        // Unlocked visual only when actually unlocked
-        if (unlockedGlow != null)
-            unlockedGlow.SetActive(isUnlocked);
+        if (isUnlocked)
+        {
+            if (unlockedStateObject != null) unlockedStateObject.SetActive(true);
+        }
+        else if (hasPrerequisites && canUnlock)
+        {
+            if (canUnlockStateObject != null) canUnlockStateObject.SetActive(true);
+        }
+        else
+        {
+            if (lockedStateObject != null) lockedStateObject.SetActive(true);
+        }
 
-        // Button is always interactable for clicking/viewing
         if (button != null)
             button.interactable = true;
     }
