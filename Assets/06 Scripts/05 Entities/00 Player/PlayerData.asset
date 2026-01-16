@@ -17,5 +17,8 @@ MonoBehaviour:
   clickLayers:
     serializedVersion: 2
     m_Bits: 8388608
+  interactRange: 5
   scaleMultiplier: 1.05
   scaleDuration: 0.15
+  moveSpeed: 8
+  sprintSpeed: 12

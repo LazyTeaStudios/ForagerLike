@@ -113,7 +113,7 @@ Material:
     - _EnvironmentReflections: 1
     - _FeatherEnd: 25.9
     - _FeatherStart: 28.3
-    - _FillAmount: 0.5
+    - _FillAmount: 0.33333334
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0

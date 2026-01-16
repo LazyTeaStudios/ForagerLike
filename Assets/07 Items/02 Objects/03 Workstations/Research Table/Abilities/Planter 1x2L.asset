@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e6cfe7841f1fa4499ee1c2c4483fde8, type: 3}
-  m_Name: Chest Unlock
+  m_Name: Planter 1x2L
   m_EditorClassIdentifier: 
-  abilityName: 'Unlock: Wooden Chest'
-  description: Allow you to store up to 4 Items.
-  icon: {fileID: -4270508270548783589, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  abilityName: 'Unlock: 1x2L Planter'
+  description: Allow you grow your own plants at home.
+  icon: {fileID: -1184960675, guid: 49dd3e736e05c0240bd1b2f97744869e, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
     quantity: 1
   prerequisites:
-  - {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
-  unlocksAbilities: []
-  unlockedBuilding: {fileID: 11400000, guid: 5a1722e0ab1c66144adc8ef40601c064, type: 2}
+  - {fileID: 11400000, guid: 28309341576ada14a99ac9ecafc6f5c5, type: 2}
+  unlocksAbilities:
+  - {fileID: 11400000, guid: 3560ff6604b770a4bbb568fc6f96c14e, type: 2}
+  unlockedBuilding: {fileID: 11400000, guid: 4e6fcf7d572ab3c499abc3de7b90e384, type: 2}
   passiveModifier:
     type: 0
     value: 0

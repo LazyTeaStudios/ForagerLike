@@ -49,10 +49,23 @@ public class ClickableDamageable : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, playerData.clickRange, playerData.clickLayers))
         {
             if (hit.collider != coll) return;
-
             if (plantGrowth != null && !plantGrowth.IsFullyGrown) return;
 
-            healthSystem.TakeDamage(playerData.damagePerClick);
+            // Apply base damage
+            float damage = playerData.damagePerClick;
+
+            // Check for double-click chance
+            if (ResearchManager.Instance != null)
+            {
+                float doubleClickChance = ResearchManager.Instance.GetDoubleClickChance();
+                if (doubleClickChance > 0f && Random.value < doubleClickChance)
+                {
+                    damage *= 2f;
+                    Debug.Log("Double click activated!");
+                }
+            }
+
+            healthSystem.TakeDamage(damage);
             TriggerScaleFeedback();
         }
     }

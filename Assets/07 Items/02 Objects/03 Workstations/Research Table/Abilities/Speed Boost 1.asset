@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e6cfe7841f1fa4499ee1c2c4483fde8, type: 3}
-  m_Name: Chest Unlock
+  m_Name: Speed Boost 1
   m_EditorClassIdentifier: 
-  abilityName: 'Unlock: Wooden Chest'
-  description: Allow you to store up to 4 Items.
-  icon: {fileID: -4270508270548783589, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  abilityName: Passive Speed Boost 1
+  description: Increase your movement speed by 3 (base speed = 8)
+  icon: {fileID: 21300000, guid: ce830d5dbbe2b93489c42944d9bec609, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
     quantity: 1
   prerequisites:
   - {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
   unlocksAbilities: []
-  unlockedBuilding: {fileID: 11400000, guid: 5a1722e0ab1c66144adc8ef40601c064, type: 2}
+  unlockedBuilding: {fileID: 0}
   passiveModifier:
-    type: 0
-    value: 0
+    type: 1
+    value: 20

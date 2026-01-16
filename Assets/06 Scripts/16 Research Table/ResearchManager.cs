@@ -48,4 +48,56 @@ public class ResearchManager : Singleton<ResearchManager>
     {
         return allAbilities;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    [Header("Current Modifiers")]
+    private float moveSpeedBonus = 0f;
+    private float doubleClickChance = 0f;
+
+    public float GetMoveSpeedBonus() => moveSpeedBonus;
+    public float GetDoubleClickChance() => doubleClickChance;
+
+
+
+    public void ApplyPassiveAbility(PassiveAbilityModifier modifier)
+    {
+        if (modifier == null) return;
+
+        switch (modifier.type)
+        {
+            case PassiveAbilityType.MoveSpeedBonus:
+                moveSpeedBonus += modifier.value;
+                ApplyMoveSpeedToPlayer();
+                break;
+
+            case PassiveAbilityType.DoubleClickChance:
+                doubleClickChance = Mathf.Clamp01(doubleClickChance + modifier.value);
+                break;
+        }
+    }
+
+    private void ApplyMoveSpeedToPlayer()
+    {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            var controller = player.GetComponent<FirstPersonController>();
+            if (controller != null)
+            {
+                // Apply bonus to base speeds
+                controller.MoveSpeed = PlayerDataHandler.Data.moveSpeed + moveSpeedBonus;
+                controller.SprintSpeed = PlayerDataHandler.Data.sprintSpeed + moveSpeedBonus;
+            }
+        }
+    }
 }

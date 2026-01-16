@@ -10,15 +10,12 @@ public class ResearchAbilityButton : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Button button;
     [SerializeField] private Image iconImage;
-
-    // Show this when the ability CANNOT be unlocked right now (locked state)
+    // Show this when prerequisites are NOT met (truly locked)
     [SerializeField] private GameObject lockOverlay;
-
-    // Your existing "unlocked" visual (keep using this, no new GO needed)
+    // Show this when the ability is unlocked
     [SerializeField] private GameObject unlockedGlow;
 
     private ResearchTableUI tableUI;
-
     public ResearchAbility Ability => ability;
 
     void Awake()
@@ -32,8 +29,6 @@ public class ResearchAbilityButton : MonoBehaviour
         {
             button.onClick.RemoveListener(OnClicked);
             button.onClick.AddListener(OnClicked);
-
-            // Never disable the button
             button.interactable = true;
         }
     }
@@ -47,30 +42,30 @@ public class ResearchAbilityButton : MonoBehaviour
     {
         if (ability == null)
         {
-            // If there truly is no ability assigned, hiding is reasonable
             gameObject.SetActive(false);
             return;
         }
 
-        // Always show the button (do not hide based on prerequisites)
         gameObject.SetActive(true);
 
         // Update icon
-        if (iconImage != null && ability.icon != null)
-            iconImage.sprite = ability.icon;
+        //if (iconImage != null && ability.icon != null)
+         //   iconImage.sprite = ability.icon;
 
         bool isUnlocked = ability.IsUnlocked;
-        bool canUnlockNow = !isUnlocked && ability.CanUnlock();
+        bool hasPrerequisites = ability.ArePrerequisitesMet();
+        bool hasResources = ability.HasRequiredItems();
 
-        // Lock overlay should be visible only when the ability cannot be unlocked right now
+        // Lock overlay only shows when prerequisites are not met
+        // NOT when you simply lack resources
         if (lockOverlay != null)
-            lockOverlay.SetActive(!isUnlocked && !canUnlockNow);
+            lockOverlay.SetActive(!isUnlocked && !hasPrerequisites);
 
-        // Unlocked visual enabled only when unlocked
+        // Unlocked visual only when actually unlocked
         if (unlockedGlow != null)
             unlockedGlow.SetActive(isUnlocked);
 
-        // Never disable the button
+        // Button is always interactable for clicking/viewing
         if (button != null)
             button.interactable = true;
     }

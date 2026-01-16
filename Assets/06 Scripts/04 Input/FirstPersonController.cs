@@ -114,6 +114,9 @@ public class FirstPersonController : MonoBehaviour
 
         if (CinemachineCameraTarget != null)
             _cameraTargetStandLocalPos = CinemachineCameraTarget.transform.localPosition;
+
+        MoveSpeed = PlayerDataHandler.Data.moveSpeed;
+        SprintSpeed = PlayerDataHandler.Data.sprintSpeed;
     }
 
     private void Update()

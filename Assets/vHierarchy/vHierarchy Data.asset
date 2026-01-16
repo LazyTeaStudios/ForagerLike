@@ -674,6 +674,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-1222185078-0
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-523640500-0
         - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-2905339654990691929-825126262
+        - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-782618179169028534-0
+        - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-3517742304544159684-507488393787888853
+        - globalObjectIdString: GlobalObjectId_V1-2-394ec9ff3f0f0894a9a87a90357cf455-710295355-0
         values:
         - colorIndex: 4
           iconNameOrGuid: Folder Icon
@@ -819,7 +822,7 @@ MonoBehaviour:
           iconNameOrGuid: DirectionalLight Icon
           isIconRecursive: 0
           isColorRecursive: 0
-        - colorIndex: 0
+        - colorIndex: 5
           iconNameOrGuid: SphereCollider Icon
           isIconRecursive: 0
           isColorRecursive: 0
@@ -843,16 +846,28 @@ MonoBehaviour:
           iconNameOrGuid: Folder Icon
           isIconRecursive: 0
           isColorRecursive: 0
-        - colorIndex: 0
+        - colorIndex: 8
           iconNameOrGuid: AvatarMask On Icon
           isIconRecursive: 0
           isColorRecursive: 0
-        - colorIndex: 0
+        - colorIndex: 8
           iconNameOrGuid: Settings Icon
           isIconRecursive: 0
           isColorRecursive: 0
         - colorIndex: 4
           iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 2
+          iconNameOrGuid: AvatarMask On Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
           isIconRecursive: 0
           isColorRecursive: 0
   bookmarks: []

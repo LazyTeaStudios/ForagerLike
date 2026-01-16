@@ -14,4 +14,8 @@ public class PlayerData : ScriptableObject
     [Header("Feedback")]
     public float scaleMultiplier = 1.05f;
     public float scaleDuration = 0.15f;
+
+    [Header("Movement")]
+    public float moveSpeed = 8;
+    public float sprintSpeed = 12;
 }
