@@ -195,7 +195,7 @@ public class SoundManager : Singleton<SoundManager>
         return src;
     }
 
-    public void PlayMusic(AudioClip clip, float tgtVol = 1f, float fade = 1f)
+    public void PlayMusic(AudioClip clip, float tgtVol = 0.1f, float fade = 5f)
     {
         if (!clip || IsMusicAlreadyPlaying(clip)) return;
 

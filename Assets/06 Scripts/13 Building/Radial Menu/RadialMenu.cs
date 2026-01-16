@@ -80,6 +80,8 @@ public class RadialMenu : MonoBehaviour
             float angle = i * angleStep + 270f;
             float rad = angle * Mathf.Deg2Rad;
             btn.transform.localPosition = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * radius;
+
+            // 0 = down, matches your UpdateSelection math
             btn.name = (i * angleStep).ToString();
 
             var data = buttonData[i];
@@ -90,11 +92,16 @@ public class RadialMenu : MonoBehaviour
         if (selectionFill != null) selectionFill.fillAmount = fillAmount;
         if (selectionFillInner != null) selectionFillInner.fillAmount = fillAmount;
 
-        if (buttons.Count > 0 && defaultSelection >= 0 && defaultSelection < buttons.Count)
-            selectedButton = buttons[defaultSelection];
+        // ALWAYS default to "down"
+        selectedButton = GetButtonClosestToDown();
 
         ApplyShaderFillAmount(fillAmount);
+
+        // Make UI reflect the selection immediately (cost + center text)
+        UpdateCostDisplay();
+        UpdateVisuals();
     }
+
 
     void ClearButtons()
     {
@@ -248,6 +255,32 @@ public class RadialMenu : MonoBehaviour
             if (mat != null) mat.SetFloat(FillAmountId, amount01);
         }
     }
+
+    RadialMenuButton GetButtonClosestToDown()
+    {
+        RadialMenuButton best = null;
+        float bestDist = float.MaxValue;
+
+        foreach (var btn in buttons)
+        {
+            if (btn == null) continue;
+
+            // Your naming scheme: btn.name = (i * angleStep).ToString();
+            // And your input mapping makes 0 degrees = DOWN.
+            if (!float.TryParse(btn.name, out float btnAngle))
+                continue;
+
+            float dist = Mathf.Abs(Mathf.DeltaAngle(btnAngle, 0f)); // 0f = down
+            if (dist < bestDist)
+            {
+                bestDist = dist;
+                best = btn;
+            }
+        }
+
+        return best;
+    }
+
 }
 
 public struct RadialButtonData
