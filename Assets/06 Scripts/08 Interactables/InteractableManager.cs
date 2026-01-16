@@ -4,8 +4,10 @@ public class InteractableManager : MonoBehaviour
 {
     Camera playerCamera;
     Interactable currentTarget;
-
     public static InteractableManager Instance { get; private set; }
+
+    // Add input cooldown
+    static float inputCooldownTime;
 
     void Awake()
     {
@@ -16,14 +18,23 @@ public class InteractableManager : MonoBehaviour
     void Update()
     {
         if (InputHandler.IsMapActive(ActionMap.UI)) return;
-        if (Interactable.IsUILocked) return; // Skip when UI is locked
+        if (Interactable.IsUILocked) return;
 
         CheckInteractableTarget();
 
-        if (currentTarget != null && InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
+        // Check cooldown before processing input
+        if (currentTarget != null &&
+            Time.time >= inputCooldownTime &&
+            InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
         {
             currentTarget.Interact();
         }
+    }
+
+    // Add this public method to set cooldown
+    public static void SetInputCooldown(float duration)
+    {
+        inputCooldownTime = Time.time + duration;
     }
 
     void CheckInteractableTarget()
@@ -31,15 +42,20 @@ public class InteractableManager : MonoBehaviour
         if (playerCamera == null) return;
 
         Ray ray = playerCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
-
         if (Physics.Raycast(ray, out RaycastHit hit, 10f))
         {
             Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
-
             if (interactable != null)
             {
-                float distance = Vector3.Distance(transform.position, interactable.transform.position);
+                // Check for placement delay
+                var placementDelay = interactable.GetComponent<PlacedBuildingDelay>();
+                if (placementDelay != null && !placementDelay.CanInteract())
+                {
+                    ClearTarget();
+                    return;
+                }
 
+                float distance = Vector3.Distance(transform.position, interactable.transform.position);
                 if (distance <= interactable.GetInteractRange())
                 {
                     SetTarget(interactable);
@@ -47,7 +63,6 @@ public class InteractableManager : MonoBehaviour
                 }
             }
         }
-
         ClearTarget();
     }
 
@@ -74,5 +89,21 @@ public class InteractableManager : MonoBehaviour
     void OnDestroy()
     {
         ClearTarget();
+    }
+}
+
+public class PlacedBuildingDelay : MonoBehaviour
+{
+    float interactionDelay = 0.2f; // Half second delay
+    float placeTime;
+
+    void Start()
+    {
+        placeTime = Time.time;
+    }
+
+    public bool CanInteract()
+    {
+        return Time.time - placeTime >= interactionDelay;
     }
 }

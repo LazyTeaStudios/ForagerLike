@@ -216,6 +216,10 @@ public class BuildingSystem : MonoBehaviour
         var obj = Instantiate(currentItem.prefab, preview.transform.position, preview.transform.rotation);
         var placed = obj.GetComponent<PlacedBuilding>() ?? obj.AddComponent<PlacedBuilding>();
         placed.buildItem = currentItem;
+
+        InteractableManager.SetInputCooldown(0.3f);
+
+        ExitAllModes();
     }
 
     bool ConsumeResources()
