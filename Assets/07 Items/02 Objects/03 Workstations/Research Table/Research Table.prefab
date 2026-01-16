@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 5279276858633650291}
   - component: {fileID: 3057933819716744531}
   - component: {fileID: 2159668833513108893}
-  - component: {fileID: 2555698474590013561}
+  - component: {fileID: 2181471457594113941}
   m_Layer: 0
   m_Name: Research Table
   m_TagString: Untagged
@@ -802,7 +802,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 68c8df92649b1fe41b1ebd816bc4de50, type: 3}
+  - {fileID: 2100000, guid: 77b39488a313ddd478615ad4335af21c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -853,8 +853,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   spawnRadius: 0.5
   throwForce: 3
---- !u!64 &2555698474590013561
-MeshCollider:
+--- !u!65 &2181471457594113941
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -871,10 +871,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4493585093827132993, guid: 00aab93adce84c44da53d8e518b0e4a5, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.706143, y: 0.96939075, z: 0.8530715}
+  m_Center: {x: 0, y: 0.48496753, z: 0}
 --- !u!1 &5226474577429422048
 GameObject:
   m_ObjectHideFlags: 0
