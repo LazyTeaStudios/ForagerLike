@@ -187,6 +187,8 @@ public class ProcessingMachine : Interactable
         machinePanel.SetActive(true);
         RefreshDisplay();
 
+        Sound.PlaySound("SFX_Machine_Open", 0.2f, 0.3f);
+
         LockUI();
         InputHandler.SetMap(ActionMap.UI);
 
@@ -207,6 +209,8 @@ public class ProcessingMachine : Interactable
     {
         if (machinePanel != null)
             machinePanel.SetActive(false);
+
+        Sound.PlaySound("SFX_Machine_Close", 0.2f, 0.3f);
 
         UnlockUI();
         InputHandler.SetMap(ActionMap.Gameplay);

@@ -19,8 +19,11 @@ public class Outline : MonoBehaviour
     public void SetHighlighted(bool highlighted)
     {
         if (_highlighted == highlighted) return;
+
         _highlighted = highlighted;
         _targetScale = _baseScale * (_highlighted ? scaleMultiplier : 1f);
+
+        
     }
 
     void OnEnable()

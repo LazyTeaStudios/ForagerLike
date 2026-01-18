@@ -75,6 +75,7 @@ public class InteractableManager : MonoBehaviour
 
         currentTarget = newTarget;
         currentTarget.SetHighlighted(true);
+        
     }
 
     void ClearTarget()

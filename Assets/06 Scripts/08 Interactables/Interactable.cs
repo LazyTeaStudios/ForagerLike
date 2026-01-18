@@ -54,7 +54,12 @@ public abstract class Interactable : MonoBehaviour
     public virtual void SetHighlighted(bool highlighted)
     {
         if (isHighlighted == highlighted) return;
+
+        if (highlighted && !isHighlighted)
+            Sound.PlaySound("SFX_Hover_Outline", 0.05f, 0.3f);
+
         isHighlighted = highlighted;
+
         if (highlightComponent != null)
             highlightComponent.SetHighlighted(highlighted);
     }

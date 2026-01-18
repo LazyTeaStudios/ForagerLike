@@ -22180,7 +22180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: sfx.Array.size
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: music.Array.size
@@ -22203,6 +22203,30 @@ PrefabInstance:
       value: Player_Footsteps_Rock
       objectReference: {fileID: 0}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[2].id
+      value: Player_Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[3].id
+      value: Player_Landing
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[4].id
+      value: SFX_Hover_Outline
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[5].id
+      value: SFX_Machine_Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[6].id
+      value: SFX_Machine_Close
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[7].id
+      value: SFX_Chest_Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: music.Array.data[0].id
       value: Music_Forest
       objectReference: {fileID: 0}
@@ -22213,11 +22237,35 @@ PrefabInstance:
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: sfx.Array.data[0].clip
       value: 
-      objectReference: {fileID: 8300000, guid: e9c8d1e2f80178e48a9d9eb7c58ba24a, type: 3}
+      objectReference: {fileID: 8300000, guid: 7ba86cfd52b916c4abc8561384afb256, type: 3}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: sfx.Array.data[1].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 3adaaa4807357f346a908940958832be, type: 3}
+      objectReference: {fileID: 8300000, guid: 638932c0aeea47f4ea54ceb2bbd93bbe, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6f1687f43fa83734282a12a80a5181c7, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6f74d108bb7affa41b83b5c631118d13, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ab83eaef697a84145894e7c4a73f9ab7, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 77f91a86acf9dfb4f89baa7ff98fc948, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[6].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 77f91a86acf9dfb4f89baa7ff98fc948, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[7].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 56e8cb25e04b0e646ba9d84e8b369e21, type: 3}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: entries.Array.data[0].id
       value: MusicForest
@@ -55600,6 +55648,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5351566349901537081, guid: 8778ca47f3b2d8447be93fa47bf62ae9, type: 3}
+      propertyPath: hoverSoundId
+      value: SFX_Hover_Outline
+      objectReference: {fileID: 0}
     - target: {fileID: 6764063670827499912, guid: 8778ca47f3b2d8447be93fa47bf62ae9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -63280,6 +63332,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1225854481}
     m_Modifications:
+    - target: {fileID: 649719364380673142, guid: 0010fde5f0cea2e46a11459258233786, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.00024414062
+      objectReference: {fileID: 0}
+    - target: {fileID: 649719364380673142, guid: 0010fde5f0cea2e46a11459258233786, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 15.467224
+      objectReference: {fileID: 0}
     - target: {fileID: 1626810440661113601, guid: 0010fde5f0cea2e46a11459258233786, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.8467126
@@ -64562,21 +64622,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grassFootstepId: Player_Footsteps_Grass
   rockFootstepId: Player_Footsteps_Rock
-  volume: 0.2
-  pitchVariation: 0.15
-  walkStepInterval: 0.5
-  sprintStepInterval: 0.35
-  crouchStepInterval: 0.65
-  minSpeedForSteps: 0.25
-  rayUp: 1
-  rayLength: 10
-  rayMask:
+  footstepVolume: 0.1
+  footstepPitchVariation: 0.25
+  stepsPerMeter: 0.3
+  jumpSoundId: Player_Jump
+  landSoundId: Player_Landing
+  jumpVolume: 0.05
+  landVolume: 0.1
+  jumpLandPitchVariation: 0.25
+  groundMask:
     serializedVersion: 2
     m_Bits: 256
   rockTag: Rock
-  terrainRockLayerName: TL_Rock
-  terrainGrassLayerName: TL_Grass
-  minTerrainWeight: 0.05
+  terrainRockLayer: TL_Rock
 --- !u!114 &8469333761558312090
 MonoBehaviour:
   m_ObjectHideFlags: 0

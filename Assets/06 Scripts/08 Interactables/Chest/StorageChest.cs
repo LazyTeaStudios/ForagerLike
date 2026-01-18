@@ -81,6 +81,8 @@ public class StorageChest : Interactable
         storagePanel.SetActive(true);
         RefreshDisplay();
 
+        Sound.PlaySound("SFX_Chest_Open", 0.2f, 0.3f);
+
         LockUI();
         InputHandler.SetMap(ActionMap.UI);
 
