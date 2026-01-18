@@ -1,35 +1,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// One row in the inspector
 [System.Serializable]
-public struct AudioEntry
+public struct ClipEntry
 {
-    public string id;        // unique key
-    public AudioClip clip;      // the asset
-    public AudioCategory category;  // routing hint
+    public string id;
+    public AudioClip clip;
 }
 
-/// <summary>
-/// Lightweight, dictionary-backed sound catalogue.
-/// *No* playback helpers here – it’s purely for reference access.
-/// </summary>
 [AddComponentMenu("Audio/Audio Library")]
 public class AudioLibrary : MonoBehaviour
 {
-    [Tooltip("Register every clip you want globally available.")]
-    [SerializeField] private AudioEntry[] entries = { };
+    [SerializeField] ClipEntry[] music = { };
+    [SerializeField] ClipEntry[] sfx = { };
+    [SerializeField] ClipEntry[] ui = { };
+    [SerializeField] ClipEntry[] ambience = { };
 
-    private Dictionary<string, AudioEntry> lookup;
+    struct LookupEntry
+    {
+        public AudioClip clip;
+        public AudioCategory category;
+        public LookupEntry(AudioClip c, AudioCategory cat) { clip = c; category = cat; }
+    }
+
+    Dictionary<string, LookupEntry> lookup;
     public static AudioLibrary Instance { get; private set; }
 
     void Awake()
     {
-        lookup = new Dictionary<string, AudioEntry>(entries.Length);
-        foreach (var e in entries)
+        Instance = this;
+        lookup = new Dictionary<string, LookupEntry>(CountAll());
+        AddRange(music, AudioCategory.Music);
+        AddRange(sfx, AudioCategory.SFX);
+        AddRange(ui, AudioCategory.UI);
+        AddRange(ambience, AudioCategory.Ambience);
+    }
+
+    int CountAll() => (music?.Length ?? 0) + (sfx?.Length ?? 0) + (ui?.Length ?? 0) + (ambience?.Length ?? 0);
+
+    void AddRange(ClipEntry[] arr, AudioCategory cat)
+    {
+        if (arr == null) return;
+        for (int i = 0; i < arr.Length; i++)
         {
-            if (!string.IsNullOrEmpty(e.id) && e.clip && !lookup.ContainsKey(e.id))
-                lookup.Add(e.id, e);
+            var e = arr[i];
+            if (string.IsNullOrEmpty(e.id) || !e.clip) continue;
+            if (lookup.ContainsKey(e.id)) continue;
+            lookup.Add(e.id, new LookupEntry(e.clip, cat));
         }
     }
 
@@ -48,6 +65,27 @@ public class AudioLibrary : MonoBehaviour
         lookup != null && lookup.TryGetValue(id, out var e) ? e.clip : null;
 
     public AudioCategory GetCategory(string id) =>
-        lookup != null && lookup.TryGetValue(id, out var e) ? e.category
-                                                           : AudioCategory.SFX;
+        lookup != null && lookup.TryGetValue(id, out var e) ? e.category : AudioCategory.SFX;
+
+#if UNITY_EDITOR
+    public IEnumerable<string> EditorGetIds(AudioCategory cat)
+    {
+        var arr = cat switch
+        {
+            AudioCategory.Music => music,
+            AudioCategory.SFX => sfx,
+            AudioCategory.UI => ui,
+            AudioCategory.Ambience => ambience,
+            _ => null
+        };
+
+        if (arr == null) yield break;
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            var id = arr[i].id;
+            if (!string.IsNullOrEmpty(id)) yield return id;
+        }
+    }
+#endif
 }

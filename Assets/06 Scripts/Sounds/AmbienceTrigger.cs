@@ -1,9 +1,9 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class MusicTrigger : MonoBehaviour
+public class AmbienceTrigger : MonoBehaviour
 {
-    [SerializeField, AudioId(AudioCategory.Music)] string musicId;
+    [SerializeField, AudioId(AudioCategory.Ambience)] string ambienceId;
     [SerializeField, Range(0f, 1f)] float volume = 1f;
     [SerializeField] float fadeOut = 5f;
 
@@ -19,9 +19,9 @@ public class MusicTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         if (playing) return;
-        if (string.IsNullOrEmpty(musicId)) return;
+        if (string.IsNullOrEmpty(ambienceId)) return;
 
-        playing = Sound.PlaySound(musicId, volume, 0f, loop: true);
+        playing = Sound.PlaySound(ambienceId, volume, 0f, loop: true);
     }
 
     void OnTriggerExit(Collider other)

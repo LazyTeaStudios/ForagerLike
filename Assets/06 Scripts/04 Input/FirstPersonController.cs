@@ -46,7 +46,7 @@ public class FirstPersonController : MonoBehaviour
     [Tooltip("How far to lower the camera target when crouched (local Y offset).")]
     public float CameraCrouchYOffset = -0.6f;
     [Tooltip("Layers that block standing up (ceilings, props, etc). Usually 'Default' + environment layers.")]
-    public LayerMask CrouchObstructionLayers = ~0; // currently unused, kept for future
+    public LayerMask CrouchObstructionLayers = ~0;
 
     [Header("Player Grounded")]
     public bool Grounded = true;
@@ -77,14 +77,11 @@ public class FirstPersonController : MonoBehaviour
     private GameObject _mainCamera;
     private Vector2 _lookSmoothed;
 
-    // Track horizontal velocity ourselves so we can apply air drag smoothly
     private Vector3 _horizontalVelocity;
 
-    // Jump buffer state
     private float _jumpBufferCounter;
     private bool _jumpHeldLast;
 
-    // Crouch state
     private bool _isCrouched;
     private float _standHeight;
     private Vector3 _standCenter;
@@ -107,7 +104,6 @@ public class FirstPersonController : MonoBehaviour
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
 
-        // Cache standing dimensions for crouch system
         _standHeight = _controller.height;
         _standCenter = _controller.center;
         _standBottomLocalY = _standCenter.y - (_standHeight * 0.5f);
@@ -123,7 +119,6 @@ public class FirstPersonController : MonoBehaviour
     {
         float dt = Time.deltaTime;
 
-        // Update jump buffer BEFORE we evaluate jump logic
         UpdateJumpBuffer(dt);
 
         GroundedCheck();
@@ -141,7 +136,6 @@ public class FirstPersonController : MonoBehaviour
 
     private void UpdateJumpBuffer(float dt)
     {
-        // Detect jump press edge (since _input.jump is held-state)
         if (_input.jump && !_jumpHeldLast)
         {
             _jumpBufferCounter = JumpBufferTime;
@@ -181,13 +175,11 @@ public class FirstPersonController : MonoBehaviour
 
     private void HandleCrouch(float dt)
     {
-        // PURE HOLD-TO-CROUCH
         _isCrouched = _input.crouch;
 
         float desiredHeight = _isCrouched ? (_standHeight * CrouchHeightMultiplier) : _standHeight;
         desiredHeight = Mathf.Max(desiredHeight, _controller.radius * 2.0f + 0.01f);
 
-        // Keep feet at same place by preserving bottom Y
         float desiredCenterY = _standBottomLocalY + (desiredHeight * 0.5f);
         Vector3 desiredCenter = new Vector3(_standCenter.x, desiredCenterY, _standCenter.z);
 
@@ -195,7 +187,6 @@ public class FirstPersonController : MonoBehaviour
         _controller.height = Mathf.Lerp(_controller.height, desiredHeight, t);
         _controller.center = Vector3.Lerp(_controller.center, desiredCenter, t);
 
-        // Camera target smooth offset
         if (CinemachineCameraTarget != null)
         {
             Vector3 camPos = CinemachineCameraTarget.transform.localPosition;
@@ -207,10 +198,7 @@ public class FirstPersonController : MonoBehaviour
 
     private void Move(float dt)
     {
-        // Desired speed
         float baseSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-
-        // If crouched, override speed
         float targetSpeed = _isCrouched ? CrouchSpeed : baseSpeed;
 
         if (_input.move == Vector2.zero)
@@ -218,17 +206,14 @@ public class FirstPersonController : MonoBehaviour
 
         float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
-        // Convert input to world direction
         Vector3 desiredDir = Vector3.zero;
         if (_input.move != Vector2.zero)
             desiredDir = (transform.right * _input.move.x + transform.forward * _input.move.y).normalized;
 
-        // Desired horizontal velocity (ignores y)
         Vector3 desiredHorizontalVel = desiredDir * (targetSpeed * inputMagnitude);
 
         if (Grounded)
         {
-            // On ground: smoothing toward desired speed
             Vector3 currentHorizontal = new Vector3(_controller.velocity.x, 0f, _controller.velocity.z);
             float currentSpeed = currentHorizontal.magnitude;
 
@@ -249,7 +234,6 @@ public class FirstPersonController : MonoBehaviour
         }
         else
         {
-            // In air: acceleration toward desired velocity + drag when no input
             bool hasInput = _input.move != Vector2.zero;
 
             if (hasInput)
@@ -260,7 +244,6 @@ public class FirstPersonController : MonoBehaviour
                     AirAcceleration * dt
                 );
 
-                // Extra drag when reversing direction in air
                 if (_horizontalVelocity.sqrMagnitude > 0.001f && desiredHorizontalVel.sqrMagnitude > 0.001f)
                 {
                     float dot = Vector3.Dot(_horizontalVelocity.normalized, desiredHorizontalVel.normalized);
@@ -290,15 +273,9 @@ public class FirstPersonController : MonoBehaviour
 
     private void JumpAndGravity(float dt)
     {
-        // Treat buffered press as "wants jump"
         bool wantsJump = _jumpBufferCounter > 0f;
-
-        // REAL grounding (collision-based)
         bool controllerGrounded = _controller.isGrounded;
 
-        // -----------------------
-        // JUMP (ground + coyote)
-        // -----------------------
         if (Grounded)
         {
             _coyoteTimeCounter = CoyoteTime;
@@ -306,7 +283,6 @@ public class FirstPersonController : MonoBehaviour
             if (_jumpTimeoutDelta > 0f)
                 _jumpTimeoutDelta -= dt;
 
-            // Jump from ground using buffer
             if (wantsJump && _jumpTimeoutDelta <= 0f)
             {
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
@@ -320,11 +296,9 @@ public class FirstPersonController : MonoBehaviour
         }
         else
         {
-            // airborne timers
             _coyoteTimeCounter -= dt;
             _jumpTimeoutDelta = JumpTimeout;
 
-            // Coyote jump using buffer (only if we haven't already jumped)
             if (wantsJump && _coyoteTimeCounter > 0f && !_isJumping)
             {
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
@@ -336,38 +310,27 @@ public class FirstPersonController : MonoBehaviour
             }
         }
 
-        // -----------------------
-        // VARIABLE JUMP HEIGHT
-        // -----------------------
         bool movingUp = _verticalVelocity > 0f;
         bool jumpReleased = !_input.jump;
         bool pastGrace = (Time.time - _jumpStartedTime) > JumpCutGraceTime;
 
-        // If player releases jump while going up (after a tiny grace time),
-        // cut the upward velocity for a shorter hop.
         if (_isJumping && jumpReleased && movingUp && pastGrace)
         {
             _verticalVelocity *= JumpCutMultiplier;
-            _isJumping = false; // we spent our variable jump
+            _isJumping = false;
         }
 
-        // -----------------------
-        // GRAVITY (same everywhere)
-        // -----------------------
         _verticalVelocity += Gravity * dt;
 
-        // Clamp terminal velocity (Gravity is negative)
         if (_verticalVelocity < -_terminalVelocity)
             _verticalVelocity = -_terminalVelocity;
 
-        // Actually on floor? Stop us from sinking and end the jump.
         if (controllerGrounded && _verticalVelocity < 0f)
         {
             _verticalVelocity = -2f;
-            _isJumping = false; // landed
+            _isJumping = false;
         }
     }
-
 
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {

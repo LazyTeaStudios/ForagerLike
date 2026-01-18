@@ -16576,7 +16576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPrefab: {fileID: 6967365203733630599, guid: 6e6aa5d1220be4f45a436eb2247b5947, type: 3}
-  maxSpawnCount: 10
+  maxSpawnCount: 15
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -16588,7 +16588,7 @@ MonoBehaviour:
   ignoreRaycastLayers:
     serializedVersion: 2
     m_Bits: 8390145
-  ticksBetweenSpawns: 10
+  ticksBetweenSpawns: 5
   growthTicks: 10
   startScale: 0.01
   growthSmoothSpeed: 8

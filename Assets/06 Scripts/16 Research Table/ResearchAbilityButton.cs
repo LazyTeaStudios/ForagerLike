@@ -51,8 +51,7 @@ public class ResearchAbilityButton : MonoBehaviour
         gameObject.SetActive(true);
 
         bool isUnlocked = ability.IsUnlocked;
-        bool hasPrerequisites = ability.ArePrerequisitesMet();
-        bool canUnlock = !isUnlocked && ability.CanUnlock();
+        bool canUnlock = !isUnlocked && ability.ArePrerequisitesMet();
 
         if (lockedStateObject != null) lockedStateObject.SetActive(false);
         if (canUnlockStateObject != null) canUnlockStateObject.SetActive(false);
@@ -62,7 +61,7 @@ public class ResearchAbilityButton : MonoBehaviour
         {
             if (unlockedStateObject != null) unlockedStateObject.SetActive(true);
         }
-        else if (hasPrerequisites && canUnlock)
+        else if (canUnlock)
         {
             if (canUnlockStateObject != null) canUnlockStateObject.SetActive(true);
         }
