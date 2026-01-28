@@ -31,8 +31,7 @@ public class ProcessingMachine : Interactable
     protected float processTimer;
     protected bool isProcessing;
 
-    private Vector3 bounceBaseScale;
-    private bool bounceBaseScaleSet;
+    Vector3 bounceBaseScale;
 
     public bool IsProcessing => isProcessing;
 
@@ -54,7 +53,6 @@ public class ProcessingMachine : Interactable
             bounceTarget = transform;
 
         bounceBaseScale = bounceTarget.localScale;
-        bounceBaseScaleSet = true;
     }
 
     void InitializeSlots()
@@ -99,12 +97,12 @@ public class ProcessingMachine : Interactable
 
     void UpdateProcessingBounce()
     {
-        if (!bounceBaseScaleSet || bounceTarget == null)
+        if (bounceTarget == null)
             return;
 
         if (!BounceActive)
         {
-            bounceTarget.localScale = bounceBaseScale;
+            bounceBaseScale = bounceTarget.localScale;
             return;
         }
 
@@ -187,6 +185,9 @@ public class ProcessingMachine : Interactable
 
         if (processingVisualObject != null)
             processingVisualObject.SetActive(false);
+
+        if (bounceTarget != null)
+            bounceTarget.localScale = bounceBaseScale;
     }
 
     public ProcessingRecipe FindMatchingRecipe()

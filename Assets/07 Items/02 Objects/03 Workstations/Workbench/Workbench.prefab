@@ -2679,8 +2679,6 @@ MonoBehaviour:
   usePlayerDataRange: 1
   customInteractRange: 5
   highlightComponent: {fileID: 0}
-  hoverScaleMultiplier: 1.1
-  hoverLerpSpeed: 20
   machinePanel: {fileID: 4883043627956353057}
   inputSlotUI1: {fileID: 1678937782440634626}
   inputSlotUI2: {fileID: 5950495758348533983}
@@ -2799,8 +2797,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5592146, y: 1.4540861, z: 1.2796073}
-  m_Center: {x: 0, y: 0.7274513, z: 0}
+  m_Size: {x: 2.5592146, y: 1.0011281, z: 1.2796073}
+  m_Center: {x: 0, y: 0.50097233, z: 0}
 --- !u!1 &5663629638877511798
 GameObject:
   m_ObjectHideFlags: 0

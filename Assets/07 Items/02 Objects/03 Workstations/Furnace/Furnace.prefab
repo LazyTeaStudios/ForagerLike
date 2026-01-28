@@ -788,6 +788,7 @@ GameObject:
   - component: {fileID: 55783952150289031}
   - component: {fileID: 6425352298222051888}
   - component: {fileID: 9029104868645597126}
+  - component: {fileID: 7483800708909037701}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -863,6 +864,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7483800708909037701
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796868938705957681}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8251561792921069437, guid: 326165131678cbb44a7e9bf82dda362e, type: 3}
 --- !u!1 &2869582218392234457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,13 +1064,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3245169422868422038}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.597, z: -1.52}
+  m_LocalRotation: {x: -0.44149262, y: 0.32114658, z: -0.17295395, w: 0.8197781}
+  m_LocalPosition: {x: 0, y: 1.055, z: -0.842}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7649306683892948060}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -37.79, y: 59.263, z: -45.861}
 --- !u!1 &3250787963731862131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2440,6 +2463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7649306683892948060}
+  - component: {fileID: 2125064690829074959}
   - component: {fileID: 2487785461457824706}
   - component: {fileID: 1711263048551958842}
   - component: {fileID: 2250498804827325859}
@@ -2465,13 +2489,26 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.02, y: 9.996737, z: -122.448044}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 55783952150289031}
   - {fileID: 7876308519492167278}
   - {fileID: 8121529682541688217}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2125064690829074959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8384637420421834888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ead5d7165b764e4d90437169393846d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: {fileID: 2487785461457824706}
 --- !u!114 &2487785461457824706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2486,9 +2523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usePlayerDataRange: 1
   customInteractRange: 8
-  highlightComponent: {fileID: 0}
-  hoverScaleMultiplier: 1.1
-  hoverLerpSpeed: 20
+  highlightComponent: {fileID: 1711263048551958842}
   machinePanel: {fileID: 2998586717467267815}
   inputSlotUI1: {fileID: 1724137907482867050}
   inputSlotUI2: {fileID: 7319265111134788161}
@@ -2497,6 +2532,17 @@ MonoBehaviour:
   itemDropper: {fileID: 294705349661157930}
   outputPoint: {fileID: 7876308519492167278}
   processingVisualObject: {fileID: 4863513546772109785}
+  bounceTarget: {fileID: 7649306683892948060}
+  bounceSpeed: 6
+  bounceMinY: 1
+  bounceMaxY: 1.2
+  growPoint: {fileID: 7876308519492167278}
+  growthSmoothSpeed: 6
+  minScale: 0.2
+  maxScale: 1
+  door: {fileID: 55783952150289031}
+  doorOpenX: -90
+  doorLerpSpeed: 8
 --- !u!114 &1711263048551958842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2504,13 +2550,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8384637420421834888}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f98f87ad60b3a044ca43a3b5e0527659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleMultiplier: 1.3
-  lerpSpeed: 20
+  outlineEffect: {fileID: 0}
 --- !u!33 &2250498804827325859
 MeshFilter:
   m_ObjectHideFlags: 0

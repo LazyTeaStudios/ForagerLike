@@ -7,10 +7,6 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected float customInteractRange = 5f;
     [SerializeField] protected Outline highlightComponent;
 
-    [Header("Hover Scale Settings")]
-    [SerializeField] protected float hoverScaleMultiplier = 1.1f;
-    [SerializeField] protected float hoverLerpSpeed = 20f;
-
     protected bool isHighlighted;
 
     static int uiLockCount;
@@ -30,8 +26,6 @@ public abstract class Interactable : MonoBehaviour
         if (highlightComponent == null)
             highlightComponent = gameObject.AddComponent<Outline>();
 
-        highlightComponent.scaleMultiplier = hoverScaleMultiplier;
-        highlightComponent.lerpSpeed = hoverLerpSpeed;
         highlightComponent.SetHighlighted(false);
     }
 
