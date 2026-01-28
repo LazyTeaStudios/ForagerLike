@@ -5,7 +5,7 @@ public class ProcessingMachine : Interactable
     [Header("UI")]
     [SerializeField] protected GameObject machinePanel;
     [SerializeField] protected SlotUI inputSlotUI1;
-    [SerializeField] protected SlotUI inputSlotUI2; // Optional second slot
+    [SerializeField] protected SlotUI inputSlotUI2;
 
     [Header("Recipes")]
     [SerializeField] protected ProcessingRecipe[] recipes;
@@ -79,12 +79,12 @@ public class ProcessingMachine : Interactable
         UpdateProcessing();
     }
 
-    void UpdateProcessing()
+    protected virtual void UpdateProcessing()
     {
         if (isProcessing)
         {
             processTimer += Time.deltaTime;
-            if (processTimer >= currentRecipe.processingTime)
+            if (currentRecipe != null && processTimer >= currentRecipe.processingTime)
                 CompleteProcessing();
         }
         else
@@ -95,17 +95,13 @@ public class ProcessingMachine : Interactable
 
     public virtual void TryStartProcessing()
     {
-        // Check if any slots have items
         if (inputSlot1.IsEmpty() && inputSlot2.IsEmpty()) return;
 
         var recipe = FindMatchingRecipe();
         if (recipe == null) return;
 
-        // Get required amounts for this specific combination
-        recipe.GetRequiredAmounts(inputSlot1.item, inputSlot2.item,
-                                 out int required1, out int required2);
+        recipe.GetRequiredAmounts(inputSlot1.item, inputSlot2.item, out int required1, out int required2);
 
-        // Move items to processing slots
         if (required1 > 0)
         {
             processingSlot1.Set(inputSlot1.item, required1);
@@ -136,15 +132,13 @@ public class ProcessingMachine : Interactable
             processingVisualObject.SetActive(true);
     }
 
-    void CompleteProcessing()
+    protected virtual void CompleteProcessing()
     {
         if (currentRecipe == null) return;
 
-        // Spawn output
         if (currentRecipe.outputItem?.itemPrefab != null)
             itemDropper.Drop(currentRecipe.outputItem, currentRecipe.outputQuantity);
 
-        // Clear processing slots
         processingSlot1.Set(null, 0);
         processingSlot2.Set(null, 0);
 
@@ -204,7 +198,6 @@ public class ProcessingMachine : Interactable
         }
     }
 
-
     public void Close()
     {
         if (machinePanel != null)
@@ -239,7 +232,6 @@ public class ProcessingMachine : Interactable
 
     public void DropAllItems()
     {
-        // Drop all input and processing items
         DropSlotItems(inputSlot1);
         DropSlotItems(inputSlot2);
         DropSlotItems(processingSlot1);

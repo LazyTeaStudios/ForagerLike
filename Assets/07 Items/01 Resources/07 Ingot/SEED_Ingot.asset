@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5983d49365a8cf94e824da4260bbdf8b, type: 3}
-  m_Name: DATA_Ingot
+  m_Name: SEED_Ingot
   m_EditorClassIdentifier: 
-  itemName: Stone Small
+  itemName: Iron Igot Seed
   icon: {fileID: 21300000, guid: 1f870c756f807944480c3d1c2fae6a3d, type: 3}
   maxStackSize: 64
   itemType: 1
-  itemPrefab: {fileID: 1784502518683212841, guid: 3f69820943555ce47b40feef3c39a161, type: 3}
-  growthStages: 0
-  maxHealth: 100
-  plantPrefab: {fileID: 6967365203733630599, guid: 646231e4f76bc6f4e895b8e690516c5e, type: 3}
+  itemPrefab: {fileID: 765830019208060021, guid: 8d48cb546d0202545824590648c2e38d, type: 3}
+  growthStages: 10
+  maxHealth: 30
+  plantPrefab: {fileID: 6967365203733630599, guid: 40a48cf19f26c7a41a951530b3f451bd, type: 3}
   drops:
-  - item: {fileID: 11400000}
+  - item: {fileID: 11400000, guid: 47715040fa056874a90ad9d5c3278367, type: 2}
     quantity: 2
