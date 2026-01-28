@@ -10,7 +10,10 @@ public class CrosshairUI : MonoBehaviour
     [SerializeField] float hoverScale = 0.5f;
     [SerializeField] float lerpSpeed = 20f;
 
+    [SerializeField] GameObject hoverObject;
+
     Vector3 targetScale;
+    bool isHovering;
 
     void Awake()
     {
@@ -21,15 +24,24 @@ public class CrosshairUI : MonoBehaviour
         targetScale = transform.localScale;
 
         SetHover(false);
+        hoverObject.SetActive(false);
     }
 
     public void SetHover(bool hovering)
     {
+        if (isHovering == hovering)
+            return;
+
+        isHovering = hovering;
+
         if (image != null)
             image.sprite = hovering ? hoverSprite : normalSprite;
 
         float s = hovering ? hoverScale : normalScale;
         targetScale = Vector3.one * s;
+
+        if (hoverObject != null)
+            hoverObject.SetActive(hovering);
     }
 
     void Update()
