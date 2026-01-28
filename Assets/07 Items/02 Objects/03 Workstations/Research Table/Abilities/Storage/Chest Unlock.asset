@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: 'Unlock: Wooden Chest'
   description: Allow you to store up to 4 Items.
-  icon: {fileID: -4270508270548783589, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
+  icon: {fileID: 21300000, guid: 2561978f21affa44a979024ce927c9a5, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
     quantity: 10
