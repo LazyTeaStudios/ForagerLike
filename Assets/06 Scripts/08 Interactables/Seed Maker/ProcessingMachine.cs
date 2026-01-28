@@ -17,6 +17,12 @@ public class ProcessingMachine : Interactable
     [Header("Processing Visual")]
     [SerializeField] protected GameObject processingVisualObject;
 
+    [Header("Processing Bounce")]
+    [SerializeField] private Transform bounceTarget;
+    [SerializeField] private float bounceSpeed = 6f;
+    [SerializeField] private float bounceMinY = 1f;
+    [SerializeField] private float bounceMaxY = 1.2f;
+
     protected InventorySlot inputSlot1;
     protected InventorySlot inputSlot2;
     protected InventorySlot processingSlot1;
@@ -25,7 +31,12 @@ public class ProcessingMachine : Interactable
     protected float processTimer;
     protected bool isProcessing;
 
+    private Vector3 bounceBaseScale;
+    private bool bounceBaseScaleSet;
+
     public bool IsProcessing => isProcessing;
+
+    protected virtual bool BounceActive => isProcessing;
 
     protected override void Awake()
     {
@@ -38,6 +49,12 @@ public class ProcessingMachine : Interactable
 
         if (processingVisualObject != null)
             processingVisualObject.SetActive(false);
+
+        if (bounceTarget == null)
+            bounceTarget = transform;
+
+        bounceBaseScale = bounceTarget.localScale;
+        bounceBaseScaleSet = true;
     }
 
     void InitializeSlots()
@@ -77,6 +94,26 @@ public class ProcessingMachine : Interactable
             Close();
 
         UpdateProcessing();
+        UpdateProcessingBounce();
+    }
+
+    void UpdateProcessingBounce()
+    {
+        if (!bounceBaseScaleSet || bounceTarget == null)
+            return;
+
+        if (!BounceActive)
+        {
+            bounceTarget.localScale = bounceBaseScale;
+            return;
+        }
+
+        float t = (Mathf.Sin(Time.time * bounceSpeed) + 1f) * 0.5f;
+        float yMul = Mathf.Lerp(bounceMinY, bounceMaxY, t);
+
+        Vector3 s = bounceBaseScale;
+        s.y = bounceBaseScale.y * yMul;
+        bounceTarget.localScale = s;
     }
 
     protected virtual void UpdateProcessing()

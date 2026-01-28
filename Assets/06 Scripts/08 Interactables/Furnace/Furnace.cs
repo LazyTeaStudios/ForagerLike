@@ -8,6 +8,13 @@ public class Furnace : ProcessingMachine
     [SerializeField] private float minScale = 0.2f;
     [SerializeField] private float maxScale = 1f;
 
+    [Header("Furnace Door")]
+    [SerializeField] private Transform door;
+    [SerializeField] private float doorOpenX = -90f;
+    [SerializeField] private float doorLerpSpeed = 8f;
+
+    private float doorClosedX;
+
     private GameObject currentPlant;
     private PlantGrowth currentPlantGrowth;
     private HealthSystem currentPlantHealth;
@@ -18,11 +25,17 @@ public class Furnace : ProcessingMachine
     private bool isGrowing;
     private bool plantDeathHandled;
 
+    protected override bool BounceActive => isProcessing || isGrowing;
+
     protected override void Awake()
     {
         base.Awake();
+
         if (growPoint == null)
             growPoint = transform;
+
+        if (door != null)
+            doorClosedX = door.localEulerAngles.x;
     }
 
     private void OnEnable()
@@ -40,6 +53,22 @@ public class Furnace : ProcessingMachine
     {
         base.Update();
         UpdatePlantVisuals();
+        UpdateDoor();
+    }
+
+    void UpdateDoor()
+    {
+        if (door == null)
+            return;
+
+        float targetX = (currentPlant != null) ? doorOpenX : doorClosedX;
+
+        Vector3 e = door.localEulerAngles;
+        float x = e.x;
+        if (x > 180f) x -= 360f;
+
+        float newX = Mathf.Lerp(x, targetX, 1f - Mathf.Exp(-doorLerpSpeed * Time.deltaTime));
+        door.localEulerAngles = new Vector3(newX, e.y, e.z);
     }
 
     void UpdatePlantVisuals()

@@ -18,12 +18,9 @@ MonoBehaviour:
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
     quantity: 8
-  - item: {fileID: 11400000, guid: 8a972ebf156a92942979b295b1a1b270, type: 2}
-    quantity: 5
   prerequisites:
-  - {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
-  unlocksAbilities:
-  - {fileID: 11400000, guid: 28309341576ada14a99ac9ecafc6f5c5, type: 2}
+  - {fileID: 11400000, guid: ebd2f78a01e6ce44a96b3eab9f160851, type: 2}
+  unlocksAbilities: []
   unlockedBuilding: {fileID: 11400000, guid: cda4ff426908de14aa7bdfc178124f33, type: 2}
   passiveModifier:
     type: 0

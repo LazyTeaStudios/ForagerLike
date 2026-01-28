@@ -724,7 +724,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityButtons:
   - {fileID: 1410312655445704831}
-  - {fileID: 9044810829215224620}
   - {fileID: 6321483058619715372}
   - {fileID: 7548968436490838666}
   - {fileID: 734399067300838400}
@@ -744,7 +743,16 @@ MonoBehaviour:
   - {fileID: 3413751557956566328}
   - {fileID: 8402935586568346234}
   - {fileID: 2021394157963564994}
-  - {fileID: 4478389774457768685}
+  - {fileID: 8025759252742911737}
+  - {fileID: 6702084551627021387}
+  - {fileID: 6702591848041683499}
+  - {fileID: 5061952147872997608}
+  - {fileID: 4979501257128399304}
+  - {fileID: 9110299623412146104}
+  - {fileID: 2495378265001945410}
+  - {fileID: 1549375622710335292}
+  - {fileID: 6318540102717469937}
+  - {fileID: 538660709103773611}
   tooltipPanel: {fileID: 3517742304544159684}
   tooltipTitle: {fileID: 6027130672400754670}
   tooltipDescription: {fileID: 8850865264816511889}
@@ -837,6 +845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98f87ad60b3a044ca43a3b5e0527659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineEffect: {fileID: 0}
+  useScalePop: 1
   scaleMultiplier: 1.1
   lerpSpeed: 20
 --- !u!114 &2159668833513108893
@@ -1610,6 +1620,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ability Connector
       objectReference: {fileID: 0}
+    - target: {fileID: 2378989158627122140, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3089822363373337699, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1732,7 +1746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5662c956d32fa19438d4e4684d5fdec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromAbility: {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
+  fromAbility: {fileID: 11400000, guid: ebd2f78a01e6ce44a96b3eab9f160851, type: 2}
   toAbility: {fileID: 11400000, guid: 5a25f6d188da2a74e952014108580dfa, type: 2}
   connectionSlider: {fileID: 8118055656023433831}
   fillSpeed: 2
@@ -2539,6 +2553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seed Maker Unlock
       objectReference: {fileID: 0}
+    - target: {fileID: 3998481868736065191, guid: 830608ac623aec341a5b6c1e205d9d30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5310964928780681363, guid: 830608ac623aec341a5b6c1e205d9d30, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4
@@ -2585,17 +2603,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1353592455961651487, guid: 830608ac623aec341a5b6c1e205d9d30, type: 3}
   m_PrefabInstance: {fileID: 2229717193876304981}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9044810829215224620 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7166375440555779961, guid: 830608ac623aec341a5b6c1e205d9d30, type: 3}
-  m_PrefabInstance: {fileID: 2229717193876304981}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afef8cac3c3030f409a73053f9abe964, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2351790910799374983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3868,7 +3875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5662c956d32fa19438d4e4684d5fdec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromAbility: {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
+  fromAbility: {fileID: 11400000, guid: ebd2f78a01e6ce44a96b3eab9f160851, type: 2}
   toAbility: {fileID: 11400000, guid: 560bf505a8027b74598fe452968ae425, type: 2}
   connectionSlider: {fileID: 4776596016159816175}
   fillSpeed: 2
@@ -3894,6 +3901,10 @@ PrefabInstance:
     - target: {fileID: 2378989158627122140, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
       propertyPath: m_Name
       value: Ability Connector (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2378989158627122140, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3089822363373337699, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
       propertyPath: m_Pivot.x
@@ -3989,11 +4000,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7140810308713035139, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7140810308713035139, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8975227598590545380, guid: 4285d7e36fcbf1944b87f3315bfa595f, type: 3}
       propertyPath: m_Value
@@ -5360,7 +5371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5662c956d32fa19438d4e4684d5fdec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromAbility: {fileID: 11400000, guid: 184a4beb6a1b5ae44ab9eabab32a42ea, type: 2}
+  fromAbility: {fileID: 11400000, guid: ebd2f78a01e6ce44a96b3eab9f160851, type: 2}
   toAbility: {fileID: 11400000, guid: 91f2e23867438d246bab118a47c0e343, type: 2}
   connectionSlider: {fileID: 1498426792393724245}
   fillSpeed: 2
@@ -5989,7 +6000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1353592455961651487, guid: 830608ac623aec341a5b6c1e205d9d30, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -223.3
+      value: -36.16662
       objectReference: {fileID: 0}
     - target: {fileID: 1353592455961651487, guid: 830608ac623aec341a5b6c1e205d9d30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

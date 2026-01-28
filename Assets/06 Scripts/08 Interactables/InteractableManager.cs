@@ -6,12 +6,17 @@ public class InteractableManager : MonoBehaviour
     Interactable currentTarget;
     public static InteractableManager Instance { get; private set; }
 
+    [SerializeField] CrosshairUI crosshairUI;
+
     static float inputCooldownTime;
 
     void Awake()
     {
         Instance = this;
         playerCamera = Camera.main;
+
+        if (crosshairUI == null)
+            crosshairUI = FindFirstObjectByType<CrosshairUI>();
     }
 
     void Update()
@@ -39,32 +44,56 @@ public class InteractableManager : MonoBehaviour
         if (playerCamera == null) return;
 
         Ray ray = playerCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
-        if (Physics.Raycast(ray, out RaycastHit hit, 10f))
+        var hits = Physics.RaycastAll(ray, 10f);
+
+        if (hits == null || hits.Length == 0)
         {
-            var proxy = hit.collider.GetComponent<InteractableCollider>();
-            if (proxy == null)
+            ClearTarget();
+            return;
+        }
+
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            var col = hits[i].collider;
+            if (col == null) continue;
+            if (col.isTrigger) continue;
+
+            if (col.GetComponentInParent<InteractionRaycastBlocker>() != null)
             {
                 ClearTarget();
                 return;
             }
 
-            Interactable interactable = proxy.GetInteractable();
-            if (interactable != null)
-            {
-                var placementDelay = interactable.GetComponent<PlacedBuildingDelay>();
-                if (placementDelay != null && !placementDelay.CanInteract())
-                {
-                    ClearTarget();
-                    return;
-                }
+            Interactable interactable = null;
 
-                float distance = Vector3.Distance(transform.position, interactable.transform.position);
-                if (distance <= interactable.GetInteractRange())
-                {
-                    SetTarget(interactable);
-                    return;
-                }
+            var proxy = col.GetComponent<InteractableCollider>();
+            if (proxy != null)
+                interactable = proxy.GetInteractable();
+            else
+                interactable = col.GetComponentInParent<Interactable>();
+
+            if (interactable == null)
+            {
+                ClearTarget();
+                return;
             }
+
+            var placementDelay = interactable.GetComponent<PlacedBuildingDelay>();
+            if (placementDelay != null && !placementDelay.CanInteract())
+            {
+                ClearTarget();
+                return;
+            }
+
+            float distance = Vector3.Distance(transform.position, interactable.transform.position);
+            if (distance <= interactable.GetInteractRange())
+                SetTarget(interactable);
+            else
+                ClearTarget();
+
+            return;
         }
 
         ClearTarget();
@@ -72,13 +101,16 @@ public class InteractableManager : MonoBehaviour
 
     void SetTarget(Interactable newTarget)
     {
-        if (currentTarget == newTarget) return;
-
-        if (currentTarget != null)
+        if (currentTarget != null && currentTarget != newTarget)
             currentTarget.SetHighlighted(false);
 
         currentTarget = newTarget;
-        currentTarget.SetHighlighted(true);
+
+        if (currentTarget != null)
+            currentTarget.SetHighlighted(true);
+
+        if (crosshairUI != null)
+            crosshairUI.SetHover(currentTarget != null);
     }
 
     void ClearTarget()
@@ -88,6 +120,9 @@ public class InteractableManager : MonoBehaviour
             currentTarget.SetHighlighted(false);
             currentTarget = null;
         }
+
+        if (crosshairUI != null)
+            crosshairUI.SetHover(false);
     }
 
     void OnDestroy()
@@ -95,6 +130,8 @@ public class InteractableManager : MonoBehaviour
         ClearTarget();
     }
 }
+
+
 
 public class PlacedBuildingDelay : MonoBehaviour 
 { 

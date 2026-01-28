@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputItem1: {fileID: 11400000, guid: f9534097a3b83554382fccbb35da457d, type: 2}
   inputQuantity1: 1
-  inputItem2: {fileID: 0}
-  inputQuantity2: 1
-  outputItem: {fileID: 11400000, guid: 8a972ebf156a92942979b295b1a1b270, type: 2}
-  outputQuantity: 5
-  processingTime: 1
+  inputItem2: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
+  inputQuantity2: 2
+  outputItem: {fileID: 11400000, guid: e685dcef02444e944972887e55511725, type: 2}
+  outputQuantity: 1
+  processingTime: 0

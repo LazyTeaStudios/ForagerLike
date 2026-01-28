@@ -8,7 +8,7 @@ public class ProcessingRecipe : ScriptableObject
     public int inputQuantity1 = 1;
 
     [Space]
-    public ItemData inputItem2; // Optional second input
+    public ItemData inputItem2;
     public int inputQuantity2 = 1;
 
     [Header("Output")]

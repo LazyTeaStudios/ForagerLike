@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 8987621011340875345}
   - component: {fileID: 8118223803295043411}
   m_Layer: 23
-  m_Name: FLR_Ingot
+  m_Name: FLR_Rope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c9bbe2d3ae8fa429265ce09350e245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SeedData: {fileID: 11400000, guid: d0404cdd87ca8d6418653d24fd497e9b, type: 2}
+  SeedData: {fileID: 11400000, guid: 0f3bc4a3585854245a9d37a24e649d7c, type: 2}
 --- !u!114 &1244691313051543667
 MonoBehaviour:
   m_ObjectHideFlags: 0
