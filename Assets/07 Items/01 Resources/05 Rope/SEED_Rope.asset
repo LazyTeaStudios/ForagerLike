@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SEED_Rope
   m_EditorClassIdentifier: 
   itemName: Rope Seed
-  icon: {fileID: 21300000, guid: 312044f705eab1d449bed0fd058149e8, type: 3}
+  icon: {fileID: 21300000, guid: cf6c8cb063bf77748ad237a57d86cab7, type: 3}
   maxStackSize: 64
   itemType: 1
   itemPrefab: {fileID: 765830019208060021, guid: a5147f91e34aca046a47c64a9d14f6cd, type: 3}
