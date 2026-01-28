@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Stone Small
   icon: {fileID: 21300000, guid: 1f870c756f807944480c3d1c2fae6a3d, type: 3}
   maxStackSize: 64
-  itemType: 0
+  itemType: 1
   itemPrefab: {fileID: 1784502518683212841, guid: 3f69820943555ce47b40feef3c39a161, type: 3}
   growthStages: 0
   maxHealth: 100
