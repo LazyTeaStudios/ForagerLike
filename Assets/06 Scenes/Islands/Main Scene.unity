@@ -35339,6 +35339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68eadbedfe0ef314eb225f995fe8a535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crosshairUI: {fileID: 0}
 --- !u!1 &1223270315 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2859c9da2ace75c40b265abccefed51b, type: 3}
@@ -55227,8 +55228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98f87ad60b3a044ca43a3b5e0527659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleMultiplier: 1.1
-  lerpSpeed: 20
+  outlineEffect: {fileID: 0}
 --- !u!1 &647972527333297916
 GameObject:
   m_ObjectHideFlags: 0
@@ -57120,8 +57120,6 @@ MonoBehaviour:
   usePlayerDataRange: 0
   customInteractRange: 20
   highlightComponent: {fileID: 0}
-  hoverScaleMultiplier: 1.15
-  hoverLerpSpeed: 20
   obeliskPanel: {fileID: 525646856963681540}
   obeliskUI: {fileID: 7862654517920723684}
   currentQuest: {fileID: 11400000, guid: 1d81f2fd99fe24a46a91cea9edf858ab, type: 2}
@@ -63291,6 +63289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68eadbedfe0ef314eb225f995fe8a535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crosshairUI: {fileID: 0}
 --- !u!114 &8469333761558312090
 MonoBehaviour:
   m_ObjectHideFlags: 0
