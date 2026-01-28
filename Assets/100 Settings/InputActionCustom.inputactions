@@ -246,21 +246,21 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
-                    "name": "ToggleBuildModeAction",
-                    "type": "Button",
-                    "id": "0ab10a63-5d1d-44ed-9b16-42a87b0647ce",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "GameplayPause",
                     "type": "Button",
                     "id": "b47cde96-1639-4bb7-a7ad-30eba4394930",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleBuildModeAction",
+                    "type": "Button",
+                    "id": "a36efd4e-e430-42fb-8c27-ececf2c32ef3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -469,7 +469,7 @@
                 },
                 {
                     "name": "",
-                    "id": "4e265e42-3103-4780-be40-616470cf82d3",
+                    "id": "435d8ea7-fb7d-45ee-b7df-ac151502cb39",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
@@ -667,6 +667,15 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseBuildModeAction",
+                    "type": "Button",
+                    "id": "a4c36abe-2b00-416d-a84b-b7fc1dc165da",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -1017,6 +1026,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
                     "action": "UIPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f346ab24-4a54-4aad-bd11-fa74f4576747",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseBuildModeAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

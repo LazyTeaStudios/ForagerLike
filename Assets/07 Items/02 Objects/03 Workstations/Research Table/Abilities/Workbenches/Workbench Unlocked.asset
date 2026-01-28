@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Workbench Unlocked
   m_EditorClassIdentifier: 
   abilityName: 'Unlock: Workbecnh'
-  description: Allow you to craft resoruces for building and upgrades.
+  description: Allow you to craft resoruces for building and upgrades. Press TAB
+    to open your BUILD Menu.
   icon: {fileID: -1721002306866770218, guid: a166a39ed07ef2a4ab1977097ac0edb0, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}

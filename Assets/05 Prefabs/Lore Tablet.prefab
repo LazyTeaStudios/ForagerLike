@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6593795660093732245, guid: 6984c55133691f94681896f3eef4d7e8, type: 2}
+  - {fileID: 6593795660093732245, guid: d9c25eba7591e454889fa81fa0e7b6f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,12 +102,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
+  m_text: Witches get hurt when they touch water. Be careful!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6984c55133691f94681896f3eef4d7e8, type: 2}
-  m_sharedMaterial: {fileID: 6593795660093732245, guid: 6984c55133691f94681896f3eef4d7e8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d9c25eba7591e454889fa81fa0e7b6f7, type: 2}
+  m_sharedMaterial: {fileID: 6593795660093732245, guid: d9c25eba7591e454889fa81fa0e7b6f7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -200,43 +198,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.11
+      value: -45.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.7
+      value: 19.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -103.83
+      value: -105.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.77299184
+      value: 0.81777376
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.12847923
+      value: 0.12475069
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6211437
+      value: -0.5585852
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.012541481
+      value: -0.060546547
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 12.369
+      value: 7.839
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 78.464
+      value: -69.629
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 8.253
+      value: -13.925
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34372d94f96512e4a907a8dfd84c7dcc, type: 3}
       propertyPath: m_ConstrainProportionsScale

@@ -21,8 +21,11 @@ public class InteractableManager : MonoBehaviour
 
     void Update()
     {
-        if (InputHandler.IsMapActive(ActionMap.UI)) return;
-        if (Interactable.IsUILocked) return;
+        if (InputHandler.IsMapActive(ActionMap.UI) || Interactable.IsUILocked)
+        {
+            ClearTarget();
+            return;
+        }
 
         CheckInteractableTarget();
 

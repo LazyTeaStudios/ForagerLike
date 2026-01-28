@@ -30,7 +30,7 @@ public class ResearchTableUI : MonoBehaviour
     {        
         if (unlockButton != null)
             unlockButton.onClick.AddListener(UnlockSelectedAbility);
-        ShowTooltip(abilityButtons[0].Ability);
+        //ShowTooltip(abilityButtons[0].Ability);
         RefreshDisplay();
     }
     

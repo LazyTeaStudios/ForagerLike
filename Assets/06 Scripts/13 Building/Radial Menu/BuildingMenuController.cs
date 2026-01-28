@@ -20,16 +20,20 @@ public class BuildingMenuController : MonoBehaviour
     void Update()
     {
         if (InputHandler.Pressed(GameAction.ToggleBuildModeAction))
-            ToggleMenu();
+        {
+            if (!isOpen)
+                OpenMenu(mainMenuDef);
+        }
+
+        if (InputHandler.Pressed(GameAction.CloseBuildModeAction))
+        {
+            if (isOpen)
+                CloseMenu();
+        }
+
     }
 
-    void ToggleMenu()
-    {
-        if (!isOpen)
-            OpenMenu(mainMenuDef);
-        else
-            CloseMenu();
-    }
+
 
     void OpenMenu(RadialMenuDefinition menuDef)
     {

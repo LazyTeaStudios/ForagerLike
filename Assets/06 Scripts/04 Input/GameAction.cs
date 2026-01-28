@@ -27,6 +27,7 @@ public enum GameAction
     Click,
     RightClick,
 
+    CloseBuildModeAction,
     CloseChest,
 
     //Gameplay Action Map
