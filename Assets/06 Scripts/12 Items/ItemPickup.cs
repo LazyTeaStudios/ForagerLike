@@ -208,6 +208,8 @@ public class ItemPickup : MonoBehaviour
 
         if (InventoryManager.Instance.AddItem(itemData, amount))
             Destroy(gameObject);
+
+        Sound.PlaySound("SFX_Item_Pickup", 0.1f, 0.5f);
     }
 
     void OnTriggerEnter(Collider other)

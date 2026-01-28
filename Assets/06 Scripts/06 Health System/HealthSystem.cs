@@ -20,6 +20,7 @@ public class HealthSystem : MonoBehaviour
     [Header("Death")]
     [SerializeField] private bool destroyOnDeath = true;
     [SerializeField] private GameObject onDeathParticles;
+    [SerializeField] private GameObject onDamageParticles;
     [SerializeField] private Vector3 spawnOnDeathOffset = Vector3.zero;
 
     public event Action<float, float> OnHealthChanged;
@@ -72,6 +73,12 @@ public class HealthSystem : MonoBehaviour
 
         currentHealth = Mathf.Max(0f, currentHealth - damage);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        Vector3 spawnPos = transform.TransformPoint(spawnOnDeathOffset);
+        Instantiate(onDamageParticles, spawnPos, Quaternion.identity);
+
+        Sound.PlaySound("SFX_Damage_Click", 0.1f, 0.5f);
+        ScreenShakeManager.Instance.Shake(.1f,.1f,.1f);
 
         if (IsDead)
             Die();

@@ -465,10 +465,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera
       objectReference: {fileID: 0}
-    - target: {fileID: 1029885257269689213, guid: a356cd5d4215640419741ccc2c5b504f, type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2170402768297931495, guid: a356cd5d4215640419741ccc2c5b504f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.3126
@@ -24610,7 +24606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: sfx.Array.size
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: music.Array.size
@@ -24657,6 +24653,14 @@ PrefabInstance:
       value: SFX_Chest_Open
       objectReference: {fileID: 0}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[8].id
+      value: SFX_Damage_Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[9].id
+      value: SFX_Item_Pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: music.Array.data[0].id
       value: Music_Forest
       objectReference: {fileID: 0}
@@ -24675,7 +24679,7 @@ PrefabInstance:
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: sfx.Array.data[2].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 6f1687f43fa83734282a12a80a5181c7, type: 3}
+      objectReference: {fileID: 8300000, guid: 6f74d108bb7affa41b83b5c631118d13, type: 3}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: sfx.Array.data[3].clip
       value: 
@@ -24696,6 +24700,14 @@ PrefabInstance:
       propertyPath: sfx.Array.data[7].clip
       value: 
       objectReference: {fileID: 8300000, guid: 56e8cb25e04b0e646ba9d84e8b369e21, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[8].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3b9eb792ae1a46e4296830ddf1a3bebe, type: 3}
+    - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
+      propertyPath: sfx.Array.data[9].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 77f91a86acf9dfb4f89baa7ff98fc948, type: 3}
     - target: {fileID: 5400542712142253434, guid: 1471bd6467ab55a4daec082c36fa4224, type: 3}
       propertyPath: entries.Array.data[0].id
       value: MusicForest
@@ -69110,8 +69122,8 @@ MonoBehaviour:
   stepsPerMeter: 0.3
   jumpSoundId: Player_Jump
   landSoundId: Player_Landing
-  jumpVolume: 0.05
-  landVolume: 0.1
+  jumpVolume: 0.01
+  landVolume: 0.01
   jumpLandPitchVariation: 0.25
   groundMask:
     serializedVersion: 2

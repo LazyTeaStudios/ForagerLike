@@ -86,6 +86,7 @@ MonoBehaviour:
   entityType: 0
   destroyOnDeath: 1
   onDeathParticles: {fileID: 6244200998153680120, guid: 4f5d0d2556e196045b1af657e907ce58, type: 3}
+  onDamageParticles: {fileID: 6244200998153680120, guid: 208fb969b79537c44b0c3004850e002d, type: 3}
   spawnOnDeathOffset: {x: 0, y: 1, z: 0}
 --- !u!114 &1490692170104351164
 MonoBehaviour:
