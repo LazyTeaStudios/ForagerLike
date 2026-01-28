@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.25, y: 0.101, z: 0.221}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.76, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8736353571385809385}
@@ -147,7 +147,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5f7f30077c85e9043905514386e8809f, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: e3db6ea74e7283f4e94d1f5aea3f4207, type: 2}
+      objectReference: {fileID: 2100000, guid: a576e075aa9f78749a9ee18ee321e86f, type: 2}
     - target: {fileID: 919132149155446097, guid: 5f7f30077c85e9043905514386e8809f, type: 3}
       propertyPath: m_Name
       value: Planter 1x1DirtBed

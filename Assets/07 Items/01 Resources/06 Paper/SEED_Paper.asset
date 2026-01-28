@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SEED_Paper
   m_EditorClassIdentifier: 
   itemName: Paper Seed
-  icon: {fileID: 21300000, guid: 2dd545afcb7274b498e8f1787df5efbe, type: 3}
+  icon: {fileID: 21300000, guid: 1b7bce5553e7986429843d62e1e9fdf2, type: 3}
   maxStackSize: 64
   itemType: 1
   itemPrefab: {fileID: 765830019208060021, guid: e2fdd3e315dac6c4a8cad3cd9a60583b, type: 3}
