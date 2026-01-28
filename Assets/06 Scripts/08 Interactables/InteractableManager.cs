@@ -6,7 +6,6 @@ public class InteractableManager : MonoBehaviour
     Interactable currentTarget;
     public static InteractableManager Instance { get; private set; }
 
-    // Add input cooldown
     static float inputCooldownTime;
 
     void Awake()
@@ -22,7 +21,6 @@ public class InteractableManager : MonoBehaviour
 
         CheckInteractableTarget();
 
-        // Check cooldown before processing input
         if (currentTarget != null &&
             Time.time >= inputCooldownTime &&
             InputHandler.Pressed(GameAction.GameplayMouseLeftClick))
@@ -31,7 +29,6 @@ public class InteractableManager : MonoBehaviour
         }
     }
 
-    // Add this public method to set cooldown
     public static void SetInputCooldown(float duration)
     {
         inputCooldownTime = Time.time + duration;
@@ -44,10 +41,16 @@ public class InteractableManager : MonoBehaviour
         Ray ray = playerCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
         if (Physics.Raycast(ray, out RaycastHit hit, 10f))
         {
-            Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
+            var proxy = hit.collider.GetComponent<InteractableCollider>();
+            if (proxy == null)
+            {
+                ClearTarget();
+                return;
+            }
+
+            Interactable interactable = proxy.GetInteractable();
             if (interactable != null)
             {
-                // Check for placement delay
                 var placementDelay = interactable.GetComponent<PlacedBuildingDelay>();
                 if (placementDelay != null && !placementDelay.CanInteract())
                 {
@@ -63,6 +66,7 @@ public class InteractableManager : MonoBehaviour
                 }
             }
         }
+
         ClearTarget();
     }
 
@@ -75,7 +79,6 @@ public class InteractableManager : MonoBehaviour
 
         currentTarget = newTarget;
         currentTarget.SetHighlighted(true);
-        
     }
 
     void ClearTarget()
@@ -93,18 +96,17 @@ public class InteractableManager : MonoBehaviour
     }
 }
 
-public class PlacedBuildingDelay : MonoBehaviour
-{
+public class PlacedBuildingDelay : MonoBehaviour 
+{ 
     float interactionDelay = 0.2f; // Half second delay
     float placeTime;
-
-    void Start()
-    {
-        placeTime = Time.time;
-    }
-
-    public bool CanInteract()
-    {
-        return Time.time - placeTime >= interactionDelay;
-    }
+                                   
+    void Start() 
+    { 
+        placeTime = Time.time; 
+    } 
+    public bool CanInteract() 
+    { 
+        return Time.time - placeTime >= interactionDelay; 
+    } 
 }

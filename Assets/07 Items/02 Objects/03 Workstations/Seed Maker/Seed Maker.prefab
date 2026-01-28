@@ -908,6 +908,7 @@ GameObject:
   - component: {fileID: 2869873661430849311}
   - component: {fileID: 5072753654645824068}
   - component: {fileID: 4280425356507168122}
+  - component: {fileID: 5504633388707526041}
   m_Layer: 0
   m_Name: Seed Maker
   m_TagString: Untagged
@@ -1082,6 +1083,19 @@ MonoBehaviour:
   returnFullResources: 1
   resourceReturnRate: 1
   itemDropper: {fileID: 5072753654645824068}
+--- !u!114 &5504633388707526041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125780599337610684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ead5d7165b764e4d90437169393846d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: {fileID: 7882328841272843980}
 --- !u!1 &5463115968043920009
 GameObject:
   m_ObjectHideFlags: 0

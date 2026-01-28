@@ -683,6 +683,7 @@ GameObject:
   - component: {fileID: 3057933819716744531}
   - component: {fileID: 2159668833513108893}
   - component: {fileID: 2181471457594113941}
+  - component: {fileID: 2731081703569124793}
   m_Layer: 0
   m_Name: Research Table
   m_TagString: Untagged
@@ -874,6 +875,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.706143, y: 0.96939075, z: 0.8530715}
   m_Center: {x: 0, y: 0.48496753, z: 0}
+--- !u!114 &2731081703569124793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523224898451388996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ead5d7165b764e4d90437169393846d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: {fileID: 5351566349901537081}
 --- !u!1 &5226474577429422048
 GameObject:
   m_ObjectHideFlags: 0
