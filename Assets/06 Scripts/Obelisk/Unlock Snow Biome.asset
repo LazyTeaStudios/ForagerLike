@@ -17,8 +17,9 @@ MonoBehaviour:
     to get there!
   questIcon: {fileID: 21300000, guid: 19a08f0280ed53144ae930a57618a919, type: 3}
   requiredItems:
-  - item: {fileID: 11400000, guid: 221aa63806171094bbe81a22912b6fda, type: 2}
-    quantity: 10
+  - item: {fileID: 11400000, guid: 8a972ebf156a92942979b295b1a1b270, type: 2}
+    quantity: 15
+  - item: {fileID: 11400000, guid: 00fdab18faef8164d83cc282e44120cb, type: 2}
+    quantity: 15
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
-    quantity: 30
-  objectToEnable: {fileID: 0}
+    quantity: 50

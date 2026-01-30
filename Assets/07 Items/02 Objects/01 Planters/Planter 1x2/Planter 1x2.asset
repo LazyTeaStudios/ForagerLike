@@ -18,9 +18,9 @@ MonoBehaviour:
   prefab: {fileID: 144784770610736651, guid: 8d60065d7ba29854689dbd6ebff1d968, type: 3}
   requiredResources:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
-    quantity: 12
-  - item: {fileID: 11400000, guid: 221aa63806171094bbe81a22912b6fda, type: 2}
-    quantity: 5
+    quantity: 15
+  - item: {fileID: 11400000, guid: 00fdab18faef8164d83cc282e44120cb, type: 2}
+    quantity: 1
   allowedSurfaces: 0
   maxGroundAngle: 15
   maxWallAngle: 0

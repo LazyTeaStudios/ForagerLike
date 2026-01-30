@@ -71318,7 +71318,7 @@ MonoBehaviour:
   highlightComponent: {fileID: 0}
   obeliskPanel: {fileID: 525646856963681540}
   obeliskUI: {fileID: 7862654517920723684}
-  currentQuest: {fileID: 11400000, guid: 2f12df9a87e38f648b4698c9afe67d2a, type: 2}
+  currentQuest: {fileID: 11400000, guid: 1d81f2fd99fe24a46a91cea9edf858ab, type: 2}
   objectToEnable: {fileID: 357125854}
 --- !u!222 &3671049144828685572
 CanvasRenderer:
