@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: RPY_Ingot
   m_EditorClassIdentifier: 
   inputItem1: {fileID: 11400000, guid: 2b1a0d901c1a179438a98733743fa568, type: 2}
-  inputQuantity1: 1
+  inputQuantity1: 5
   inputItem2: {fileID: 11400000, guid: 582c622d833a1a54bb0a2205391acfd3, type: 2}
-  inputQuantity2: 1
+  inputQuantity2: 5
   outputItem: {fileID: 11400000, guid: d0404cdd87ca8d6418653d24fd497e9b, type: 2}
   outputQuantity: 1
   processingTime: 0

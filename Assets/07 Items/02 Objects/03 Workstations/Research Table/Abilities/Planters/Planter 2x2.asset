@@ -16,8 +16,12 @@ MonoBehaviour:
   description: Allow you grow your own plants at home.
   icon: {fileID: -1184960675, guid: 49dd3e736e05c0240bd1b2f97744869e, type: 3}
   itemCosts:
-  - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
+  - item: {fileID: 11400000, guid: 8a972ebf156a92942979b295b1a1b270, type: 2}
     quantity: 1
+  - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
+    quantity: 10
+  - item: {fileID: 11400000, guid: 582c622d833a1a54bb0a2205391acfd3, type: 2}
+    quantity: 10
   prerequisites:
   - {fileID: 11400000, guid: a26e655ef55906543ba5148345d31f59, type: 2}
   unlocksAbilities: []

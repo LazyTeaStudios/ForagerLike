@@ -17,6 +17,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: f9663a2adb27e554981106241660d428, type: 3}
   itemCosts:
   - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
+    quantity: 5
+  - item: {fileID: 11400000, guid: 221aa63806171094bbe81a22912b6fda, type: 2}
+    quantity: 5
+  - item: {fileID: 11400000, guid: 8a972ebf156a92942979b295b1a1b270, type: 2}
     quantity: 1
   prerequisites:
   - {fileID: 11400000, guid: 91f2e23867438d246bab118a47c0e343, type: 2}

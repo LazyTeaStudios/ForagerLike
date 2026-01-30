@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Increase your movement speed by 2.
   icon: {fileID: 21300000, guid: ce830d5dbbe2b93489c42944d9bec609, type: 3}
   itemCosts:
-  - item: {fileID: 11400000, guid: 7044d4c1ddb8ea54294ed059231f4bae, type: 2}
-    quantity: 1
+  - item: {fileID: 11400000, guid: 8a972ebf156a92942979b295b1a1b270, type: 2}
+    quantity: 15
   prerequisites:
   - {fileID: 11400000, guid: 3560ff6604b770a4bbb568fc6f96c14e, type: 2}
   unlocksAbilities: []

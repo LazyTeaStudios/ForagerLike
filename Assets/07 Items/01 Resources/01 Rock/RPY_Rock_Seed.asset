@@ -17,5 +17,5 @@ MonoBehaviour:
   inputItem2: {fileID: 0}
   inputQuantity2: 1
   outputItem: {fileID: 11400000, guid: 9c2b6a98d151b5c4a8328f4de23b0c42, type: 2}
-  outputQuantity: 5
-  processingTime: 0.1
+  outputQuantity: 1
+  processingTime: 1
